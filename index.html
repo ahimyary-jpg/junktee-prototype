@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>JUNKTEE</title>
+<meta name="junktee-payment-api" content="https://junktee-sandbox-payments.ahimyary.workers.dev">
+<title>JUNKTEE — Sandbox Checkout</title>
 <style>
 :root{
   color-scheme: light;
@@ -378,6 +379,7 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 @media(min-width:900px){#app{border-radius:18px;border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 120px rgba(0,0,0,.18)}body{background:#DCD7CF}[data-theme="dark"] body{background:#0D0C0B}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
+<link rel="stylesheet" href="./junktee-v03.css">
 </head>
 <body data-theme="light">
 
@@ -1134,14 +1136,23 @@ const revealObserver = new IntersectionObserver(entries=>entries.forEach(entry=>
   if(entry.isIntersecting){ entry.target.classList.add('in-view'); revealObserver.unobserve(entry.target); }
 }),{threshold:.16});
 document.querySelectorAll('.editorial-reveal').forEach(el=>revealObserver.observe(el));
-document.getElementById('screen-home').classList.add('active');
-setTimeout(()=>{
-  document.getElementById('splash').classList.add('hide');
-  setTimeout(()=>{ document.getElementById('splash').remove(); document.getElementById('screen-home').classList.remove('active'); go('onboarding',{replace:true}); document.getElementById('screen-onboarding').classList.add('active'); }, 500);
-}, 1400);
-// fix initial state: onboarding first, home behind it
-document.getElementById('screen-home').classList.remove('active');
-history_ = ['onboarding'];
+let resumeV03 = new URLSearchParams(location.search).has('payment');
+try { resumeV03 ||= Boolean(localStorage.getItem('junktee_v03_last_confirmation')); } catch {}
+if(resumeV03){
+  document.getElementById('splash').remove();
+  document.getElementById('screen-home').classList.remove('active');
+  history_ = ['home'];
+} else {
+  document.getElementById('screen-home').classList.add('active');
+  setTimeout(()=>{
+    document.getElementById('splash').classList.add('hide');
+    setTimeout(()=>{ document.getElementById('splash').remove(); document.getElementById('screen-home').classList.remove('active'); go('onboarding',{replace:true}); document.getElementById('screen-onboarding').classList.add('active'); }, 500);
+  }, 1400);
+  // fix initial state: onboarding first, home behind it
+  document.getElementById('screen-home').classList.remove('active');
+  history_ = ['onboarding'];
+}
 </script>
+<script defer src="./junktee-v03.js"></script>
 </body>
 </html>
