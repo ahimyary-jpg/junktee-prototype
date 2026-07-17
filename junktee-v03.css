@@ -1,7 +1,7 @@
 /* JUNKTEE v0.3 — sandbox checkout and ownership state */
 :focus-visible{outline:2px solid var(--green);outline-offset:3px}
 .btn:disabled,.icon-btn:disabled{cursor:not-allowed;opacity:.45;transform:none}
-#screen-cart,#screen-checkout{padding-bottom:calc(132px + env(safe-area-inset-bottom))}
+#screen-cart,#screen-checkout,#screen-settings{padding-bottom:calc(132px + env(safe-area-inset-bottom))}
 .btn-loading{position:relative;color:transparent!important}
 .btn-loading:after{content:"";position:absolute;width:17px;height:17px;border:1.5px solid currentColor;border-right-color:transparent;border-radius:50%;color:var(--bg);animation:jt-spin .75s linear infinite}
 @keyframes jt-spin{to{transform:rotate(360deg)}}
