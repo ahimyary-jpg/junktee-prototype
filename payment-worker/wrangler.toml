@@ -1,0 +1,8 @@
+name = "junktee-sandbox-payments"
+main = "src/index.js"
+compatibility_date = "2026-07-17"
+workers_dev = true
+
+[vars]
+FRONTEND_URL = "https://ahimyary-jpg.github.io/junktee-prototype/"
+ALLOWED_ORIGIN = "https://ahimyary-jpg.github.io"
