@@ -228,7 +228,7 @@
           </div>
         </div>
         <div class="checkout-status" id="checkout-status" role="status" aria-live="polite"></div>
-        <button class="btn btn-primary" id="payment-submit" type="submit"><span>Continue to Test Payment · <span id="payment-button-total">SAR 0</span></span></button>
+        <button class="btn btn-primary" id="payment-submit" type="button" onclick="startJunkteePayment()"><span>Continue to Test Payment · <span id="payment-button-total">SAR 0</span></span></button>
         <p class="payment-submit-copy"><strong>Sandbox only.</strong> No real money can be charged.</p>
       </form>`;
   }
@@ -359,9 +359,9 @@
   }
 
   async function startPayment(event) {
-    event.preventDefault();
+    event?.preventDefault();
     if (submitting) return;
-    const form = event.currentTarget;
+    const form = event?.currentTarget || document.getElementById("payment-form");
     clearCheckoutStatus();
     if (!cart.length) {
       setCheckoutStatus("Your Bag is empty.", "error");
@@ -411,6 +411,10 @@
       setCheckoutStatus("We couldn’t connect to the payment service. Your Bag and shipping details are safe — please retry.", "error");
     }
   }
+
+  window.startJunkteePayment = function startJunkteePayment() {
+    return startPayment();
+  };
 
   function cleanPaymentURL() {
     const url = new URL(location.href);
