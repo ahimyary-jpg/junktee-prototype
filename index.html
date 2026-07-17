@@ -73,7 +73,9 @@ img{max-width:100%; display:block;}
   position:absolute; left:0; right:0; bottom:0; z-index:30; display:flex; justify-content:space-around; align-items:center;
   height:64px; background:var(--bg); border-top:1px solid var(--border);
   padding-bottom: env(safe-area-inset-bottom);
+  transition:opacity .28s var(--ease), visibility .28s var(--ease);
 }
+#screen-onboarding.active ~ #bottomnav{opacity:0;visibility:hidden;pointer-events:none;}
 .navitem{ background:none; border:none; display:flex; flex-direction:column; align-items:center; gap:3px; color:var(--muted); font-size:10px; flex:1; padding:6px 0;}
 .navitem svg{ width:22px; height:22px; stroke:var(--muted); fill:none; stroke-width:1.5; }
 .navitem.active{ color:var(--fg); }
