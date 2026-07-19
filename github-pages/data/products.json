@@ -1,0 +1,315 @@
+{
+  "schemaVersion": 1,
+  "source": "catalog/JUNKTEE_Product_Catalog.xlsx",
+  "sourceSha256": "ed64965123bb98a5a5ae35904fa640d7904a05ab2a2013deec71f9a8dd74f56f",
+  "products": [
+    {
+      "id": "ST23A451",
+      "sku": "ST23A451",
+      "name": "DEAD FISH SWEAT TEE",
+      "category": "Sweatshirts",
+      "collection": "Dead Fish",
+      "price": "SAR 330",
+      "priceSar": 330.0,
+      "unitAmount": 33000,
+      "color": "Black",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "description": "Oversized sweat tee crafted from 100% organic French Terry cotton for everyday comfort. Designed with a relaxed fit, drop shoulders, ribbed trims, and side pockets for effortless daily wear. Finished with a front graphic print inspired by the Red Sea and a message of individuality.",
+      "story": "Oversized sweat tee crafted from 100% organic French Terry cotton for everyday comfort. Designed with a relaxed fit, drop shoulders, ribbed trims, and side pockets for effortless daily wear. Finished with a front graphic print inspired by the Red Sea and a message of individuality.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "passportId": "",
+      "images": {
+        "front": "./assets/products/st23a451/front.png",
+        "back": "./assets/products/st23a451/back.png",
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST23A441",
+      "sku": "ST23A441",
+      "name": "DEAD FISH TEE",
+      "category": "T-Shirts",
+      "collection": "Dead Fish",
+      "price": "SAR 185",
+      "priceSar": 185.0,
+      "unitAmount": 18500,
+      "color": "Beige",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "description": "Oversized T-shirt crafted from 100% organic hemp for everyday comfort. Designed with a relaxed fit, drop shoulders, and a ribbed crewneck for effortless daily wear. Finished with a front graphic print inspired by the Red Sea and a message of individuality.",
+      "story": "Oversized T-shirt crafted from 100% organic hemp for everyday comfort. Designed with a relaxed fit, drop shoulders, and a ribbed crewneck for effortless daily wear. Finished with a front graphic print inspired by the Red Sea and a message of individuality.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "passportId": "",
+      "images": {
+        "front": "./assets/products/st23a441/front.jpeg",
+        "back": "./assets/products/st23a441/back.jpeg",
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST23A44",
+      "sku": "ST23A44",
+      "name": "ECO-UNFRIENDLY HOODIE",
+      "category": "Hoodies",
+      "collection": "ECO-UNFRIENDLY",
+      "price": "SAR 375",
+      "priceSar": 375.0,
+      "unitAmount": 37500,
+      "color": "Black",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "description": "Oversized hoodie crafted from 100% organic French Terry cotton for everyday comfort. Designed with a relaxed fit, drop shoulders, ribbed trims, and a kangaroo pocket for effortless daily wear. Finished with the signature [ECO-UNFRIENDLY] text print.",
+      "story": "Oversized hoodie crafted from 100% organic French Terry cotton for everyday comfort. Designed with a relaxed fit, drop shoulders, ribbed trims, and a kangaroo pocket for effortless daily wear. Finished with the signature [ECO-UNFRIENDLY] text print.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "passportId": "",
+      "images": {
+        "front": "./assets/products/st23a44/front.jpeg",
+        "back": "./assets/products/st23a44/back.jpeg",
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST23A444",
+      "sku": "ST23A444",
+      "name": "ECO-UNFRIENDLY TEE",
+      "category": "T-Shirts",
+      "collection": "ECO-UNFRIENDLY",
+      "price": "SAR 185",
+      "priceSar": 185.0,
+      "unitAmount": 18500,
+      "color": "Black",
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "description": "Oversized T-shirt crafted from 100% organic hemp for everyday comfort. Designed with a relaxed fit, drop shoulders, and a ribbed crewneck for effortless daily wear. Finished with the signature [ECO-UNFRIENDLY] text print.",
+      "story": "Oversized T-shirt crafted from 100% organic hemp for everyday comfort. Designed with a relaxed fit, drop shoulders, and a ribbed crewneck for effortless daily wear. Finished with the signature [ECO-UNFRIENDLY] text print.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "passportId": "",
+      "images": {
+        "front": "./assets/products/st23a444/front.jpeg",
+        "back": "./assets/products/st23a444/back.jpeg",
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST23A450",
+      "sku": "ST23A450",
+      "name": "ECO-UNFRIENDLY CROP TEE",
+      "category": "Crop top",
+      "collection": "ECO-UNFRIENDLY",
+      "price": "SAR 170",
+      "priceSar": 170.0,
+      "unitAmount": 17000,
+      "color": "Black & White",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "description": "Oversized crop top crafted from 100% organic hemp for everyday comfort. Designed with a relaxed fit, drop shoulders, and a ribbed crewneck for effortless daily wear. Finished with the signature [ECO-UNFRIENDLY]text print.",
+      "story": "Oversized crop top crafted from 100% organic hemp for everyday comfort. Designed with a relaxed fit, drop shoulders, and a ribbed crewneck for effortless daily wear. Finished with the signature [ECO-UNFRIENDLY]text print.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "passportId": "",
+      "images": {
+        "front": "./assets/products/st23a450/front.png",
+        "back": "./assets/products/st23a450/back.png",
+        "details": [
+          "./assets/products/st23a450/detail-1.png",
+          "./assets/products/st23a450/detail-2.png"
+        ]
+      },
+      "available": true
+    },
+    {
+      "id": "ST23A440",
+      "sku": "ST23A440",
+      "name": "RECYCLE TEE",
+      "category": "T-Shirts",
+      "collection": "RECYCLE TEE",
+      "price": "SAR 185",
+      "priceSar": 185.0,
+      "unitAmount": 18500,
+      "color": "Black",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "description": "Oversized T-shirt crafted from 100% organic hemp for everyday comfort. Designed with a relaxed fit, drop shoulders, and a ribbed crewneck for effortless daily wear. Finished with an abstract graphic on the front and a larger back print, reimagining the recycling symbol through a bold, understated design inspired by environmental awareness.",
+      "story": "Oversized T-shirt crafted from 100% organic hemp for everyday comfort. Designed with a relaxed fit, drop shoulders, and a ribbed crewneck for effortless daily wear. Finished with an abstract graphic on the front and a larger back print, reimagining the recycling symbol through a bold, understated design inspired by environmental awareness.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "passportId": "",
+      "images": {
+        "front": "./assets/products/st23a440/front.jpeg",
+        "back": "./assets/products/st23a440/back.jpeg",
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST23A442",
+      "sku": "ST23A442",
+      "name": "STAY CLEAN TEE",
+      "category": "T-Shirts",
+      "collection": "STAY CLEAN TEE",
+      "price": "SAR 185",
+      "priceSar": 185.0,
+      "unitAmount": 18500,
+      "color": "White",
+      "sizes": [
+        "S",
+        "L",
+        "XL"
+      ],
+      "description": "Oversized T-shirt crafted from 100% organic hemp for everyday comfort. Designed with a relaxed fit, drop shoulders, and a ribbed crewneck for effortless daily wear. Finished with a graphic print that promotes staying clean, both for yourself and the environment.",
+      "story": "Oversized T-shirt crafted from 100% organic hemp for everyday comfort. Designed with a relaxed fit, drop shoulders, and a ribbed crewneck for effortless daily wear. Finished with a graphic print that promotes staying clean, both for yourself and the environment.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "passportId": "",
+      "images": {
+        "front": "./assets/products/st23a442/front.jpeg",
+        "back": "./assets/products/st23a442/back.jpeg",
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST23A443",
+      "sku": "ST23A443",
+      "name": "TRASHY TALK TEE",
+      "category": "T-Shirts",
+      "collection": "TRASHY TALK TEE",
+      "price": "SAR 185",
+      "priceSar": 185.0,
+      "unitAmount": 18500,
+      "color": "White",
+      "sizes": [
+        "S",
+        "M"
+      ],
+      "description": "Oversized T-shirt crafted from 100% organic hemp for everyday comfort. Designed with a relaxed fit, drop shoulders, and a ribbed crewneck for effortless daily wear.Finished with a graphic print inspired by retro newspaper layouts, combining playful environmental messages with nostalgic 90s-inspired illustrations.",
+      "story": "Oversized T-shirt crafted from 100% organic hemp for everyday comfort. Designed with a relaxed fit, drop shoulders, and a ribbed crewneck for effortless daily wear.Finished with a graphic print inspired by retro newspaper layouts, combining playful environmental messages with nostalgic 90s-inspired illustrations.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "passportId": "",
+      "images": {
+        "front": "./assets/products/st23a443/front.jpeg",
+        "back": "./assets/products/st23a443/back.jpeg",
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST23A446",
+      "sku": "ST23A446",
+      "name": "THE STASH CAN",
+      "category": "Stash Can",
+      "collection": "STASH CAN",
+      "price": "SAR 130",
+      "priceSar": 130.0,
+      "unitAmount": 13000,
+      "color": "Grey",
+      "sizes": [
+        "ONE SIZE"
+      ],
+      "description": "A compact storage can designed to keep everyday essentials organized and within reach. Featuring a removable lid and a vintage-inspired finish, it adds a playful industrial touch to desks, shelves, and living spaces. Ideal for storing office supplies, small accessories, plants, or other daily essentials.",
+      "story": "A compact storage can designed to keep everyday essentials organized and within reach. Featuring a removable lid and a vintage-inspired finish, it adds a playful industrial touch to desks, shelves, and living spaces. Ideal for storing office supplies, small accessories, plants, or other daily essentials.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "passportId": "",
+      "images": {
+        "front": "./assets/products/st23a446/front.png",
+        "back": null,
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST23A447",
+      "sku": "ST23A447",
+      "name": "THE MATCHBOX",
+      "category": "MATCHBOX",
+      "collection": "THE MATCHBOX",
+      "price": "SAR 30",
+      "priceSar": 30.0,
+      "unitAmount": 3000,
+      "color": "Grey",
+      "sizes": [
+        "ONE SIZE"
+      ],
+      "description": "A compact matchbox is designed to bring a subtle statement to everyday spaces. Featuring custom JUNKTEE branding and a unique interior pattern, it combines practicality with a distinctive design aesthetic. Ideal for lighting candles, incense, or adding a decorative touch to your home.",
+      "story": "A compact matchbox is designed to bring a subtle statement to everyday spaces. Featuring custom JUNKTEE branding and a unique interior pattern, it combines practicality with a distinctive design aesthetic. Ideal for lighting candles, incense, or adding a decorative touch to your home.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "passportId": "",
+      "images": {
+        "front": "./assets/products/st23a447/front.png",
+        "back": "./assets/products/st23a447/back.png",
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST23A448",
+      "sku": "ST23A448",
+      "name": "THE TOTE",
+      "category": "Tote Bag",
+      "collection": "THE TOTE",
+      "price": "SAR 100",
+      "priceSar": 100.0,
+      "unitAmount": 10000,
+      "color": "Grey",
+      "sizes": [
+        "ONE SIZE"
+      ],
+      "description": "A versatile canvas tote designed for everyday use. Featuring twin shoulder straps and logo prints on the front and back, it offers a practical carry-all solution for work, errands, travel, and daily essentials. Finished with a clean, minimalist design that complements any lifestyle.",
+      "story": "A versatile canvas tote designed for everyday use. Featuring twin shoulder straps and logo prints on the front and back, it offers a practical carry-all solution for work, errands, travel, and daily essentials. Finished with a clean, minimalist design that complements any lifestyle.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "passportId": "",
+      "images": {
+        "front": "./assets/products/st23a448/front.png",
+        "back": "./assets/products/st23a448/back.png",
+        "details": []
+      },
+      "available": true
+    }
+  ]
+}
