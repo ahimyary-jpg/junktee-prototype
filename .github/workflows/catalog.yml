@@ -1,0 +1,43 @@
+name: Build product catalog
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - catalog/JUNKTEE_Product_Catalog.xlsx
+      - scripts/build_catalog.py
+      - .github/workflows/catalog.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: junktee-product-catalog
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Convert Excel catalog and extract product images
+        run: python3 scripts/build_catalog.py
+      - name: Sync generated files to the GitHub Pages root
+        run: |
+          mkdir -p data assets
+          rm -rf assets/products
+          cp github-pages/data/products.json data/products.json
+          cp github-pages/data/products.generated.js data/products.generated.js
+          cp -R github-pages/assets/products assets/products
+      - name: Commit generated catalog
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add github-pages/data github-pages/assets/products data/products.json data/products.generated.js assets/products payment-worker/src/catalog.generated.js
+          git diff --cached --quiet && exit 0
+          git commit -m "catalog: regenerate storefront and payment data"
+          git push
