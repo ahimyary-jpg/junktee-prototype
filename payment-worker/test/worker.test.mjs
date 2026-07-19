@@ -22,7 +22,7 @@ test("rejects non-test Stripe keys without contacting Stripe", async () => {
   try {
     const response = await handleRequest(request("/v1/checkout-sessions", {
       method: "POST",
-      body: JSON.stringify({ attemptId: "attempt_123456789", items: [{ productId: "p1", size: "M", quantity: 1 }] }),
+      body: JSON.stringify({ attemptId: "attempt_123456789", items: [{ productId: "ST23A451", size: "M", quantity: 1 }] }),
     }), { ...ENV, STRIPE_SECRET_KEY: "sk_live_forbidden" });
     assert.equal(response.status, 503);
     assert.equal((await response.json()).error.code, "test_mode_required");
@@ -49,15 +49,15 @@ test("creates a server-priced, idempotent test Checkout Session", async () => {
       body: JSON.stringify({
         attemptId: "attempt_123456789",
         customerEmail: "layla@example.com",
-        items: [{ productId: "p2", size: "L", quantity: 2 }],
+        items: [{ productId: "ST23A44", size: "L", quantity: 2 }],
       }),
     }), ENV);
     assert.equal(response.status, 201);
     const result = await response.json();
-    assert.equal(result.amountTotal, 93300);
+    assert.equal(result.amountTotal, 78500);
     assert.equal(stripeCall.init.headers["idempotency-key"], "junktee-demo-attempt_123456789");
     const form = new URLSearchParams(stripeCall.init.body);
-    assert.equal(form.get("line_items[0][price_data][unit_amount]"), "44900");
+    assert.equal(form.get("line_items[0][price_data][unit_amount]"), "37500");
     assert.equal(form.get("line_items[0][quantity]"), "2");
     assert.match(form.get("success_url"), /session_id=\{CHECKOUT_SESSION_ID\}/);
   } finally {
@@ -86,16 +86,16 @@ test("verifies paid test sessions and returns only safe order data", async () =>
     payment_status: "paid",
     created: 1784246400,
     currency: "sar",
-    amount_total: 28400,
-    metadata: { cart: JSON.stringify([{ productId: "p1", size: "M", quantity: 1 }]) },
+    amount_total: 36500,
+    metadata: { cart: JSON.stringify([{ productId: "ST23A451", size: "M", quantity: 1 }]) },
   });
   try {
     const response = await handleRequest(request("/v1/checkout/verify?session_id=cs_test_verified123"), ENV);
     const result = await response.json();
     assert.equal(response.status, 200);
     assert.equal(result.verified, true);
-    assert.equal(result.order.amountTotal, 28400);
-    assert.equal(result.order.items[0].passportId.startsWith("JT-P1-"), true);
+    assert.equal(result.order.amountTotal, 36500);
+    assert.equal(result.order.items[0].passportId.startsWith("JT-ST23A451-"), true);
     assert.equal(JSON.stringify(result).includes("card"), false);
   } finally {
     globalThis.fetch = originalFetch;
