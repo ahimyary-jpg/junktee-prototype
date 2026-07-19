@@ -47,7 +47,9 @@
   }
 
   function priceAmount(product) {
-    return Number(String(product.price).replace(/[^0-9]/g, "")) * 100;
+    const serverOwnedAmount = Number(product?.unitAmount);
+    if (Number.isInteger(serverOwnedAmount) && serverOwnedAmount > 0) return serverOwnedAmount;
+    return Math.round(Number(String(product?.price || "").replace(/[^0-9.]/g, "")) * 100);
   }
 
   function money(halalas) {
@@ -69,7 +71,9 @@
       const product = productById(item.id);
       const quantity = Math.min(5, Math.max(1, Number(item.quantity) || 1));
       if (!product) return [];
-      const size = product.id === "p6" ? "ONE SIZE" : ["S", "M", "L", "XL"].includes(item.size) ? item.size : "M";
+      const sizes = Array.isArray(product.sizes) && product.sizes.length ? product.sizes : ["ONE SIZE"];
+      const requestedSize = String(item.size || "").trim().toUpperCase();
+      const size = sizes.find((entry) => entry.toUpperCase() === requestedSize) || sizes.find((entry) => entry === "M") || sizes[0];
       return [{ ...product, size, quantity }];
     });
   }
@@ -106,16 +110,19 @@
   }
 
   function selectedSize() {
-    if (currentProduct === "p6") return "ONE SIZE";
-    return document.querySelector("#size-row .sizechip.selected")?.textContent.trim().toUpperCase() || "M";
+    const product = productById(currentProduct);
+    return document.querySelector("#size-row .sizechip.selected")?.dataset.size
+      || product?.sizes?.[0]
+      || "ONE SIZE";
   }
 
   function configureSizes(productId) {
     const row = document.getElementById("size-row");
     if (!row) return;
-    row.innerHTML = productId === "p6"
-      ? '<button class="sizechip selected" type="button">One Size</button>'
-      : ["S", "M", "L", "XL"].map((size) => `<button class="sizechip ${size === "M" ? "selected" : ""}" type="button">${size}</button>`).join("");
+    const product = productById(productId);
+    const sizes = Array.isArray(product?.sizes) && product.sizes.length ? product.sizes : ["ONE SIZE"];
+    const preferred = sizes.includes("M") ? "M" : sizes[0];
+    row.innerHTML = sizes.map((size) => `<button class="sizechip ${size === preferred ? "selected" : ""}" data-size="${escapeHTML(size)}" type="button">${escapeHTML(size === "ONE SIZE" ? "One Size" : size)}</button>`).join("");
   }
 
   window.openProduct = function openProductV03(id) {
@@ -125,6 +132,10 @@
 
   window.addToBag = function addToBagV03() {
     const product = productById(currentProduct);
+    if (!product) {
+      toast("This product is unavailable.");
+      return;
+    }
     const size = selectedSize();
     const existing = cart.find((item) => item.id === product.id && item.size === size);
     if (existing) existing.quantity = Math.min(5, existing.quantity + 1);
@@ -171,7 +182,7 @@
     summary.style.display = "block";
     wrap.innerHTML = cart.map((item, index) => `
       <article class="cart-item">
-        <div class="imgbox visual-${escapeHTML(item.id)}">${pIcon()}</div>
+        <div class="imgbox catalog-product">${productImageHTML(item)}</div>
         <div style="flex:1;">
           <p class="body-md">${escapeHTML(item.name)}</p>
           <p class="bag-size" style="margin:7px 0 10px;">Size ${escapeHTML(item.size)}</p>
@@ -285,7 +296,7 @@
     document.getElementById("checkout-piece-count").textContent = `${quantity} ${quantity === 1 ? "piece" : "pieces"}`;
     itemsWrap.innerHTML = cart.length ? cart.map((item) => `
       <div class="checkout-line">
-        <div class="imgbox visual-${escapeHTML(item.id)}">${pIcon()}</div>
+        <div class="imgbox catalog-product">${productImageHTML(item)}</div>
         <div><p class="product-name">${escapeHTML(item.name)}</p><p class="meta">Size ${escapeHTML(item.size)} · Qty ${item.quantity}</p></div>
         <p class="price">${money(priceAmount(item) * item.quantity)}</p>
       </div>`).join("") : '<p class="meta">Your Bag is empty.</p>';
@@ -577,7 +588,7 @@
       <section class="activated-card" aria-labelledby="passport-activated-title">
         <p class="active-label">Digital Passport Activated</p>
         <div class="confirmation-product">
-          <div class="imgbox visual-${escapeHTML(item.productId)}">${pIcon()}</div>
+          <div class="imgbox catalog-product">${productImageHTML(productById(item.productId))}</div>
           <div><p class="eyebrow" style="color:#8c8c8c;">${escapeHTML(order.orderReference)}</p><h2 id="passport-activated-title">${escapeHTML(item.name)}</h2><p class="meta">Size ${escapeHTML(item.size)} · Qty ${item.quantity}</p></div>
         </div>
         <div class="confirmation-data">
@@ -619,11 +630,11 @@
     if (!grid) return;
     grid.innerHTML = allPieces.map((piece) => piece.base ? `
       <div class="card" style="border:none;" onclick="openProduct('${escapeHTML(piece.id)}')">
-        <div class="imgbox visual-${escapeHTML(piece.id)} editorial-reveal in-view">${pIcon()}</div>
+        <div class="imgbox catalog-product editorial-reveal in-view">${productImageHTML(productById(piece.id))}</div>
         <span class="passport-meta">V · Verified</span><p class="name" style="margin-top:8px;font-size:13px;font-weight:600;">${escapeHTML(piece.name)}</p>
       </div>` : `
       <div class="card" style="border:none;" onclick="openOwnedPassport('${escapeHTML(piece.productId)}')">
-        <div class="imgbox visual-${escapeHTML(piece.productId)} editorial-reveal in-view">${pIcon()}</div>
+        <div class="imgbox catalog-product editorial-reveal in-view">${productImageHTML(productById(piece.productId))}</div>
         <span class="passport-meta passport-active">Active Passport</span><p class="name" style="margin-top:8px;font-size:13px;font-weight:600;">${escapeHTML(piece.name)}</p>
         <div class="cabinet-owned-meta"><span>${escapeHTML(formatDate(piece.purchaseDate))}</span><span>${escapeHTML(piece.ownershipStatus)} · ${escapeHTML(piece.passportId)}</span></div>
       </div>`).join("");
@@ -652,7 +663,7 @@
       { title: "Piece", body: `<p class="pp-para">${escapeHTML(product?.story || "A JUNKTEE piece with a story built to continue.")}</p><p class="pquote">“Only dead fish go with the flow.”</p>` },
       { title: "Purchase Record", body: `<div class="datarow"><span class="k">Order reference</span><span class="v">${escapeHTML(piece.orderReference)}</span></div><div class="datarow"><span class="k">Purchase status</span><span class="v">Verified</span></div><div class="datarow"><span class="k">Activation date</span><span class="v">${escapeHTML(formatDate(piece.activationDate))}</span></div><div class="datarow"><span class="k">Size</span><span class="v">${escapeHTML(piece.size)}</span></div>` },
       { title: "Ownership", body: `<div class="datarow"><span class="k">First owner</span><span class="v">${escapeHTML(piece.firstOwner)}</span></div><div class="datarow"><span class="k">Current owner</span><span class="v">${escapeHTML(piece.currentOwner)}</span></div><div class="datarow"><span class="k">Ownership status</span><span class="v">${escapeHTML(piece.ownershipStatus)}</span></div><div class="datarow"><span class="k">Product ID</span><span class="v">${escapeHTML(piece.productId.toUpperCase())}</span></div>` },
-      { title: "Materials & Origin", body: `<div class="datarow"><span class="k">Material</span><span class="v">${escapeHTML(product?.material || "JUNKTEE material")}</span></div><div class="datarow"><span class="k">Country of Origin</span><span class="v">Saudi Arabia</span></div><p class="pp-para" style="margin-top:18px;">Material impact statements remain qualified until supplier verification is complete.</p>` },
+      { title: "Materials & Origin", body: `<div class="datarow"><span class="k">Material</span><span class="v">${escapeHTML(product?.material || "Details pending")}</span></div><div class="datarow"><span class="k">Country of Origin</span><span class="v">${escapeHTML(product?.countryOfManufacture || "Details pending")}</span></div><p class="pp-para" style="margin-top:18px;">${escapeHTML(product?.careInstructions || "Material and care details will appear when they are added to the product catalog.")}</p>` },
       { title: "Ownership Timeline", body: `<div class="rail"><div class="rail-item"><p class="rt-date">${escapeHTML(formatDate(piece.activationDate).toUpperCase())}</p><p class="rt-desc">Purchased and Passport activated. · First owner · ${escapeHTML(piece.city)}</p></div><p class="rail-continue">This story continues.</p></div>` },
       { title: "Repair & Care", body: `<p class="pp-para">Nothing to repair yet. We’ll be here when this piece needs care.</p><div class="divider" style="background:#222;"></div><p class="eyebrow" style="margin-top:16px;">Care</p><p class="pp-para">Wash cold. Hang dry. Outlive the hype cycle.</p>` },
       { title: "Authentication", body: `<p class="pid" style="font-size:28px;margin-top:40px;">${escapeHTML(piece.passportId)}</p><p class="pp-para" style="text-align:center;margin-top:24px;">One piece. One identity. Activated only after the sandbox payment was verified server-side.</p>` },

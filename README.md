@@ -1,6 +1,6 @@
 # JUNKTEE v0.3 — Sandbox Checkout Prototype
 
-JUNKTEE v0.3 is a presentation-ready luxury fashion prototype with a real Stripe Test Mode journey. It preserves the v0.2 Home, Collection, Product, Bag, Journal, Digital Passport, Collector Cabinet, Scan, and Settings experiences while adding a secure hosted sandbox checkout.
+JUNKTEE v0.3 is a presentation-ready luxury fashion prototype with a real Stripe Test Mode journey and an Excel-driven product catalog. It preserves the v0.2 Home, Collection, Product, Bag, Journal, Digital Passport, Collector Cabinet, Scan, and Settings experiences while adding a secure hosted sandbox checkout.
 
 No real money can be charged. Card details are entered only on Stripe-hosted Checkout and are never seen or stored by JUNKTEE.
 
@@ -13,16 +13,43 @@ No real money can be charged. Card details are entered only on Stripe-hosted Che
 5. JUNKTEE asks the Worker to retrieve and verify the returned Checkout Session. A redirect query alone never creates an order.
 6. Only after the Worker confirms a paid, complete, test-mode Session with the expected total does the browser activate the Digital Passport and add the piece to the Collector Cabinet.
 7. Non-sensitive presentation state is kept in browser `localStorage`. There is no order database or D1 dependency.
+8. `catalog/JUNKTEE_Product_Catalog.xlsx` is the product source of truth. A deterministic build creates the browser catalog, extracts its product images, and creates the Worker’s trusted price-and-size catalog.
 
 The Worker uses Stripe’s idempotency support for duplicate session requests. The browser also locks the submit button and reuses a pending session for the same Bag.
 
 ## Project surfaces
 
 - `github-pages/` — public static frontend source
+- `catalog/JUNKTEE_Product_Catalog.xlsx` — authoritative product workbook
+- `scripts/build_catalog.py` — dependency-free Excel-to-web conversion
 - `payment-worker/` — minimal Cloudflare Worker
 - `deliverables/` — local prototype package
 - `tests/sandbox-checkout.test.mjs` — public frontend and security assertions
 - `payment-worker/test/worker.test.mjs` — server validation and verification tests
+- `tests/catalog-pipeline.test.mjs` — catalog/image/server consistency checks
+
+## Product catalog workflow
+
+Edit only `catalog/JUNKTEE_Product_Catalog.xlsx` when changing products. The `Products` sheet controls the Collection, product detail content, images, sizes, availability, and SAR prices. The `Optional Details` sheet adds material, care, origin, and Passport metadata by matching the same SKU.
+
+Required fields for a publishable row are `SKU`, `Product Name`, and a positive `Price (SAR)`. SKUs must be unique. Blank size cells become `ONE SIZE`; missing optional details are hidden or shown as pending without breaking the site. Set `Available (Yes/No)` to `No` to exclude a product from the public storefront and Worker checkout catalog.
+
+Images can remain embedded in the Excel image cells. The converter extracts them and assigns stable SKU/role paths such as `assets/products/st23a451/front.png`. A cell may instead contain a filename stored under `catalog/images/`.
+
+Run the conversion locally after editing the workbook:
+
+```sh
+npm run catalog:build
+```
+
+Do not hand-edit these generated outputs:
+
+- `github-pages/data/products.json`
+- `github-pages/data/products.generated.js`
+- `github-pages/assets/products/`
+- `payment-worker/src/catalog.generated.js`
+
+The `Build product catalog` GitHub Action runs on workbook changes, regenerates the files, mirrors public catalog assets to the GitHub Pages repository root, and commits the generated result. A validation error stops the workflow before the existing live catalog is replaced.
 
 ## Environment variables
 
@@ -60,14 +87,15 @@ Add the three environment-variable values to `.dev.vars`. That file is ignored b
 Run the automated checks from the repository root:
 
 ```sh
-node --test tests/sandbox-checkout.test.mjs payment-worker/test/*.test.mjs
+npm run catalog:build
+node --test tests/*.test.mjs payment-worker/test/*.test.mjs
 ```
 
 ## Deployment
 
 ### Frontend — GitHub Pages
 
-The live frontend is served from the `main` branch of the existing `junktee-prototype` repository. Replace the files at the repository root with the contents of `github-pages/`; GitHub Pages republishes automatically.
+The live frontend is served from the `main` branch of the existing `junktee-prototype` repository. Replace the files at the repository root with the contents of `github-pages/`; GitHub Pages republishes automatically. The catalog workflow keeps root `data/` and `assets/products/` synchronized after future workbook-only updates.
 
 The payment Worker URL is a safe public value. Set it in the `junktee-payment-api` meta tag in `github-pages/index.html` before publishing.
 
@@ -83,7 +111,7 @@ npx wrangler deploy
 
 `FRONTEND_URL` and `ALLOWED_ORIGIN` are non-secret deployment variables. `STRIPE_SECRET_KEY` must be entered only through Cloudflare’s encrypted secret control or `wrangler secret put`.
 
-After deployment, verify the health response:
+Catalog changes also update `payment-worker/src/catalog.generated.js`. Cloudflare’s Git deployment should redeploy the Worker automatically; otherwise deploy it manually so the server-owned prices remain synchronized. After deployment, verify the health response:
 
 ```sh
 curl https://junktee-sandbox-payments.ahimyary.workers.dev/health

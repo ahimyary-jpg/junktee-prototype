@@ -311,6 +311,12 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 .imgbox:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E")}
 .imgbox:before{content:"";position:absolute;z-index:1;width:48%;height:66%;background:linear-gradient(100deg,#171614,#393530 50%,#111);clip-path:polygon(23% 0,39% 8%,61% 8%,77% 0,100% 17%,84% 39%,75% 33%,76% 100%,24% 100%,25% 33%,16% 39%,0 17%);filter:drop-shadow(0 28px 22px rgba(0,0,0,.32));transform:translateY(4%)}
 .imgbox>svg{display:none}.imgbox:hover:before{transform:translateY(2%) scale(1.018)}
+.imgbox.catalog-product{background:#F2F0EB;overflow:hidden}
+.imgbox.catalog-product:before,.imgbox.catalog-product:after{display:none}
+.product-photo{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;object-position:center;z-index:2;transition:transform .7s var(--ease),opacity .3s var(--ease)}
+.card:hover .product-photo,.pcard-hero:hover .product-photo{transform:scale(1.018)}
+.catalog-empty{grid-column:1/-1;padding:72px 0;text-align:center}
+.catalog-empty .meta{margin-top:8px}
 .visual-p2{background:linear-gradient(145deg,rgba(255,255,255,.08),transparent 40%),linear-gradient(120deg,#6B6256,#171614 63%,#0B0B0A)}.visual-p3{background:linear-gradient(155deg,#D5CEC0,#8C8375 42%,#282622)}.visual-p4{background:linear-gradient(130deg,#413D37,#D5C6AD 68%,#8B7659)}.visual-p5{background:linear-gradient(135deg,#080808,#47413A 54%,#1B1917)}.visual-p6{background:linear-gradient(130deg,#8A7E6B,#CFC5B4 48%,#403A31)}
 .story-photo:before{width:70%;height:76%;clip-path:polygon(44% 0,56% 0,60% 19%,78% 25%,72% 100%,28% 100%,22% 25%,40% 19%);background:linear-gradient(90deg,#171614,#665D51)}
 .story-photo{background:linear-gradient(135deg,#B9AA91,#3A342D 48%,#151412)}
@@ -341,7 +347,8 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 #collection-grid .imgbox{aspect-ratio:4/5}.name{letter-spacing:-.01em}#collection-grid .name{font-size:14px!important;margin-top:14px!important}
 
 /* Product detail */
-#screen-product .pcard-hero{padding:0}#pd-hero-img{aspect-ratio:3/4!important;min-height:76vh}#screen-product>.dotrow{display:none}
+#screen-product .pcard-hero{padding:0}#pd-hero-img{aspect-ratio:3/4!important;min-height:76vh}#screen-product>.dotrow{display:none}#screen-product>.product-gallery-nav{display:flex;min-height:44px;padding:0!important;align-items:center}
+.gallery-nav-button{min-width:32px!important;width:32px;min-height:44px!important;height:44px;border:0;background:transparent;padding:0;display:grid;place-items:center}.gallery-nav-button .dot{width:5px;height:5px;background:var(--border)}.gallery-nav-button.active .dot{width:20px;border-radius:3px;background:var(--fg)}
 #screen-product>.section-tight{padding-top:56px;padding-bottom:56px}#screen-product>.section-tight:nth-of-type(1){padding-top:32px;padding-bottom:42px}
 #pd-name{font-size:32px!important;line-height:1.04}.origin-line{border:0!important;background:transparent!important;color:var(--muted)!important;padding:0!important;font-size:10px!important;letter-spacing:.1em!important}
 #pd-price{font-size:12px;font-weight:400;letter-spacing:.06em}#screen-product .pquote{font-size:34px!important;line-height:1.2;margin:24px 0!important}
@@ -442,13 +449,13 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
         <p class="eyebrow">Latest Drop</p>
         <button class="btn-text" style="font-size:12px;" onclick="go('collection')">View the drop →</button>
       </div>
-      <div class="pcard-hero" style="margin-top:14px;" onclick="openProduct('p1')">
-        <div class="imgbox visual-p1 editorial-reveal">
+      <div class="pcard-hero" id="featured-product" style="margin-top:14px;">
+        <div class="imgbox editorial-reveal" id="featured-product-image">
           <span class="tag-passport"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4" stroke="currentColor"/></svg>Passport</span>
           <svg viewBox="0 0 24 24"><path d="M6 4l12 16M18 4L6 20" stroke="currentColor"/></svg>
         </div>
-        <p class="body-md">Recycle Tee — All Black</p>
-        <p class="meta">100% Hemp · SAR 249</p>
+        <p class="body-md" id="featured-product-name">Latest piece</p>
+        <p class="meta" id="featured-product-meta">Catalog loading</p>
       </div>
       <div class="hscroll" style="margin-top:16px; padding-left:16px;" id="drop-strip"></div>
     </div>
@@ -502,7 +509,7 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
       <p class="meta" style="margin-top:6px;">Only Dead Fish — S/S26</p>
     </div>
     <div class="pills" style="margin-top:16px;">
-      <button class="pill active">All</button><button class="pill">Tees</button><button class="pill">Hoodies</button><button class="pill">Accessories</button>
+      <button class="pill active" type="button" onclick="filterCollection('All', this)">All</button><button class="pill" type="button" onclick="filterCollection('Tees', this)">Tees</button><button class="pill" type="button" onclick="filterCollection('Hoodies', this)">Hoodies</button><button class="pill" type="button" onclick="filterCollection('Accessories', this)">Accessories</button>
     </div>
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; padding:8px 16px 24px;" id="collection-grid"></div>
   </div>
@@ -514,13 +521,13 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
         <svg viewBox="0 0 24 24"><path d="M6 4l12 16M18 4L6 20" stroke="currentColor"/></svg>
       </div>
     </div>
-    <div class="dotrow" style="padding-top:10px;"><div class="dot active"></div><div class="dot" style="background:var(--border);"></div><div class="dot" style="background:var(--border);"></div></div>
+    <div class="dotrow product-gallery-nav" id="pd-gallery-nav" style="padding-top:10px;" aria-label="Product images"></div>
 
     <div class="section-tight" style="padding-top:8px;">
       <h1 class="headline" id="pd-name" style="font-size:22px;">Recycle Tee — All Black</h1>
-      <p class="meta" style="margin:6px 0 10px;">Only Dead Fish · Piece 0412</p>
+      <p class="meta" id="pd-meta" style="margin:6px 0 10px;">JUNKTEE Archive</p>
       <div style="display:flex; gap:8px; margin-bottom:12px;">
-        <span class="pill active origin-line" style="cursor:default;">Made in Saudi Arabia</span>
+        <span class="pill active origin-line" id="pd-origin" style="cursor:default;">Origin details pending</span>
       </div>
       <p class="body-md" id="pd-price">SAR 249</p>
       <p class="meta" style="margin-top:4px; color:var(--green);">In stock</p>
@@ -541,8 +548,8 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 
     <div class="section-tight">
       <p class="eyebrow" style="margin-bottom:10px;">Materials</p>
-      <div class="datarow materials-fact" style="border-color:var(--border); color:var(--fg);"><span class="k" style="color:var(--muted);">Organic Hemp</span><span class="v" style="color:var(--fg);">100%</span></div>
-      <p class="meta" style="padding:8px 0;">Grown without synthetic pesticides · roughly half the water use of conventional cotton.</p>
+      <div class="datarow materials-fact" style="border-color:var(--border); color:var(--fg);"><span class="k" id="pd-material" style="color:var(--muted);">Material details</span><span class="v" id="pd-color" style="color:var(--fg);">—</span></div>
+      <p class="meta" id="pd-care" style="padding:8px 0;">Additional material and care information will appear when added to the catalog.</p>
     </div>
 
     <div class="section-tight">
@@ -829,51 +836,109 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 </div>
 <p id="desktop-frame-label" style="text-align:center; margin-top:14px; font-family:-apple-system,sans-serif; color:#888; font-size:12px;">JUNKTEE — Private Preview</p>
 
+<script src="./data/products.generated.js"></script>
 <script>
 /* ================= DATA ================= */
-const PRODUCTS = [
-  {id:'p1', name:'Recycle Tee — All Black', price:'SAR 249', material:'100% Hemp', story:'The recycling mark started as a joke between three friends about how nobody actually reads the little triangle on a bottle.'},
-  {id:'p2', name:'Eco-Unfriendly Hoodie', price:'SAR 449', material:'Organic Terry Cotton', story:'Too comfy for this uncomfortable world. Sarcastic, because obviously it wasn\'t made in the making of fashion hell.'},
-  {id:'p3', name:'Trashy Talk Tee', price:'SAR 229', material:'100% Organic Cotton', story:'A newsprint collage of every pollution fact we could fit on 100% organic cotton.'},
-  {id:'p4', name:'Stay Clean Tee', price:'SAR 219', material:'100% Organic Cotton', story:'Stick figures for a species that keeps forgetting the instructions.'},
-  {id:'p5', name:'Only Dead Fish Sweatshirt', price:'SAR 379', material:'Organic Cotton', story:'Only dead fish go with the flow. This one doesn\'t.'},
-  {id:'p6', name:'JUNKTEE Tote', price:'SAR 149', material:'Upcycled Canvas', story:'A comment on your own life, made from upcycled material.'},
-];
+const CATALOG_PAYLOAD = window.JUNKTEE_PRODUCT_CATALOG || {products:[]};
+const PRODUCTS = Array.isArray(CATALOG_PAYLOAD.products)
+  ? CATALOG_PAYLOAD.products.filter(product=>product && product.available !== false)
+  : [];
 const ARTICLES = [
   {id:'a1', type:'Editorial Essay', title:'Only Dead Fish Go With the Flow', time:'6 min read'},
   {id:'a2', type:'Material Deep Dive', title:'Inside the Hemp Mill', time:'8 min read'},
   {id:'a3', type:'Repair Story', title:'Fixing What You Already Own', time:'4 min read'},
   {id:'a4', type:'Sketchbook', title:'The Recycle Mark, Before It Was a Logo', time:'3 min read'},
 ];
-const CABINET = [
-  {id:'p1', name:'Recycle Tee — All Black'},
-  {id:'p5', name:'Only Dead Fish Sweatshirt'},
-  {id:'p6', name:'JUNKTEE Tote'},
-];
+const CABINET = ['ST23A440','ST23A451','ST23A448']
+  .map(id=>PRODUCTS.find(product=>product.id===id))
+  .filter(Boolean)
+  .map(({id,name})=>({id,name}));
 let cart = [];
 
 /* ================= ICON HELPER ================= */
 function pIcon(){ return '<span class="garment-placeholder" aria-hidden="true"></span>'; }
+function escapeCatalogHTML(value){
+  return String(value??'').replace(/[&<>'"]/g, character=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'
+  })[character]);
+}
+function productImageHTML(product, options){
+  options=options||{};
+  const src=options.src||product?.images?.front;
+  if(!src) return pIcon();
+  const loading=options.eager?'eager':'lazy';
+  const priority=options.eager?'high':'auto';
+  const alt=options.alt||product.name;
+  return `<img class="product-photo" src="${escapeCatalogHTML(src)}" alt="${escapeCatalogHTML(alt)}" loading="${loading}" fetchpriority="${priority}" decoding="async">`;
+}
+let activeProductGallery=[];
+function renderProductGallery(product, activeIndex){
+  activeIndex=activeIndex||0;
+  activeProductGallery=[product.images?.front,product.images?.back,...(product.images?.details||[])].filter(Boolean);
+  const source=activeProductGallery[activeIndex]||product.images?.front;
+  document.getElementById('pd-hero-img').innerHTML=productImageHTML(product,{src:source,eager:true,alt:`${product.name} — view ${activeIndex+1}`});
+  document.getElementById('pd-gallery-nav').innerHTML=activeProductGallery.length>1
+    ? activeProductGallery.map((_,index)=>`<button class="gallery-nav-button ${index===activeIndex?'active':''}" type="button" onclick="selectProductImage(${index})" aria-label="Show product image ${index+1}"><span class="dot"></span></button>`).join('')
+    : '';
+}
+function selectProductImage(index){
+  const product=PRODUCTS.find(entry=>entry.id===currentProduct);
+  if(product&&activeProductGallery[index]) renderProductGallery(product,index);
+}
 
 /* ================= RENDER LISTS ================= */
 function productCardHTML(p, w){
-  return `<div class="card product-card" style="width:${w||150}px; border:none;" onclick="openProduct('${p.id}')">
-    <div class="imgbox visual-${p.id} editorial-reveal">${pIcon()}</div>
-    <span class="passport-meta">Passport available</span><p class="name">${p.name}</p><p class="meta">${p.price}</p>
+  return `<div class="card product-card" style="width:${w||150}px; border:none;" onclick="openProduct('${escapeCatalogHTML(p.id)}')">
+    <div class="imgbox catalog-product editorial-reveal">${productImageHTML(p)}</div>
+    <span class="passport-meta">Passport available</span><p class="name">${escapeCatalogHTML(p.name)}</p><p class="meta">${escapeCatalogHTML(p.price)}</p>
   </div>`;
+}
+function renderFeaturedProduct(){
+  const p=PRODUCTS[0];
+  const card=document.getElementById('featured-product');
+  if(!card) return;
+  if(!p){
+    card.removeAttribute('onclick');
+    document.getElementById('featured-product-name').textContent='Collection temporarily unavailable';
+    document.getElementById('featured-product-meta').textContent='Please try again shortly';
+    return;
+  }
+  card.onclick=()=>openProduct(p.id);
+  const image=document.getElementById('featured-product-image');
+  image.innerHTML=`<span class="tag-passport"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4" stroke="currentColor"/></svg>Passport</span>${productImageHTML(p,{eager:true})}`;
+  document.getElementById('featured-product-name').textContent=p.name;
+  document.getElementById('featured-product-meta').textContent=`${p.color||p.category||'JUNKTEE'} · ${p.price}`;
 }
 function renderDropStrip(){
   document.getElementById('drop-strip').innerHTML = PRODUCTS.slice(1).map(p=>productCardHTML(p,130)).join('');
 }
-function renderCollectionGrid(){
-  document.getElementById('collection-grid').innerHTML = PRODUCTS.map(p=>`
-    <div class="card" style="border:none;" onclick="openProduct('${p.id}')">
-      <div class="imgbox visual-${p.id} editorial-reveal">${pIcon()}</div>
-      <span class="passport-meta">Passport available</span><p class="name" style="margin-top:8px; font-size:13px; font-weight:600;">${p.name}</p><p class="meta">${p.price}</p>
+function renderCollectionGrid(products){
+  const list=products||PRODUCTS;
+  const grid=document.getElementById('collection-grid');
+  if(!list.length){
+    grid.innerHTML='<div class="catalog-empty"><p class="body-md">The collection is temporarily unavailable.</p><p class="meta">The last valid catalog remains the publishing source.</p></div>';
+    return;
+  }
+  grid.innerHTML = list.map(p=>`
+    <div class="card" style="border:none;" onclick="openProduct('${escapeCatalogHTML(p.id)}')">
+      <div class="imgbox catalog-product editorial-reveal">${productImageHTML(p)}</div>
+      <span class="passport-meta">Passport available</span><p class="name" style="margin-top:8px; font-size:13px; font-weight:600;">${escapeCatalogHTML(p.name)}</p><p class="meta">${escapeCatalogHTML(p.price)}</p>
     </div>`).join('');
 }
+function filterCollection(filter, button){
+  document.querySelectorAll('#screen-collection .pill').forEach(pill=>pill.classList.remove('active'));
+  button?.classList.add('active');
+  const filtered=PRODUCTS.filter(product=>{
+    const category=String(product.category||'').toLowerCase();
+    if(filter==='All') return true;
+    if(filter==='Hoodies') return category.includes('hoodie');
+    if(filter==='Tees') return /t-shirt|tee|sweatshirt|crop/.test(category);
+    return !/t-shirt|tee|sweatshirt|crop|hoodie/.test(category);
+  });
+  renderCollectionGrid(filtered);
+}
 function renderRelated(){
-  document.getElementById('pd-related').innerHTML = PRODUCTS.filter(p=>p.id!=='p1').slice(0,4).map(p=>productCardHTML(p,130)).join('');
+  document.getElementById('pd-related').innerHTML = PRODUCTS.filter(p=>p.id!==currentProduct).slice(0,4).map(p=>productCardHTML(p,130)).join('');
   document.getElementById('art-related').innerHTML = PRODUCTS.slice(0,3).map(p=>productCardHTML(p,120)).join('');
 }
 function renderJournal(){
@@ -891,9 +956,9 @@ function renderJournal(){
 }
 function renderCabinet(){
   document.getElementById('cabinet-grid').innerHTML = CABINET.map(c=>`
-    <div class="card" style="border:none;" onclick="openProduct('${c.id}')">
-      <div class="imgbox visual-${c.id} editorial-reveal">${pIcon()}</div>
-      <span class="passport-meta">V · Verified</span><p class="name" style="margin-top:8px; font-size:13px; font-weight:600;">${c.name}</p>
+    <div class="card" style="border:none;" onclick="openProduct('${escapeCatalogHTML(c.id)}')">
+      <div class="imgbox catalog-product editorial-reveal">${productImageHTML(PRODUCTS.find(product=>product.id===c.id))}</div>
+      <span class="passport-meta">V · Verified</span><p class="name" style="margin-top:8px; font-size:13px; font-weight:600;">${escapeCatalogHTML(c.name)}</p>
     </div>`).join('');
 }
 
@@ -926,16 +991,24 @@ function withTransition(update){
   else update();
 }
 
-let currentProduct = 'p1';
+let currentProduct = PRODUCTS[0]?.id || null;
 function openProduct(id){
   withTransition(()=>{
-    currentProduct = id;
     const p = PRODUCTS.find(x=>x.id===id);
+    if(!p){ toast('This product is not available in the current catalog.'); return; }
+    currentProduct = id;
     document.getElementById('pd-name').textContent = p.name;
     document.getElementById('pd-price').textContent = p.price;
     document.getElementById('pd-story').textContent = p.story;
+    document.getElementById('pd-meta').textContent = `${p.collection} · ${p.sku}`;
+    document.getElementById('pd-origin').textContent = p.countryOfManufacture ? `Made in ${p.countryOfManufacture}` : 'Origin details pending';
+    document.getElementById('pd-material').textContent = p.material || 'Material details pending';
+    document.getElementById('pd-color').textContent = p.color || '—';
+    document.getElementById('pd-care').textContent = p.careInstructions || 'Additional material and care information will appear when added to the catalog.';
     const hero = document.getElementById('pd-hero-img');
-    hero.className = `imgbox visual-${p.id} editorial-reveal in-view`;
+    hero.className = 'imgbox catalog-product editorial-reveal in-view';
+    renderProductGallery(p,0);
+    renderRelated();
     go('product');
   });
 }
@@ -964,6 +1037,7 @@ document.getElementById('size-row').addEventListener('click', e=>{
 /* ================= CART ================= */
 function addToBag(){
   const p = PRODUCTS.find(x=>x.id===currentProduct);
+  if(!p){ toast('This product is unavailable.'); return; }
   cart.push(p);
   document.getElementById('cart-badge').style.display='flex';
   document.getElementById('cart-badge').textContent = cart.length;
@@ -980,15 +1054,16 @@ function renderCart(){
   empty.style.display='none'; summary.style.display='block';
   wrap.innerHTML = cart.map((p,i)=>`
     <div class="cart-item">
-      <div class="imgbox">${pIcon()}</div>
+      <div class="imgbox catalog-product">${productImageHTML(p)}</div>
       <div style="flex:1;">
         <p class="body-md">${p.name}</p><p class="meta" style="margin:4px 0 10px;">${p.price}</p>
         <div class="stepper"><span style="font-size:12px;">Qty 1 · Edit</span></div>
       </div>
       <button class="icon-btn" onclick="removeCart(${i})">✕</button>
     </div>`).join('');
-  let total = cart.length*249 + (cart.length?35:0);
-  document.getElementById('cart-subtotal').textContent = 'SAR '+(cart.length*249);
+  const subtotal = cart.reduce((sum,p)=>sum+(Number(p.unitAmount)||0),0)/100;
+  const total = subtotal + (cart.length?35:0);
+  document.getElementById('cart-subtotal').textContent = 'SAR '+subtotal;
   document.getElementById('cart-total').textContent = 'SAR '+total;
 }
 function removeCart(i){ cart.splice(i,1); document.getElementById('cart-badge').textContent=cart.length; if(cart.length===0)document.getElementById('cart-badge').style.display='none'; renderCart(); }
@@ -1131,7 +1206,7 @@ function doVerify(){
 function showActivateConfirm(){ showScanStep('confirm'); }
 
 /* ================= INIT ================= */
-renderDropStrip(); renderCollectionGrid(); renderRelated(); renderJournal(); renderCabinet(); renderCart();
+renderFeaturedProduct(); renderDropStrip(); renderCollectionGrid(); renderRelated(); renderJournal(); renderCabinet(); renderCart();
 const revealObserver = new IntersectionObserver(entries=>entries.forEach(entry=>{
   if(entry.isIntersecting){ entry.target.classList.add('in-view'); revealObserver.unobserve(entry.target); }
 }),{threshold:.16});
