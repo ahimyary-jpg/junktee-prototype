@@ -1,15 +1,8 @@
+import { CATALOG, CATALOG_SCHEMA_VERSION, CATALOG_SOURCE_SHA256 } from "./catalog.generated.js";
+
 const STRIPE_API = "https://api.stripe.com/v1";
 const CURRENCY = "sar";
 const DELIVERY_HALALAS = 3500;
-
-const CATALOG = Object.freeze({
-  p1: { name: "Recycle Tee — All Black", unitAmount: 24900, sizes: ["S", "M", "L", "XL"] },
-  p2: { name: "Eco-Unfriendly Hoodie", unitAmount: 44900, sizes: ["S", "M", "L", "XL"] },
-  p3: { name: "Trashy Talk Tee", unitAmount: 22900, sizes: ["S", "M", "L", "XL"] },
-  p4: { name: "Stay Clean Tee", unitAmount: 21900, sizes: ["S", "M", "L", "XL"] },
-  p5: { name: "Only Dead Fish Sweatshirt", unitAmount: 37900, sizes: ["S", "M", "L", "XL"] },
-  p6: { name: "JUNKTEE Tote", unitAmount: 14900, sizes: ["ONE SIZE"] },
-});
 
 const json = (data, status = 200, headers = {}) => new Response(JSON.stringify(data), {
   status,
@@ -72,7 +65,7 @@ function validateItems(value) {
     const product = CATALOG[productId];
     const quantity = Number(item?.quantity);
     const requestedSize = String(item?.size || "").trim().toUpperCase();
-    const size = productId === "p6" && !requestedSize ? "ONE SIZE" : requestedSize;
+    const size = !requestedSize && product?.sizes?.length === 1 ? product.sizes[0] : requestedSize;
 
     if (!product || !Number.isInteger(quantity) || quantity < 1 || quantity > 5) {
       throw new Error("INVALID_ITEM");
@@ -290,7 +283,16 @@ export async function handleRequest(request, env) {
   if (request.method === "GET" && url.pathname === "/health") {
     try {
       assertTestConfiguration(env);
-      return json({ ok: true, provider: "stripe", mode: "test" }, 200, headers);
+      return json({
+        ok: true,
+        provider: "stripe",
+        mode: "test",
+        catalog: {
+          schemaVersion: CATALOG_SCHEMA_VERSION,
+          sourceSha256: CATALOG_SOURCE_SHA256,
+          productCount: Object.keys(CATALOG).length,
+        },
+      }, 200, headers);
     } catch {
       return json({ ok: false, provider: "stripe", mode: "unconfigured" }, 503, headers);
     }
