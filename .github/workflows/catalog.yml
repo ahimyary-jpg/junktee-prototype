@@ -6,6 +6,7 @@ on:
     paths:
       - catalog/JUNKTEE_Product_Catalog.xlsx
       - scripts/build_catalog.py
+      - requirements-catalog.txt
       - .github/workflows/catalog.yml
   workflow_dispatch:
 
@@ -24,6 +25,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: pip
+      - name: Install catalog image tooling
+        run: python3 -m pip install --requirement requirements-catalog.txt
       - name: Convert Excel catalog and extract product images
         run: python3 scripts/build_catalog.py
       - name: Sync generated files to the GitHub Pages root
