@@ -324,13 +324,7 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 
 /* Hero: full-bleed, documentary, unhurried */
 .hero{height:100%;min-height:100%;background:#11100F;align-items:flex-end}
-.hero-media{opacity:1!important;background:
-  linear-gradient(90deg,rgba(12,11,10,.82),rgba(12,11,10,.12) 70%),
-  radial-gradient(circle at 76% 20%,#C7B18E 0%,#675E52 19%,transparent 42%),
-  linear-gradient(125deg,#181715 0%,#38342F 52%,#9A8B75 100%)!important;transform:scale(1.04);animation:heroSettle 1.4s var(--ease) forwards}
-.hero-media:before{content:"";position:absolute;right:11%;bottom:0;width:39%;height:80%;background:linear-gradient(100deg,#0F0F0E,#302D29 55%,#111);clip-path:polygon(36% 0,64% 0,70% 16%,83% 23%,76% 100%,24% 100%,17% 23%,30% 16%);filter:drop-shadow(0 32px 36px rgba(0,0,0,.4))}
-.hero-media:after{content:"";position:absolute;inset:0;opacity:.09;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-@keyframes heroSettle{to{transform:scale(1)}}
+.hero-media{opacity:1!important}
 .hero-content{padding:0 28px 72px}.hero .wordmark-lg{font-size:10px;letter-spacing:.2em}.hero .line{font-size:48px;line-height:.96;letter-spacing:-.04em;max-width:370px}.scrolldown{font-size:12px;animation:bob 2.8s ease-in-out infinite}
 .splash .mark,.hero .wordmark-lg{font-size:0;background:url("data:image/jpeg;base64,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") center/contain no-repeat;filter:invert(1);mix-blend-mode:screen}.splash .mark{width:240px;height:60px}.hero .wordmark-lg{width:126px;height:31px;margin-bottom:20px}
 
@@ -386,7 +380,7 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 @media(min-width:900px){#app{border-radius:18px;border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 120px rgba(0,0,0,.18)}body{background:#DCD7CF}[data-theme="dark"] body{background:#0D0C0B}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
-<link rel="stylesheet" href="./junktee-v03.css?v=0.3.2">
+<link rel="stylesheet" href="./junktee-v03.css?v=0.4.0">
 </head>
 <body data-theme="light">
 
@@ -426,10 +420,15 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
   <!-- ============ HOME ============ -->
   <div class="screen" id="screen-home">
     <div class="hero">
-      <div class="hero-media" style="background:radial-gradient(circle at 30% 20%, #262626, #050505 70%);"></div>
+      <div class="hero-media" id="hero-media" aria-hidden="true">
+        <div class="hero-studio hero-studio-primary" id="hero-primary-image"></div>
+        <div class="hero-studio hero-studio-secondary" id="hero-secondary-image"></div>
+        <span class="hero-sku mono" id="hero-sku"></span>
+      </div>
       <div class="hero-content">
         <div class="wordmark-lg">JUNKTEE</div>
         <div class="line" id="hero-line">Only dead fish go with the flow.</div>
+        <button class="hero-cta" type="button" onclick="go('collection')"><span id="hero-cta-label">Explore the collection</span><span aria-hidden="true">↗</span></button>
       </div>
       <div class="scrolldown">↓</div>
     </div>
@@ -463,7 +462,7 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
     <div class="section-tight">
       <p class="eyebrow">Why This Piece Matters</p>
       <p class="pquote" style="color:var(--fg); font-size:18px; margin:12px 0;">"We wanted a shirt that admits the joke before you do."</p>
-      <p class="meta">Hemp uses roughly half the water of conventional cotton to grow.</p>
+      <p class="meta" id="home-product-note"></p>
     </div>
 
     <div class="section-tight passport-chapter" style="background:var(--g900); color:#fff;">
@@ -471,8 +470,8 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
       <h2 class="headline" style="margin:10px 0;">See what's really in it.</h2>
       <p class="body" style="color:#ccc; margin-bottom:18px;">Every JUNKTEE piece carries its own verified story.</p>
       <div style="background:#000; border:1px solid #262626; border-radius:12px; padding:16px; margin-bottom:16px;">
-        <p class="mono" style="font-size:15px;">JT-0412-2026</p>
-        <span class="verified-badge" style="margin-top:8px;"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4" stroke="currentColor"/></svg>Verified</span>
+        <p class="mono" id="home-passport-id" style="font-size:15px;">Catalog loading</p>
+        <span class="verified-badge" style="margin-top:8px;"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4" stroke="currentColor"/></svg>Passport available</span>
       </div>
       <button class="btn btn-secondary" style="color:#fff; border-color:#fff;" onclick="startScan()">Scan a piece</button>
     </div>
@@ -537,7 +536,7 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
     <div class="section-tight">
       <p class="eyebrow">Why This Piece Matters</p>
       <p class="pquote" style="font-size:18px; margin:12px 0;">"We wanted a shirt that admits the joke before you do."</p>
-      <p class="meta">100% Organic Hemp — roughly half the water use of conventional cotton to grow.</p>
+      <p class="meta" id="pd-impact-material" hidden></p>
     </div>
 
     <div class="section-tight">
@@ -548,14 +547,17 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 
     <div class="section-tight">
       <p class="eyebrow" style="margin-bottom:10px;">Materials</p>
-      <div class="datarow materials-fact" style="border-color:var(--border); color:var(--fg);"><span class="k" id="pd-material" style="color:var(--muted);">Material details</span><span class="v" id="pd-color" style="color:var(--fg);">—</span></div>
-      <p class="meta" id="pd-care" style="padding:8px 0;">Additional material and care information will appear when added to the catalog.</p>
+      <div class="materials-fact" style="border-color:var(--border); color:var(--fg);">
+        <div class="datarow" id="pd-material-row"><span class="k">Material</span><span class="v" id="pd-material"></span></div>
+        <div class="datarow"><span class="k">Color</span><span class="v" id="pd-color">—</span></div>
+      </div>
+      <p class="meta" id="pd-care" style="padding:8px 0;"></p>
     </div>
 
     <div class="section-tight">
       <div class="passport-teaser" style="background:var(--g900); color:#fff;">
-        <p class="mono" style="font-size:14px;">JT-0412-2026</p>
-        <p class="meta" style="color:#999; margin:6px 0 14px;">Piece 412 of this drop · Verified</p>
+        <p class="mono" id="pd-passport-id" style="font-size:14px;"></p>
+        <p class="meta" id="pd-passport-meta" style="color:#999; margin:6px 0 14px;">Passport preview</p>
         <button class="btn btn-secondary" style="color:#fff; border-color:#555;" onclick="openPassport()">Open Passport</button>
       </div>
     </div>
@@ -755,7 +757,7 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
   </div>
 
   <!-- CART FAB -->
-  <button id="cart-fab" onclick="go('cart')" style="position:absolute; right:16px; bottom:78px; z-index:40; background:var(--fg); color:var(--bg); border:none; width:46px;height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 20px rgba(0,0,0,.25);">
+  <button id="cart-fab" aria-label="Open Bag" title="Open Bag" onclick="go('cart')" style="position:absolute; right:16px; bottom:78px; z-index:40; background:var(--fg); color:var(--bg); border:none; width:46px;height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 20px rgba(0,0,0,.25);">
     <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M6 7V5a2 2 0 012-2h8a2 2 0 012 2v2M4 7h16l-1 14H5L4 7z"/></svg>
     <span id="cart-badge" style="position:absolute; top:-2px; right:-2px; background:var(--green); color:#fff; font-size:9px; font-weight:700; border-radius:50%; width:16px;height:16px; display:none; align-items:center; justify-content:center;">0</span>
   </button>
@@ -820,7 +822,7 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
         <div class="next-actions">
           <a onclick="closeScanAnd('passport')">Explore the Passport <span>→</span></a>
           <a onclick="closeScanAnd('article','a1')">Read the Story <span>→</span></a>
-          <a onclick="toast('Wash cold. Hang dry. Outlive the hype cycle.')">Care Guide <span>→</span></a>
+          <a onclick="showCurrentCare()">Care Guide <span>→</span></a>
         </div>
         <button class="btn btn-primary" style="margin-top:20px;" onclick="closeScan()">Done</button>
       </div>
@@ -868,8 +870,18 @@ function productImageHTML(product, options){
   if(!src) return pIcon();
   const loading=options.eager?'eager':'lazy';
   const priority=options.eager?'high':'auto';
-  const alt=options.alt||product.name;
-  return `<img class="product-photo" src="${escapeCatalogHTML(src)}" alt="${escapeCatalogHTML(alt)}" loading="${loading}" fetchpriority="${priority}" decoding="async">`;
+  const alt=Object.prototype.hasOwnProperty.call(options,'alt')?options.alt:product.name;
+  return `<img class="product-photo" src="${escapeCatalogHTML(src)}" alt="${escapeCatalogHTML(alt)}" width="1200" height="1500" loading="${loading}" fetchpriority="${priority}" decoding="async">`;
+}
+function renderHeroProduct(){
+  const product=PRODUCTS[0];
+  const primary=document.getElementById('hero-primary-image');
+  const secondary=document.getElementById('hero-secondary-image');
+  if(!product||!primary||!secondary) return;
+  const alternate=product.images?.back||product.images?.details?.[0]||product.images?.front;
+  primary.innerHTML=productImageHTML(product,{src:product.images?.front,eager:true,alt:''});
+  secondary.innerHTML=productImageHTML(product,{src:alternate,eager:true,alt:''});
+  document.getElementById('hero-sku').textContent=`${product.collection} · ${product.sku}`;
 }
 let activeProductGallery=[];
 function renderProductGallery(product, activeIndex){
@@ -908,6 +920,8 @@ function renderFeaturedProduct(){
   image.innerHTML=`<span class="tag-passport"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4" stroke="currentColor"/></svg>Passport</span>${productImageHTML(p,{eager:true})}`;
   document.getElementById('featured-product-name').textContent=p.name;
   document.getElementById('featured-product-meta').textContent=`${p.color||p.category||'JUNKTEE'} · ${p.price}`;
+  document.getElementById('home-product-note').textContent=(p.description||'').split(/(?<=[.!?])\s+/)[0]||`${p.name} · ${p.collection}`;
+  document.getElementById('home-passport-id').textContent=p.passportId||p.sku;
 }
 function renderDropStrip(){
   document.getElementById('drop-strip').innerHTML = PRODUCTS.slice(1).map(p=>productCardHTML(p,130)).join('');
@@ -1001,10 +1015,21 @@ function openProduct(id){
     document.getElementById('pd-price').textContent = p.price;
     document.getElementById('pd-story').textContent = p.story;
     document.getElementById('pd-meta').textContent = `${p.collection} · ${p.sku}`;
-    document.getElementById('pd-origin').textContent = p.countryOfManufacture ? `Made in ${p.countryOfManufacture}` : 'Origin details pending';
-    document.getElementById('pd-material').textContent = p.material || 'Material details pending';
+    const origin=document.getElementById('pd-origin');
+    origin.hidden=!p.countryOfManufacture;
+    origin.textContent=p.countryOfManufacture ? `Made in ${p.countryOfManufacture}` : '';
+    const materialRow=document.getElementById('pd-material-row');
+    materialRow.hidden=!p.material;
+    document.getElementById('pd-material').textContent=p.material||'';
     document.getElementById('pd-color').textContent = p.color || '—';
-    document.getElementById('pd-care').textContent = p.careInstructions || 'Additional material and care information will appear when added to the catalog.';
+    const care=document.getElementById('pd-care');
+    care.hidden=!p.careInstructions;
+    care.textContent=p.careInstructions||'';
+    const impactMaterial=document.getElementById('pd-impact-material');
+    impactMaterial.hidden=!p.material;
+    impactMaterial.textContent=p.material||'';
+    document.getElementById('pd-passport-id').textContent=p.passportId||p.sku;
+    document.getElementById('pd-passport-meta').textContent=`${p.name} · Passport preview`;
     const hero = document.getElementById('pd-hero-img');
     hero.className = 'imgbox catalog-product editorial-reveal in-view';
     renderProductGallery(p,0);
@@ -1020,6 +1045,10 @@ function openArticle(id){
     document.getElementById('art-meta').textContent = 'By JUNKTEE · '+a.time;
     go('article');
   });
+}
+function showCurrentCare(){
+  const product=PRODUCTS.find(entry=>entry.id===currentProduct);
+  toast(product?.careInstructions||'Care instructions are not recorded for this product yet.');
 }
 document.getElementById('screen-article').addEventListener('scroll', function(){
   const el = this; const pct = el.scrollTop/(el.scrollHeight-el.clientHeight)*100;
@@ -1092,6 +1121,7 @@ function toggleRTL(){
   html.setAttribute('dir', rtl?'ltr':'rtl');
   document.getElementById('rtl-toggle')?.classList.toggle('on', !rtl);
   document.getElementById('hero-line').textContent = rtl ? 'Only dead fish go with the flow.' : 'الأسماك الميتة فقط تسير مع التيار.';
+  document.getElementById('hero-cta-label').textContent = rtl ? 'Explore the collection' : 'اكتشف المجموعة';
 }
 
 /* ================= ONBOARDING ================= */
@@ -1111,47 +1141,35 @@ function skipOnboarding(){
 }
 
 /* ================= PASSPORT ================= */
+function passportProduct(){ return PRODUCTS.find(product=>product.id===currentProduct)||PRODUCTS[0]; }
+function passportDataRow(label,detail){
+  return detail?`<div class="datarow"><span class="k">${escapeCatalogHTML(label)}</span><span class="v">${escapeCatalogHTML(detail)}</span></div>`:'';
+}
 const PP_PAGES = [
-  {title:'Identity', render:()=>`
-    <div class="seal">JUNKTEE<br>SEAL</div>
-    <p class="pid">JT-0412-2026</p>
-    <p class="pcollection">Only Dead Fish · S/S26</p>
-    <div class="verified-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Verified</div>
-    <div style="margin-top:28px;">
-      <div class="datarow"><span class="k">Designer</span><span class="v">JUNKTEE</span></div>
-      <div class="datarow"><span class="k">Drop</span><span class="v">S/S26</span></div>
-      <div class="datarow"><span class="k">Country of Origin</span><span class="v">Saudi Arabia</span></div>
-    </div>`},
-  {title:'Story', render:()=>`
-    <p class="pp-para">The recycling mark started as a joke between three friends about how nobody actually reads the little triangle on a bottle. So we put it on a shirt — bigger, unmissable.</p>
-    <p class="pquote">"Only dead fish go with the flow."</p>
-    <p class="pp-para" style="color:#888; font-size:13px;">🎧 Owner-exclusive audio note available</p>`},
-  {title:'Materials & Origin', render:()=>`
-    <div class="datarow"><span class="k">Organic Hemp</span><span class="v">100%</span></div>
-    <div class="datarow"><span class="k">Batch</span><span class="v">HMP-0091</span></div>
-    <div class="datarow"><span class="k">Production Date</span><span class="v">04 FEB 2026</span></div>
-    <p class="pp-para" style="margin-top:16px;">Grown without synthetic pesticides, roughly half the water use of conventional cotton.</p>`},
-  {title:'Environmental', render:()=>`
-    <p class="pp-para">Estimated water saved vs. conventional cotton: <b style="color:#fff;">~1,400L</b> for this piece.</p>
-    <p class="pp-para">Carbon estimate still being finalized for this batch.</p>
-    <p class="pp-para" style="color:#888;">This piece has had 1 owner — extending its life, not adding to landfill.</p>`},
-  {title:'Ownership Timeline', render:()=>`
-    <div class="rail">
-      <div class="rail-item"><p class="rt-date">04 MAR 2026</p><p class="rt-desc">Activated · First owner · Jeddah</p></div>
-      <p class="rail-continue">This story continues.</p>
-    </div>`},
-  {title:'Repair & Care', render:()=>`
-    <p class="pp-para">Nothing to repair yet. That's a good sign — but we'll be here when you need us.</p>
-    <div class="divider" style="background:#222;"></div>
-    <p class="eyebrow" style="margin-top:16px;">Care</p>
-    <p class="pp-para">Wash cold. Hang dry. Outlive the hype cycle.</p>`},
-  {title:'Authentication', render:()=>`
-    <div style="width:140px;height:140px; background:#fff; margin:0 auto 20px; border-radius:8px; display:flex; align-items:center; justify-content:center;">
-      <svg width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="#fff"/><g fill="#0A0A0A"><rect x="6" y="6" width="26" height="26"/><rect x="68" y="6" width="26" height="26"/><rect x="6" y="68" width="26" height="26"/><rect x="14" y="14" width="10" height="10" fill="#fff"/><rect x="76" y="14" width="10" height="10" fill="#fff"/><rect x="14" y="76" width="10" height="10" fill="#fff"/><rect x="42" y="42" width="8" height="8"/><rect x="54" y="54" width="8" height="8"/><rect x="42" y="60" width="8" height="8"/></g></svg>
-    </div>
-    <p class="pid" style="font-size:16px;">JT-0412-2026</p>
-    <p class="pp-para" style="text-align:center; margin-top:16px;">Every piece gets one ID, issued once, checked every time. No shortcuts, no duplicates.</p>
-    <button class="btn-text" style="color:var(--green-bright); display:block; margin:16px auto 0;" onclick="toast('Opening the Archive keepsake…')">See where this one started →</button>`},
+  {title:'Identity', render:()=>{
+    const product=passportProduct();
+    const identity=product?.passportId||product?.sku||'Product record unavailable';
+    return `<div class="seal">JUNKTEE<br>SEAL</div><p class="pid">${escapeCatalogHTML(identity)}</p><p class="pcollection">${escapeCatalogHTML(product?.name||'JUNKTEE Piece')} · ${escapeCatalogHTML(product?.collection||'Archive')}</p><div class="verified-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Passport preview</div><div style="margin-top:28px;">${passportDataRow('Designer','JUNKTEE')}${passportDataRow('Product ID',product?.sku)}${passportDataRow('Collection',product?.collection)}${passportDataRow('Country of Origin',product?.countryOfManufacture)}</div>`;
+  }},
+  {title:'Story', render:()=>{
+    const product=passportProduct();
+    return `<p class="pp-para">${escapeCatalogHTML(product?.story||'No product story is recorded in the current catalog.')}</p><p class="pquote">"Only dead fish go with the flow."</p>`;
+  }},
+  {title:'Materials & Origin', render:()=>{
+    const product=passportProduct();
+    const details=`${passportDataRow('Material',product?.material)}${passportDataRow('Color',product?.color)}${passportDataRow('Country of Origin',product?.countryOfManufacture)}`;
+    return details||'<p class="pp-para">Additional provenance details are not recorded in the current product catalog.</p>';
+  }},
+  {title:'Impact Record', render:()=>'<p class="pp-para">Product-specific impact data is not recorded in the current catalog.</p>'},
+  {title:'Ownership Timeline', render:()=>'<p class="pp-para">This Passport has not been activated. Verified ownership events will appear here after purchase or first scan.</p>'},
+  {title:'Repair & Care', render:()=>{
+    const product=passportProduct();
+    return product?.careInstructions?`<p class="eyebrow">Care</p><p class="pp-para" style="margin-top:16px;">${escapeCatalogHTML(product.careInstructions)}</p>`:'<p class="pp-para">Care instructions are not recorded in the current product catalog.</p>';
+  }},
+  {title:'Authentication', render:()=>{
+    const product=passportProduct();
+    return `<div style="width:140px;height:140px; background:#fff; margin:0 auto 20px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><svg width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="#fff"/><g fill="#0A0A0A"><rect x="6" y="6" width="26" height="26"/><rect x="68" y="6" width="26" height="26"/><rect x="6" y="68" width="26" height="26"/><rect x="14" y="14" width="10" height="10" fill="#fff"/><rect x="76" y="14" width="10" height="10" fill="#fff"/><rect x="14" y="76" width="10" height="10" fill="#fff"/><rect x="42" y="42" width="8" height="8"/><rect x="54" y="54" width="8" height="8"/><rect x="42" y="60" width="8" height="8"/></g></svg></div><p class="pid" style="font-size:16px;">${escapeCatalogHTML(product?.passportId||product?.sku||'—')}</p><p class="pp-para" style="text-align:center; margin-top:16px;">The active Passport will be issued and verified through the ownership flow.</p>`;
+  }},
 ];
 let ppIndex = 0;
 function renderPassport(){
@@ -1206,7 +1224,7 @@ function doVerify(){
 function showActivateConfirm(){ showScanStep('confirm'); }
 
 /* ================= INIT ================= */
-renderFeaturedProduct(); renderDropStrip(); renderCollectionGrid(); renderRelated(); renderJournal(); renderCabinet(); renderCart();
+renderHeroProduct(); renderFeaturedProduct(); renderDropStrip(); renderCollectionGrid(); renderRelated(); renderJournal(); renderCabinet(); renderCart();
 const revealObserver = new IntersectionObserver(entries=>entries.forEach(entry=>{
   if(entry.isIntersecting){ entry.target.classList.add('in-view'); revealObserver.unobserve(entry.target); }
 }),{threshold:.16});
@@ -1228,6 +1246,6 @@ if(resumeV03){
   history_ = ['onboarding'];
 }
 </script>
-<script defer src="./junktee-v03.js?v=0.3.2"></script>
+<script defer src="./junktee-v03.js?v=0.4.0"></script>
 </body>
 </html>

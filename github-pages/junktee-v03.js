@@ -658,14 +658,21 @@
       return;
     }
     const product = productById(piece.productId);
+    const provenanceRows = [
+      product?.material ? ["Material", product.material] : null,
+      product?.countryOfManufacture ? ["Country of Origin", product.countryOfManufacture] : null,
+    ].filter(Boolean);
+    const provenanceBody = provenanceRows.length || product?.careInstructions
+      ? `${provenanceRows.map(([label, detail]) => `<div class="datarow"><span class="k">${escapeHTML(label)}</span><span class="v">${escapeHTML(detail)}</span></div>`).join("")}${product?.careInstructions ? `<p class="pp-para" style="margin-top:18px;">${escapeHTML(product.careInstructions)}</p>` : ""}`
+      : '<p class="pp-para">Additional provenance details are not recorded in the current product catalog.</p>';
     const pages = [
       { title: "Identity", body: `<div class="seal">JUNKTEE<br>SEAL</div><p class="pid">${escapeHTML(piece.passportId)}</p><p class="pcollection">${escapeHTML(piece.name)} · Owned piece</p><div class="verified-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Active · Verified</div>` },
       { title: "Piece", body: `<p class="pp-para">${escapeHTML(product?.story || "A JUNKTEE piece with a story built to continue.")}</p><p class="pquote">“Only dead fish go with the flow.”</p>` },
       { title: "Purchase Record", body: `<div class="datarow"><span class="k">Order reference</span><span class="v">${escapeHTML(piece.orderReference)}</span></div><div class="datarow"><span class="k">Purchase status</span><span class="v">Verified</span></div><div class="datarow"><span class="k">Activation date</span><span class="v">${escapeHTML(formatDate(piece.activationDate))}</span></div><div class="datarow"><span class="k">Size</span><span class="v">${escapeHTML(piece.size)}</span></div>` },
       { title: "Ownership", body: `<div class="datarow"><span class="k">First owner</span><span class="v">${escapeHTML(piece.firstOwner)}</span></div><div class="datarow"><span class="k">Current owner</span><span class="v">${escapeHTML(piece.currentOwner)}</span></div><div class="datarow"><span class="k">Ownership status</span><span class="v">${escapeHTML(piece.ownershipStatus)}</span></div><div class="datarow"><span class="k">Product ID</span><span class="v">${escapeHTML(piece.productId.toUpperCase())}</span></div>` },
-      { title: "Materials & Origin", body: `<div class="datarow"><span class="k">Material</span><span class="v">${escapeHTML(product?.material || "Details pending")}</span></div><div class="datarow"><span class="k">Country of Origin</span><span class="v">${escapeHTML(product?.countryOfManufacture || "Details pending")}</span></div><p class="pp-para" style="margin-top:18px;">${escapeHTML(product?.careInstructions || "Material and care details will appear when they are added to the product catalog.")}</p>` },
+      { title: "Materials & Origin", body: provenanceBody },
       { title: "Ownership Timeline", body: `<div class="rail"><div class="rail-item"><p class="rt-date">${escapeHTML(formatDate(piece.activationDate).toUpperCase())}</p><p class="rt-desc">Purchased and Passport activated. · First owner · ${escapeHTML(piece.city)}</p></div><p class="rail-continue">This story continues.</p></div>` },
-      { title: "Repair & Care", body: `<p class="pp-para">Nothing to repair yet. We’ll be here when this piece needs care.</p><div class="divider" style="background:#222;"></div><p class="eyebrow" style="margin-top:16px;">Care</p><p class="pp-para">Wash cold. Hang dry. Outlive the hype cycle.</p>` },
+      { title: "Repair & Care", body: `<p class="pp-para">Nothing to repair yet. We’ll be here when this piece needs care.</p>${product?.careInstructions ? `<div class="divider" style="background:#222;"></div><p class="eyebrow" style="margin-top:16px;">Care</p><p class="pp-para">${escapeHTML(product.careInstructions)}</p>` : ""}` },
       { title: "Authentication", body: `<p class="pid" style="font-size:28px;margin-top:40px;">${escapeHTML(piece.passportId)}</p><p class="pp-para" style="text-align:center;margin-top:24px;">One piece. One identity. Activated only after the sandbox payment was verified server-side.</p>` },
     ];
     const wrap = document.getElementById("passport-pages");

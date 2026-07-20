@@ -39,10 +39,11 @@ Open `http://localhost:4173`. Local end-to-end payment testing also requires the
 The authoritative workbook is `../catalog/JUNKTEE_Product_Catalog.xlsx`. Edit product rows, embedded product images, and optional details there, then run from the repository root:
 
 ```sh
+python3 -m pip install --requirement requirements-catalog.txt
 npm run catalog:build
 ```
 
-This regenerates `data/products.json`, `data/products.generated.js`, the `assets/products/` images, and the Worker’s server-owned catalog. Do not edit those files directly. Pushing a workbook change to `main` also triggers the catalog GitHub Action. Invalid or duplicate SKUs and invalid prices fail the build, leaving the last valid live catalog intact; missing optional fields fall back gracefully.
+This regenerates `data/products.json`, `data/products.generated.js`, optimized WebP files under `assets/products/`, and the Worker’s server-owned catalog. The embedded workbook images remain the untouched source assets. Do not edit generated files directly. Pushing a workbook change to `main` also triggers the catalog GitHub Action. Invalid or duplicate SKUs and invalid prices fail the build, leaving the last valid live catalog intact; missing optional fields are hidden gracefully.
 
 ## Update the live frontend
 
