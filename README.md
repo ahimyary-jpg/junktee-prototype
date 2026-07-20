@@ -21,7 +21,8 @@ The Worker uses Stripe’s idempotency support for duplicate session requests. T
 
 - `github-pages/` — public static frontend source
 - `catalog/JUNKTEE_Product_Catalog.xlsx` — authoritative product workbook
-- `scripts/build_catalog.py` — dependency-free Excel-to-web conversion
+- `scripts/build_catalog.py` — Excel-to-web conversion and deterministic WebP optimization
+- `requirements-catalog.txt` — pinned image-build dependency
 - `payment-worker/` — minimal Cloudflare Worker
 - `deliverables/` — local prototype package
 - `tests/sandbox-checkout.test.mjs` — public frontend and security assertions
@@ -32,15 +33,18 @@ The Worker uses Stripe’s idempotency support for duplicate session requests. T
 
 Edit only `catalog/JUNKTEE_Product_Catalog.xlsx` when changing products. The `Products` sheet controls the Collection, product detail content, images, sizes, availability, and SAR prices. The `Optional Details` sheet adds material, care, origin, and Passport metadata by matching the same SKU.
 
-Required fields for a publishable row are `SKU`, `Product Name`, and a positive `Price (SAR)`. SKUs must be unique. Blank size cells become `ONE SIZE`; missing optional details are hidden or shown as pending without breaking the site. Set `Available (Yes/No)` to `No` to exclude a product from the public storefront and Worker checkout catalog.
+Required fields for a publishable row are `SKU`, `Product Name`, and a positive `Price (SAR)`. SKUs must be unique. Blank size cells become `ONE SIZE`; missing optional details are hidden without breaking the site. Set `Available (Yes/No)` to `No` to exclude a product from the public storefront and Worker checkout catalog.
 
-Images can remain embedded in the Excel image cells. The converter extracts them and assigns stable SKU/role paths such as `assets/products/st23a451/front.png`. A cell may instead contain a filename stored under `catalog/images/`.
+Images can remain embedded in the Excel image cells. The converter reads each original directly from the workbook, preserves that workbook as the source asset, and generates a quality-controlled WebP derivative at a stable SKU/role path such as `assets/products/st23a451/front.webp`. It never recompresses a previously generated image. A cell may instead contain a filename stored under `catalog/images/`.
 
 Run the conversion locally after editing the workbook:
 
 ```sh
+python3 -m pip install --requirement requirements-catalog.txt
 npm run catalog:build
 ```
+
+The generated storefront uses one neutral studio-frame system with a fixed 4:5 aspect ratio and `object-fit: contain` across Home, Collection, product galleries, Bag, Checkout, Cabinet, and confirmation. Original white backgrounds are therefore treated as intentional photography sheets rather than pasted rectangles. The Home hero uses real front and back imagery from the first available catalog product; it does not use generated garments or stock photography.
 
 Do not hand-edit these generated outputs:
 
