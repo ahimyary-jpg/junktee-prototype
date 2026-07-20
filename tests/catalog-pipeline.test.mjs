@@ -18,14 +18,22 @@ test("Excel is the authoritative source for all generated products", async () =>
   assert.equal(catalog.products.length, 11);
   assert.equal(new Set(catalog.products.map(({ id }) => id)).size, 11);
   assert.equal(catalog.products.every(({ id, name, unitAmount, sizes }) => id && name && unitAmount > 0 && sizes.length), true);
+  assert.deepEqual(catalog.products.find(({ id }) => id === "ST23A444").sizes, ["S", "M", "L", "XL"]);
+  assert.deepEqual(catalog.products.find(({ id }) => id === "ST23A442").sizes, ["S", "M", "L", "XL"]);
+  assert.deepEqual(catalog.products.find(({ id }) => id === "ST23A443").sizes, ["S", "M", "L", "XL"]);
 });
 
-test("generated frontend products have usable images or a graceful fallback", async () => {
+test("generated frontend products have optimized WebP images or a graceful fallback", async () => {
   const catalog = JSON.parse(await read("github-pages/data/products.json"));
   for (const product of catalog.products) {
-    if (!product.images.front) continue;
-    const image = new URL(`github-pages/${product.images.front.replace(/^\.\//, "")}`, root);
-    assert.equal((await stat(image)).size > 0, true, `${product.id} front image is empty`);
+    const paths = [product.images.front, product.images.back, ...product.images.details].filter(Boolean);
+    for (const path of paths) {
+      assert.match(path, /\.webp$/);
+      const image = new URL(`github-pages/${path.replace(/^\.\//, "")}`, root);
+      const size = (await stat(image)).size;
+      assert.equal(size > 0, true, `${product.id} image is empty`);
+      assert.equal(size < 300_000, true, `${product.id} image is unexpectedly large`);
+    }
   }
   assert.equal(catalog.products.filter(({ images }) => images.front).length, 11);
 });
@@ -45,4 +53,7 @@ test("the storefront loads generated data instead of a hardcoded product array",
   assert.doesNotMatch(html, /const PRODUCTS\s*=\s*\[/);
   assert.match(html, /Collection temporarily unavailable/);
   assert.match(html, /productImageHTML/);
+  assert.match(html, /id="hero-primary-image"/);
+  assert.match(html, /renderHeroProduct/);
+  assert.doesNotMatch(html, /hero-media:before\{content:"";position:absolute;right:11%/);
 });
