@@ -1119,6 +1119,7 @@ function toggleRTL(){
   const html = document.documentElement;
   const rtl = html.getAttribute('dir')==='rtl';
   html.setAttribute('dir', rtl?'ltr':'rtl');
+  html.setAttribute('lang', rtl?'en-US':'ar');
   document.getElementById('rtl-toggle')?.classList.toggle('on', !rtl);
   document.getElementById('hero-line').textContent = rtl ? 'Only dead fish go with the flow.' : 'الأسماك الميتة فقط تسير مع التيار.';
   document.getElementById('hero-cta-label').textContent = rtl ? 'Explore the collection' : 'اكتشف المجموعة';
