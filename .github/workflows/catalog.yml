@@ -26,6 +26,7 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+          cache-dependency-path: requirements-catalog.txt
       - name: Install catalog image tooling
         run: python3 -m pip install --requirement requirements-catalog.txt
       - name: Convert Excel catalog and extract product images
