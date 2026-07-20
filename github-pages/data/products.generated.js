@@ -2,7 +2,7 @@
 window.JUNKTEE_PRODUCT_CATALOG = {
   "schemaVersion": 1,
   "source": "catalog/JUNKTEE_Product_Catalog.xlsx",
-  "sourceSha256": "ed64965123bb98a5a5ae35904fa640d7904a05ab2a2013deec71f9a8dd74f56f",
+  "sourceSha256": "0802d264a9da8ab98d9b800b93cddf2fe782075549c268847da85a6fb632390e",
   "products": [
     {
       "id": "ST23A451",
@@ -28,8 +28,8 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "countryOfManufacture": "",
       "passportId": "",
       "images": {
-        "front": "./assets/products/st23a451/front.png",
-        "back": "./assets/products/st23a451/back.png",
+        "front": "./assets/products/st23a451/front.webp",
+        "back": "./assets/products/st23a451/back.webp",
         "details": []
       },
       "available": true
@@ -57,8 +57,8 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "countryOfManufacture": "",
       "passportId": "",
       "images": {
-        "front": "./assets/products/st23a441/front.jpeg",
-        "back": "./assets/products/st23a441/back.jpeg",
+        "front": "./assets/products/st23a441/front.webp",
+        "back": "./assets/products/st23a441/back.webp",
         "details": []
       },
       "available": true
@@ -86,8 +86,8 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "countryOfManufacture": "",
       "passportId": "",
       "images": {
-        "front": "./assets/products/st23a44/front.jpeg",
-        "back": "./assets/products/st23a44/back.jpeg",
+        "front": "./assets/products/st23a44/front.webp",
+        "back": "./assets/products/st23a44/back.webp",
         "details": []
       },
       "available": true
@@ -105,7 +105,8 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "sizes": [
         "S",
         "M",
-        "L"
+        "L",
+        "XL"
       ],
       "description": "Oversized T-shirt crafted from 100% organic hemp for everyday comfort. Designed with a relaxed fit, drop shoulders, and a ribbed crewneck for effortless daily wear. Finished with the signature [ECO-UNFRIENDLY] text print.",
       "story": "Oversized T-shirt crafted from 100% organic hemp for everyday comfort. Designed with a relaxed fit, drop shoulders, and a ribbed crewneck for effortless daily wear. Finished with the signature [ECO-UNFRIENDLY] text print.",
@@ -114,8 +115,8 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "countryOfManufacture": "",
       "passportId": "",
       "images": {
-        "front": "./assets/products/st23a444/front.jpeg",
-        "back": "./assets/products/st23a444/back.jpeg",
+        "front": "./assets/products/st23a444/front.webp",
+        "back": "./assets/products/st23a444/back.webp",
         "details": []
       },
       "available": true
@@ -141,11 +142,11 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "countryOfManufacture": "",
       "passportId": "",
       "images": {
-        "front": "./assets/products/st23a450/front.png",
-        "back": "./assets/products/st23a450/back.png",
+        "front": "./assets/products/st23a450/front.webp",
+        "back": "./assets/products/st23a450/back.webp",
         "details": [
-          "./assets/products/st23a450/detail-1.png",
-          "./assets/products/st23a450/detail-2.png"
+          "./assets/products/st23a450/detail-1.webp",
+          "./assets/products/st23a450/detail-2.webp"
         ]
       },
       "available": true
@@ -173,8 +174,8 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "countryOfManufacture": "",
       "passportId": "",
       "images": {
-        "front": "./assets/products/st23a440/front.jpeg",
-        "back": "./assets/products/st23a440/back.jpeg",
+        "front": "./assets/products/st23a440/front.webp",
+        "back": "./assets/products/st23a440/back.webp",
         "details": []
       },
       "available": true
@@ -191,6 +192,7 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "color": "White",
       "sizes": [
         "S",
+        "M",
         "L",
         "XL"
       ],
@@ -201,8 +203,8 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "countryOfManufacture": "",
       "passportId": "",
       "images": {
-        "front": "./assets/products/st23a442/front.jpeg",
-        "back": "./assets/products/st23a442/back.jpeg",
+        "front": "./assets/products/st23a442/front.webp",
+        "back": "./assets/products/st23a442/back.webp",
         "details": []
       },
       "available": true
@@ -219,7 +221,9 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "color": "White",
       "sizes": [
         "S",
-        "M"
+        "M",
+        "L",
+        "XL"
       ],
       "description": "Oversized T-shirt crafted from 100% organic hemp for everyday comfort. Designed with a relaxed fit, drop shoulders, and a ribbed crewneck for effortless daily wear.Finished with a graphic print inspired by retro newspaper layouts, combining playful environmental messages with nostalgic 90s-inspired illustrations.",
       "story": "Oversized T-shirt crafted from 100% organic hemp for everyday comfort. Designed with a relaxed fit, drop shoulders, and a ribbed crewneck for effortless daily wear.Finished with a graphic print inspired by retro newspaper layouts, combining playful environmental messages with nostalgic 90s-inspired illustrations.",
@@ -228,8 +232,8 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "countryOfManufacture": "",
       "passportId": "",
       "images": {
-        "front": "./assets/products/st23a443/front.jpeg",
-        "back": "./assets/products/st23a443/back.jpeg",
+        "front": "./assets/products/st23a443/front.webp",
+        "back": "./assets/products/st23a443/back.webp",
         "details": []
       },
       "available": true
@@ -254,7 +258,7 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "countryOfManufacture": "",
       "passportId": "",
       "images": {
-        "front": "./assets/products/st23a446/front.png",
+        "front": "./assets/products/st23a446/front.webp",
         "back": null,
         "details": []
       },
@@ -280,8 +284,8 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "countryOfManufacture": "",
       "passportId": "",
       "images": {
-        "front": "./assets/products/st23a447/front.png",
-        "back": "./assets/products/st23a447/back.png",
+        "front": "./assets/products/st23a447/front.webp",
+        "back": "./assets/products/st23a447/back.webp",
         "details": []
       },
       "available": true
@@ -306,8 +310,8 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "countryOfManufacture": "",
       "passportId": "",
       "images": {
-        "front": "./assets/products/st23a448/front.png",
-        "back": "./assets/products/st23a448/back.png",
+        "front": "./assets/products/st23a448/front.webp",
+        "back": "./assets/products/st23a448/back.webp",
         "details": []
       },
       "available": true
