@@ -49,7 +49,7 @@ test("the Worker catalog exactly matches available spreadsheet prices and sizes"
 
 test("the storefront loads generated data instead of a hardcoded product array", async () => {
   const html = await read("github-pages/index.html");
-  assert.match(html, /<script src="\.\/data\/products\.generated\.js"><\/script>/);
+  assert.match(html, /<script src="\.\/data\/products\.generated\.js(?:\?v=[^"]+)?"><\/script>/);
   assert.doesNotMatch(html, /const PRODUCTS\s*=\s*\[/);
   assert.match(html, /Collection temporarily unavailable/);
   assert.match(html, /productImageHTML/);
