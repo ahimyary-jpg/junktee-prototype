@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """Build JUNKTEE's static and server-owned catalogs from the Excel source of truth.
 
-The script intentionally uses only Python's standard library so it can run locally
-and in GitHub Actions without installing spreadsheet dependencies. It supports both
-normal filename cells and Excel's embedded rich-image cells.
+The script uses Python's standard library for workbook parsing and Pillow for
+deterministic web-image optimization. It supports both normal filename cells and
+Excel's embedded rich-image cells.
 """
 
 from __future__ import annotations
 
 import argparse
 import hashlib
+import io
 import json
 import posixpath
 import re
@@ -18,6 +19,13 @@ import sys
 import zipfile
 from pathlib import Path, PurePosixPath
 from xml.etree import ElementTree as ET
+
+try:
+    from PIL import Image, ImageOps
+except ImportError as error:  # pragma: no cover - exercised by the build environment.
+    raise SystemExit(
+        "catalog error: Pillow is required. Install requirements-catalog.txt first."
+    ) from error
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -63,6 +71,8 @@ IMAGE_ROLES = {
     "Detail Image 1": "detail-1",
     "Detail Image 2": "detail-2",
 }
+IMAGE_MAX_EDGE = 1600
+IMAGE_WEBP_QUALITY = 86
 
 
 class CatalogError(RuntimeError):
@@ -291,10 +301,30 @@ def copy_image(
     if not source_bytes:
         return None
     if suffix not in {".png", ".jpg", ".jpeg", ".webp", ".gif"}:
-        suffix = ".jpg"
-    output = PRODUCT_ASSETS_BUILD / sku_slug / f"{role}{suffix}"
+        raise CatalogError(f"Unsupported image format for {sku_slug}/{role}: {suffix or 'unknown'}")
+
+    try:
+        with Image.open(io.BytesIO(source_bytes)) as source_image:
+            image = ImageOps.exif_transpose(source_image)
+            if max(image.size) > IMAGE_MAX_EDGE:
+                image.thumbnail((IMAGE_MAX_EDGE, IMAGE_MAX_EDGE), Image.Resampling.LANCZOS)
+            has_alpha = image.mode in {"RGBA", "LA"} or "transparency" in image.info
+            image = image.convert("RGBA" if has_alpha else "RGB")
+            encoded = io.BytesIO()
+            image.save(
+                encoded,
+                format="WEBP",
+                quality=IMAGE_WEBP_QUALITY,
+                method=6,
+                exact=has_alpha,
+            )
+            web_bytes = encoded.getvalue()
+    except (OSError, ValueError) as error:
+        raise CatalogError(f"Unable to optimise image for {sku_slug}/{role}.") from error
+
+    output = PRODUCT_ASSETS_BUILD / sku_slug / f"{role}.webp"
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_bytes(source_bytes)
+    output.write_bytes(web_bytes)
     return f"./assets/products/{sku_slug}/{output.name}"
 
 
