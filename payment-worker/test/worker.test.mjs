@@ -65,6 +65,34 @@ test("creates a server-priced, idempotent test Checkout Session", async () => {
   }
 });
 
+test("accepts an approved RMAYD catalog product with its server-owned price", async () => {
+  const originalFetch = globalThis.fetch;
+  let stripeCall;
+  globalThis.fetch = async (url, init) => {
+    stripeCall = { url, init };
+    return Response.json({
+      id: "cs_test_rmayd123",
+      url: "https://checkout.stripe.com/c/pay/cs_test_rmayd123",
+      livemode: false,
+    });
+  };
+  try {
+    const response = await handleRequest(request("/v1/checkout-sessions", {
+      method: "POST",
+      body: JSON.stringify({
+        attemptId: "rmayd_attempt_123",
+        items: [{ productId: "ST22B440", size: "XL", quantity: 1 }],
+      }),
+    }), ENV);
+    assert.equal(response.status, 201);
+    const form = new URLSearchParams(stripeCall.init.body);
+    assert.equal(form.get("line_items[0][price_data][unit_amount]"), "22000");
+    assert.equal(form.get("line_items[0][quantity]"), "1");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("rejects client-invented products and prices", async () => {
   const response = await handleRequest(request("/v1/checkout-sessions", {
     method: "POST",
@@ -95,7 +123,8 @@ test("verifies paid test sessions and returns only safe order data", async () =>
     assert.equal(response.status, 200);
     assert.equal(result.verified, true);
     assert.equal(result.order.amountTotal, 36500);
-    assert.equal(result.order.items[0].passportId.startsWith("JT-ST23A451-"), true);
+    assert.equal(Object.hasOwn(result.order.items[0], "passportId"), false);
+    assert.equal(Object.hasOwn(result.order.items[0], "passportEligible"), false);
     assert.equal(JSON.stringify(result).includes("card"), false);
   } finally {
     globalThis.fetch = originalFetch;
