@@ -15,7 +15,6 @@
   const params = new URLSearchParams(location.search);
   const apiBase = (document.querySelector('meta[name="junktee-payment-api"]')?.content || "").replace(/\/$/, "");
   const baseOpenProduct = window.openProduct;
-  const baseOpenPassport = window.openPassport;
   let submitting = false;
 
   function readJSON(key, fallback) {
@@ -262,14 +261,14 @@
       <div class="screen no-nav" id="screen-processing">
         <div class="payment-state" role="status" aria-live="polite">
           <p class="eyebrow">Stripe Test Mode</p><h1>Verifying your payment.</h1>
-          <p class="state-copy">Please keep this page open. Your Passport will activate only after Stripe confirms the test payment.</p>
+          <p class="state-copy">Please keep this page open. Your collection will update only after Stripe confirms the test payment.</p>
           <div class="processing-rule" aria-hidden="true"></div>
         </div>
       </div>
       <div class="screen no-nav" id="screen-payment-error">
         <div class="payment-state">
           <p class="eyebrow">Sandbox Payment</p><h1 id="payment-error-title">We couldn’t verify this payment.</h1>
-          <p class="state-copy" id="payment-error-copy">Your Bag and shipping details are still here. No Passport has been activated.</p>
+          <p class="state-copy" id="payment-error-copy">Your Bag and shipping details are still here. No order has been created.</p>
           <div class="state-actions">
             <button class="btn btn-primary" type="button" onclick="retryPayment()">Try Again</button>
             <button class="btn btn-secondary" type="button" onclick="returnToCheckout()">Change Payment Method</button>
@@ -288,7 +287,7 @@
     settings?.insertAdjacentHTML("beforeend", `
       <section class="presenter-panel" id="presenter-panel" aria-label="Presenter controls">
         <p class="eyebrow">Presenter Mode</p>
-        <p class="meta">Clear sandbox orders, purchased pieces, active Passports, Bag, shipping draft, and confirmation state.</p>
+        <p class="meta">Clear sandbox orders, saved pieces, Bag, shipping draft, and confirmation state.</p>
         <button class="btn btn-secondary btn-sm" type="button" onclick="resetJunkteeDemo()">Reset Demo State</button>
       </section>`);
 
@@ -518,10 +517,10 @@
 
       const owned = readJSON(KEYS.owned, []);
       serverOrder.items.forEach((item) => {
-        const ownershipId = `${serverOrder.orderReference}:${item.productId}:${item.size}`;
-        if (!owned.some((piece) => piece.ownershipId === ownershipId)) {
+        const collectionId = `${serverOrder.orderReference}:${item.productId}:${item.size}`;
+        if (!owned.some((piece) => piece.collectionId === collectionId)) {
           owned.unshift({
-            ownershipId,
+            collectionId,
             orderReference: serverOrder.orderReference,
             productId: item.productId,
             name: item.name,
@@ -529,15 +528,10 @@
             brandName: item.brandName || "JUNKTEE",
             size: item.size,
             quantity: item.quantity,
-            passportId: item.passportId,
             purchaseDate: serverOrder.paidAt,
-            activationDate: serverOrder.paidAt,
-            passportStatus: "Active",
-            ownershipStatus: "First owner",
-            firstOwner: shipping.fullName || "JUNKTEE Collector",
-            currentOwner: shipping.fullName || "JUNKTEE Collector",
+            collectionStatus: "Purchased",
             city: shipping.city || "—",
-            timeline: [{ date: serverOrder.paidAt, event: "Purchased and Passport activated." }],
+            orderStatus: "Paid · Stripe Test Mode",
           });
         }
       });
@@ -606,11 +600,11 @@
       <div class="confirmation-kicker">Payment Verified</div>
       <h1 class="confirmation-title">Your piece has entered the archive.</h1>
       <p class="confirmation-lede">The order is complete. Its next life begins with you.</p>
-      <section class="activated-card" aria-labelledby="passport-activated-title">
-        <p class="active-label">Digital Passport Activated</p>
+      <section class="activated-card" aria-labelledby="collection-updated-title">
+        <p class="active-label">Cabinet updated</p>
         <div class="confirmation-product">
           <div class="imgbox catalog-product">${productImageHTML(productById(item.productId))}</div>
-          <div>${brandIdentityHTML(productById(item.productId) || item, { className: "brand-identity--confirmation", alt: item.brandName || "JUNKTEE" })}<p class="eyebrow confirmation-order-ref">${escapeHTML(order.orderReference)}</p><h2 id="passport-activated-title">${escapeHTML(item.name)}</h2><p class="meta">Size ${escapeHTML(item.size)} · Qty ${item.quantity}</p></div>
+          <div>${brandIdentityHTML(productById(item.productId) || item, { className: "brand-identity--confirmation", alt: item.brandName || "JUNKTEE" })}<p class="eyebrow confirmation-order-ref">${escapeHTML(order.orderReference)}</p><h2 id="collection-updated-title">${escapeHTML(item.name)}</h2><p class="meta">Size ${escapeHTML(item.size)} · Qty ${item.quantity}</p></div>
         </div>
         <div class="confirmation-data">
           <div class="datarow"><span class="k">Payment status</span><span class="v" style="color:var(--green-bright);">${escapeHTML(order.paymentStatus)}</span></div>
@@ -618,11 +612,9 @@
           <div class="datarow"><span class="k">Customer</span><span class="v">${escapeHTML(order.customerName)}</span></div>
           <div class="datarow"><span class="k">Delivery city</span><span class="v">${escapeHTML(order.deliveryCity)}</span></div>
           <div class="datarow"><span class="k">Estimated delivery</span><span class="v">${escapeHTML(order.estimatedDelivery)}</span></div>
-          <div class="datarow"><span class="k">Passport ID</span><span class="v">${escapeHTML(item.passportId)}</span></div>
-          <div class="datarow"><span class="k">Activation date</span><span class="v">${escapeHTML(formatDate(order.paidAt))}</span></div>
+          <div class="datarow"><span class="k">Purchase date</span><span class="v">${escapeHTML(formatDate(order.paidAt))}</span></div>
         </div>
         <div class="confirmation-actions">
-          <button class="btn btn-primary" style="background:#fff;color:#0a0a0a;" type="button" onclick="openConfirmationPassport('${escapeHTML(item.productId)}')">Open Passport</button>
           <button class="btn btn-secondary" type="button" onclick="leaveConfirmation('cabinet')">View My Cabinet</button>
           <button class="btn btn-text" style="color:#fff;justify-self:center;" type="button" onclick="leaveConfirmation('collection')">Continue Exploring</button>
         </div>
@@ -632,11 +624,6 @@
   window.leaveConfirmation = function leaveConfirmation(destination) {
     removeStored(KEYS.lastConfirmation);
     go(destination, { replace: true });
-  };
-
-  window.openConfirmationPassport = function openConfirmationPassport(productId) {
-    removeStored(KEYS.lastConfirmation);
-    openOwnedPassport(productId);
   };
 
   function ownedPieces() {
@@ -652,63 +639,25 @@
     grid.innerHTML = allPieces.map((piece) => piece.base ? `
       <div class="card" style="border:none;" onclick="openProduct('${escapeHTML(piece.id)}')">
         <div class="imgbox catalog-product editorial-reveal in-view">${productImageHTML(productById(piece.id))}</div>
-        ${brandLinkHTML(productById(piece.id), { compact: true })}<span class="passport-meta">V · Verified</span><p class="name" style="margin-top:8px;font-size:13px;font-weight:600;">${escapeHTML(piece.name)}</p>
+        ${brandLinkHTML(productById(piece.id), { compact: true })}<span class="meta">Saved piece</span><p class="name" style="margin-top:8px;font-size:13px;font-weight:600;">${escapeHTML(piece.name)}</p>
       </div>` : `
-      <div class="card" style="border:none;" onclick="openOwnedPassport('${escapeHTML(piece.productId)}')">
+      <div class="card" style="border:none;" onclick="openProduct('${escapeHTML(piece.productId)}')">
         <div class="imgbox catalog-product editorial-reveal in-view">${productImageHTML(productById(piece.productId))}</div>
-        ${brandLinkHTML(piece, { compact: true })}<span class="passport-meta passport-active">Active Passport</span><p class="name" style="margin-top:8px;font-size:13px;font-weight:600;">${escapeHTML(piece.name)}</p>
-        <div class="cabinet-owned-meta"><span>${escapeHTML(formatDate(piece.purchaseDate))}</span><span>${escapeHTML(piece.ownershipStatus)} · ${escapeHTML(piece.passportId)}</span></div>
+        ${brandLinkHTML(piece, { compact: true })}<span class="meta">Purchased</span><p class="name" style="margin-top:8px;font-size:13px;font-weight:600;">${escapeHTML(piece.name)}</p>
+        <div class="cabinet-owned-meta"><span>${escapeHTML(formatDate(piece.purchaseDate))}</span><span>${escapeHTML(piece.orderStatus || "Paid · Stripe Test Mode")}</span></div>
       </div>`).join("");
 
     const total = allPieces.length;
     const stats = document.getElementById("cabinet-stats");
-    if (stats) stats.innerHTML = `<span class="n">${total}</span> pieces, all with active passports. <span class="n">${purchased.length || 1}</span> recent archive ${purchased.length === 1 ? "entry" : "entries"}. <span class="n">0</span> repairs completed. <span class="n">${total}</span> pieces still with their first owner.`;
+    if (stats) stats.innerHTML = `<span class="n">${total}</span> pieces in your collection. <span class="n">${purchased.length || 0}</span> recent purchase ${purchased.length === 1 ? "entry" : "entries"}.`;
 
     const timeline = document.getElementById("cabinet-timeline");
     if (timeline) timeline.innerHTML = `
-      ${purchased.map((piece) => `<div class="rail-item"><p class="meta mono" style="color:var(--green);">${escapeHTML(formatDate(piece.activationDate).toUpperCase())}</p><p class="body" style="margin-top:2px;">Purchased and Passport activated — ${escapeHTML(piece.name)}</p></div>`).join("")}
-      <div class="rail-item"><p class="meta mono" style="color:var(--green);">MAR 2025</p><p class="body" style="margin-top:2px;">First piece activated — Recycle Tee</p></div>
-      <div class="rail-item"><p class="meta mono" style="color:var(--green);">JUL 2025</p><p class="body" style="margin-top:2px;">First scan of the season</p></div>
+      ${purchased.map((piece) => `<div class="rail-item"><p class="meta mono" style="color:var(--green);">${escapeHTML(formatDate(piece.purchaseDate).toUpperCase())}</p><p class="body" style="margin-top:2px;">Added to your collection — ${escapeHTML(piece.name)}</p></div>`).join("")}
+      <div class="rail-item"><p class="meta mono" style="color:var(--green);">MAR 2025</p><p class="body" style="margin-top:2px;">Saved — Recycle Tee</p></div>
+      <div class="rail-item"><p class="meta mono" style="color:var(--green);">JUL 2025</p><p class="body" style="margin-top:2px;">Added a new piece to the collection</p></div>
       <p class="rail-continue">This story continues.</p>`;
   }
-
-  window.openOwnedPassport = function openOwnedPassport(productId) {
-    const piece = ownedPieces().find((item) => item.productId === productId);
-    if (!piece) {
-      baseOpenPassport();
-      return;
-    }
-    const product = productById(piece.productId);
-    const provenanceRows = [
-      product?.material ? ["Material", product.material] : null,
-      product?.countryOfManufacture ? ["Country of Origin", product.countryOfManufacture] : null,
-    ].filter(Boolean);
-    const provenanceBody = provenanceRows.length || product?.careInstructions
-      ? `${provenanceRows.map(([label, detail]) => `<div class="datarow"><span class="k">${escapeHTML(label)}</span><span class="v">${escapeHTML(detail)}</span></div>`).join("")}${product?.careInstructions ? `<p class="pp-para" style="margin-top:18px;">${escapeHTML(product.careInstructions)}</p>` : ""}`
-      : '<p class="pp-para">Additional provenance details are not recorded in the current product catalog.</p>';
-    const pages = [
-      { title: "Identity", body: `${piece.brandId === "rmayd" ? `<div class="passport-rmayd-identity">${rmaydPictureHTML("secondary", "passport-rmayd-decoration", "")}${brandIdentityHTML(piece, { className: "brand-identity--passport", alt: "RMAYD" })}</div>` : `<div class="seal">${escapeHTML(piece.brandName || "JUNKTEE")}<br>SEAL</div>`}<p class="pid">${escapeHTML(piece.passportId)}</p><p class="pcollection">${escapeHTML(piece.name)} · Owned piece</p><div class="verified-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Active · Verified</div>` },
-      { title: "Piece", body: `<p class="pp-para">${escapeHTML(product?.story || "A JUNKTEE piece with a story built to continue.")}</p><p class="pquote">“Only dead fish go with the flow.”</p>` },
-      { title: "Purchase Record", body: `<div class="datarow"><span class="k">Brand</span><span class="v">${escapeHTML(piece.brandName || "JUNKTEE")}</span></div><div class="datarow"><span class="k">Order reference</span><span class="v">${escapeHTML(piece.orderReference)}</span></div><div class="datarow"><span class="k">Purchase status</span><span class="v">Verified</span></div><div class="datarow"><span class="k">Activation date</span><span class="v">${escapeHTML(formatDate(piece.activationDate))}</span></div><div class="datarow"><span class="k">Size</span><span class="v">${escapeHTML(piece.size)}</span></div>` },
-      { title: "Ownership", body: `<div class="datarow"><span class="k">First owner</span><span class="v">${escapeHTML(piece.firstOwner)}</span></div><div class="datarow"><span class="k">Current owner</span><span class="v">${escapeHTML(piece.currentOwner)}</span></div><div class="datarow"><span class="k">Ownership status</span><span class="v">${escapeHTML(piece.ownershipStatus)}</span></div><div class="datarow"><span class="k">Product ID</span><span class="v">${escapeHTML(piece.productId.toUpperCase())}</span></div>` },
-      { title: "Materials & Origin", body: provenanceBody },
-      { title: "Ownership Timeline", body: `<div class="rail"><div class="rail-item"><p class="rt-date">${escapeHTML(formatDate(piece.activationDate).toUpperCase())}</p><p class="rt-desc">Purchased and Passport activated. · First owner · ${escapeHTML(piece.city)}</p></div><p class="rail-continue">This story continues.</p></div>` },
-      { title: "Repair & Care", body: `<p class="pp-para">Nothing to repair yet. We’ll be here when this piece needs care.</p>${product?.careInstructions ? `<div class="divider" style="background:#222;"></div><p class="eyebrow" style="margin-top:16px;">Care</p><p class="pp-para">${escapeHTML(product.careInstructions)}</p>` : ""}` },
-      { title: "Authentication", body: `<p class="pid" style="font-size:28px;margin-top:40px;">${escapeHTML(piece.passportId)}</p><p class="pp-para" style="text-align:center;margin-top:24px;">One piece. One identity. Activated only after the sandbox payment was verified server-side.</p>` },
-    ];
-    const wrap = document.getElementById("passport-pages");
-    wrap.innerHTML = pages.map((page, index) => `<div class="ppage ${index === 0 ? "active" : ""}" data-i="${index}"><p class="ppage-title">${page.title}</p>${page.body}</div>`).join("");
-    document.getElementById("pp-dots").innerHTML = pages.map((_, index) => `<div class="dot ${index === 0 ? "active" : ""}"></div>`).join("");
-    ppIndex = 0;
-    document.getElementById("pp-indicator").textContent = `1 / ${pages.length}`;
-    document.getElementById("passport-modal").classList.add("active");
-  };
-
-  window.openPassport = function openPassportV03() {
-    const latest = ownedPieces()[0];
-    if (latest) window.openOwnedPassport(latest.productId);
-    else baseOpenPassport();
-  };
 
   function configurePresenterMode() {
     if (params.get("presenter") === "1") localStorage.setItem(KEYS.presenter, "1");
