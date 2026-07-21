@@ -689,15 +689,23 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 <p id="desktop-frame-label" style="text-align:center; margin-top:14px; font-family:-apple-system,sans-serif; color:#888; font-size:12px;">JUNKTEE — Private Preview</p>
 
 <script src="./data/products.generated.js?v=0.7.1"></script>
+<script src="./data/rmayd.products.generated.js?v=0.2.0"></script>
 <script src="./data/marketplace.generated.js?v=0.7.1"></script>
 <script>
 /* ================= DATA ================= */
 const CATALOG_PAYLOAD = window.JUNKTEE_PRODUCT_CATALOG || {products:[]};
+const RMAYD_CATALOG_PAYLOAD = window.JUNKTEE_RMAYD_CATALOG || {products:[]};
 const MARKETPLACE = window.JUNKTEE_MARKETPLACE || {brands:[],demoProducts:[],collections:[],journal:[]};
-const PRODUCTS = Array.isArray(CATALOG_PAYLOAD.products)
-  ? CATALOG_PAYLOAD.products.filter(product=>product && product.available !== false).map(product=>({brandId:'junktee',brandName:'JUNKTEE',brandSlug:'junktee',purchasable:true,...product}))
-  : [];
-PRODUCTS.push(...(Array.isArray(MARKETPLACE.demoProducts)?MARKETPLACE.demoProducts:[]));
+const catalogProducts = [...(Array.isArray(CATALOG_PAYLOAD.products)?CATALOG_PAYLOAD.products:[]), ...(Array.isArray(RMAYD_CATALOG_PAYLOAD.products)?RMAYD_CATALOG_PAYLOAD.products:[])]
+  .filter(product=>product && product.available !== false)
+  .map(product=>({brandId:product.brandId||'junktee',brandName:product.brandName||'JUNKTEE',brandSlug:product.brandSlug||product.brandId||'junktee',purchasable:true,...product}));
+const hasRmaydCatalog = catalogProducts.some(product=>product.brandId==='rmayd' && !product.demo);
+const PRODUCTS = Array.from(catalogProducts);
+if(!hasRmaydCatalog) PRODUCTS.push(...(Array.isArray(MARKETPLACE.demoProducts)?MARKETPLACE.demoProducts:[]));
+if(hasRmaydCatalog){
+  const rmaydBrand=(MARKETPLACE.brands||[]).find(brand=>brand.id==='rmayd');
+  if(rmaydBrand){ rmaydBrand.placeholder=false; rmaydBrand.status='Official catalog'; rmaydBrand.description='Official RMAYD pieces, presented through the approved product catalog.'; }
+}
 const ARTICLES = [
   {id:'a1', type:'Editorial Essay', title:'Only Dead Fish Go With the Flow', time:'6 min read'},
   {id:'a2', type:'Material Deep Dive', title:'Inside the Hemp Mill', time:'8 min read'},
