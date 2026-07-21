@@ -87,6 +87,14 @@ html[dir="rtl"] body.marketplace-ready,html[dir="rtl"] body.marketplace-ready bu
 .marketplace-ready .brand-identity-image--junktee{display:block;width:100%;height:auto;filter:invert(1);mix-blend-mode:screen}
 .marketplace-ready .brand-link .brand-identity-image--junktee{width:74px;max-width:100%}
 .marketplace-ready .brand-link .brand-identity--compact.brand-identity-image--junktee{width:58px}
+.marketplace-ready .brand-identity-image--junktee.brand-identity--moment{width:min(560px,86vw)}
+.marketplace-ready .brand-identity-image--junktee.brand-identity--meet{width:min(340px,66vw)}
+.marketplace-ready .brand-identity-image--junktee.brand-identity--directory{width:min(410px,88%)}
+.marketplace-ready .brand-identity-image--junktee.brand-identity--alpha{width:132px}
+.marketplace-ready .brand-identity-image--junktee.brand-identity--discover{width:min(300px,68vw)}
+.marketplace-ready .brand-identity-image--junktee.brand-identity--hero{width:min(760px,86vw)}
+.marketplace-ready .brand-identity-image--junktee.brand-identity--product{width:110px}
+.marketplace-ready .brand-identity-image--junktee.brand-identity--confirmation{width:96px}
 .marketplace-ready #screen-home .hero .wordmark-lg{display:flex;align-items:center;gap:10px;width:auto;height:34px;margin-bottom:22px;font-size:0;letter-spacing:0;background:none;filter:none;mix-blend-mode:normal}
 .marketplace-ready #screen-home .hero .wordmark-lg .hero-platform-caption{font:500 9px/1 var(--font-platform);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.68)}
 
