@@ -74,7 +74,17 @@ function validateItems(value) {
       throw new Error("INVALID_SIZE");
     }
 
-    return { productId, name: product.name, size, quantity, unitAmount: product.unitAmount };
+    return {
+      productId,
+      name: product.name,
+      brandId: product.brandId,
+      brandName: product.brandName,
+      size,
+      quantity,
+      unitAmount: product.unitAmount,
+      passportId: product.passportId,
+      passportEligible: product.passportEligible !== false,
+    };
   });
 }
 
@@ -260,10 +270,13 @@ async function verifyCheckoutSession(sessionId, env, headers) {
       items: items.map((item, index) => ({
         productId: item.productId,
         name: item.name,
+        brandId: item.brandId,
+        brandName: item.brandName,
         size: item.size,
         quantity: item.quantity,
         unitAmount: item.unitAmount,
-        passportId: `JT-${item.productId.toUpperCase()}-${hash.slice(index * 6, index * 6 + 8)}`,
+        passportId: item.passportId || `JT-${item.productId.toUpperCase()}-${hash.slice(index * 6, index * 6 + 8)}`,
+        passportEligible: item.passportEligible,
       })),
     },
   }, 200, headers);
@@ -306,6 +319,7 @@ export async function handleRequest(request, env) {
   return publicError("Not found.", 404, headers, "not_found");
 }
 
-export default { fetch: handleRequest };
+const worker = { fetch: handleRequest };
+export default worker;
 
 export { CATALOG, DELIVERY_HALALAS, cartTotal, validateItems };
