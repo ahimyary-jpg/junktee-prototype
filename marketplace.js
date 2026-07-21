@@ -124,11 +124,11 @@
   function homeBrandMoment() {
     const brand = brandById(platform.featuredBrandIds?.[0] || "rmayd") || brandById("rmayd");
     if (!brand) return "";
-    return `<section class="brand-moment ${e(brand.id)}"><div class="brand-moment-art">${brand.id === "rmayd" ? rmaydPictureHTML("secondary", "brand-moment-mark", "") : ""}</div><div class="brand-moment-copy"><p class="eyebrow">Brand of the moment</p>${brand.id === "rmayd" ? brandIdentityHTML("rmayd", { className: "brand-identity--moment", alt: "RMAYD" }) : `<h2>${e(brand.name)}</h2>`}<p>${e(brand.description)}</p><button class="btn-text" type="button" onclick="openBrand('${e(brand.id)}')">Explore the label →</button></div></section>`;
+    return `<section class="brand-moment ${e(brand.id)}"><div class="brand-moment-art">${brand.id === "rmayd" ? rmaydPictureHTML("secondary", "brand-moment-mark", "") : ""}</div><div class="brand-moment-copy"><p class="eyebrow">Brand of the moment</p>${brandIdentityHTML(brand, { className: "brand-identity--moment", alt: brand.name })}<p>${e(brand.description)}</p><button class="btn-text" type="button" onclick="openBrand('${e(brand.id)}')">Explore the label →</button></div></section>`;
   }
 
   function homeMeetBrands() {
-    return `<section class="market-section meet-brands"><div class="market-section-head"><div><p class="eyebrow">Selected labels</p><h2 class="market-title">Meet the brands</h2></div><button class="btn-text" type="button" onclick="go('brands')">View all brands →</button></div><div class="meet-brand-list">${brands.map((brand, index) => `<button type="button" onclick="openBrand('${e(brand.id)}')"><span>0${index + 1}</span><div>${brand.id === "rmayd" ? brandIdentityHTML("rmayd", { className: "brand-identity--meet", alt: "RMAYD" }) : `<h3>${e(brand.name)}</h3>`}<p>${e(brand.status)}</p></div><i>↗</i></button>`).join("")}</div></section>`;
+    return `<section class="market-section meet-brands"><div class="market-section-head"><div><p class="eyebrow">Selected labels</p><h2 class="market-title">Meet the brands</h2></div><button class="btn-text" type="button" onclick="go('brands')">View all brands →</button></div><div class="meet-brand-list">${brands.map((brand, index) => `<button type="button" onclick="openBrand('${e(brand.id)}')"><span>0${index + 1}</span><div>${brandIdentityHTML(brand, { className: "brand-identity--meet", alt: brand.name })}<p>${e(brand.status)}</p></div><i>↗</i></button>`).join("")}</div></section>`;
   }
 
   function homeCuratedTogether() {
@@ -155,7 +155,7 @@
   }
 
   function brandDirectoryCard(brand, index) {
-    return `<button class="brand-directory-card ${e(brand.id)}" type="button" onclick="openBrand('${e(brand.id)}')"><span class="brand-number">0${index + 1} · ${e(brand.status)}</span><div>${brand.id === "rmayd" ? brandIdentityHTML(brand.id, { className: "brand-identity--directory", alt: "RMAYD" }) : `<h2>${e(brand.name)}</h2>`}<p class="brand-desc">${e(brand.description)}</p><span class="brand-explore">Explore the label →</span></div></button>`;
+    return `<button class="brand-directory-card ${e(brand.id)}" type="button" onclick="openBrand('${e(brand.id)}')"><span class="brand-number">0${index + 1} · ${e(brand.status)}</span><div>${brandIdentityHTML(brand, { className: "brand-identity--directory", alt: brand.name })}<p class="brand-desc">${e(brand.description)}</p><span class="brand-explore">Explore the label →</span></div></button>`;
   }
 
   function renderBrandLetters() {
@@ -173,7 +173,7 @@
       return;
     }
     if (state.directoryView === "alphabetical") {
-      wrap.innerHTML = `<div class="brand-alpha-list">${list.sort((a, b) => a.name.localeCompare(b.name)).map((brand) => `<button type="button" onclick="openBrand('${e(brand.id)}')"><span>${e(initials(brand.name))}</span><div>${brand.id === "rmayd" ? brandIdentityHTML("rmayd", { className: "brand-identity--alpha", alt: "RMAYD" }) : `<h2>${e(brand.name)}</h2>`}<p>${e(brand.status)}</p></div><i>↗</i></button>`).join("")}</div>`;
+      wrap.innerHTML = `<div class="brand-alpha-list">${list.sort((a, b) => a.name.localeCompare(b.name)).map((brand) => `<button type="button" onclick="openBrand('${e(brand.id)}')"><span>${e(initials(brand.name))}</span><div>${brandIdentityHTML(brand, { className: "brand-identity--alpha", alt: brand.name })}<p>${e(brand.status)}</p></div><i>↗</i></button>`).join("")}</div>`;
     } else {
       wrap.innerHTML = list.map((brand) => brandDirectoryCard(brand, brands.indexOf(brand))).join("");
     }
@@ -194,7 +194,7 @@
   function brandDiscoverMarkup(brand) {
     const others = brands.filter((entry) => entry.id !== brand.id);
     if (!others.length) return "";
-    return `<section class="brand-discover"><p class="eyebrow">Discover another label</p>${others.map((entry) => `<button type="button" onclick="openBrand('${e(entry.id)}')">${entry.id === "rmayd" ? brandIdentityHTML("rmayd", { className: "brand-identity--discover", alt: "RMAYD" }) : `<span>${e(entry.name)}</span>`}<i>↗</i></button>`).join("")}</section>`;
+    return `<section class="brand-discover"><p class="eyebrow">Discover another label</p>${others.map((entry) => `<button type="button" onclick="openBrand('${e(entry.id)}')">${brandIdentityHTML(entry, { className: "brand-identity--discover", alt: entry.name })}<i>↗</i></button>`).join("")}</section>`;
   }
 
   function renderBrandPage(id) {
@@ -209,7 +209,7 @@
       : `<div class="brand-product-grid">${products.map((product) => productCard(product)).join("")}</div>`;
     const heroVisual = isRmayd ? rmaydPictureHTML("secondary", "brand-hero-secondary", "") : (products[0] ? `<div class="brand-hero-product" aria-hidden="true">${productImageHTML(products[0], { eager: true, alt: "" })}</div>` : "");
     const followSection = isRmayd ? `<section class="rmayd-follow" aria-labelledby="rmayd-follow-title"><div><p class="eyebrow">Instagram</p><h2 id="rmayd-follow-title">Follow RMAYD</h2><a href="${e(brand.instagramUrl)}" target="_blank" rel="noopener noreferrer">${e(brand.instagramHandle)}</a><p>Open the official Instagram profile.</p></div><a class="rmayd-qr-link" href="${e(brand.instagramUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Open RMAYD on Instagram">${rmaydPictureHTML("instagram", "rmayd-instagram-qr", "Instagram QR code for @rmayd.official")}</a></section>` : "";
-    document.getElementById("brand-page").innerHTML = `<header class="brand-hero ${e(brand.id)}">${heroVisual}<div class="brand-hero-content"><p class="eyebrow">${e(brand.status)}</p>${isRmayd ? brandIdentityHTML(brand.id, { className: "brand-identity--hero", alt: "RMAYD", eager: true }) : `<h1>${e(brand.name)}</h1>`}<p>${e(brand.description)}</p><span>Selected by JUNKTEE</span></div></header>${approvedStory}<section class="market-section brand-collection-head"><div class="market-section-head"><div><p class="eyebrow">${e(brand.name)}</p><h2 class="market-title">${brand.placeholder ? "The first collection" : "Current collection"}</h2></div>${brand.placeholder ? "" : `<button class="btn-text" type="button" onclick="shopBrand('${e(brand.id)}')">Shop this brand →</button>`}</div></section>${collectionBody}${brandJournalMarkup(brand)}${followSection}${brandDiscoverMarkup(brand)}`;
+    document.getElementById("brand-page").innerHTML = `<header class="brand-hero ${e(brand.id)}">${heroVisual}<div class="brand-hero-content"><p class="eyebrow">${e(brand.status)}</p>${brandIdentityHTML(brand, { className: "brand-identity--hero", alt: brand.name, eager: true })}<p>${e(brand.description)}</p><span>Selected by JUNKTEE</span></div></header>${approvedStory}<section class="market-section brand-collection-head"><div class="market-section-head"><div><p class="eyebrow">${e(brand.name)}</p><h2 class="market-title">${brand.placeholder ? "The first collection" : "Current collection"}</h2></div>${brand.placeholder ? "" : `<button class="btn-text" type="button" onclick="shopBrand('${e(brand.id)}')">Shop this brand →</button>`}</div></section>${collectionBody}${brandJournalMarkup(brand)}${followSection}${brandDiscoverMarkup(brand)}`;
   }
 
   function filterOptions(values, label) {
