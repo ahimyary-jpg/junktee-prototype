@@ -27,6 +27,7 @@
   function productBrand(product) { return product?.brandName || brandById(product?.brandId)?.name || "JUNKTEE"; }
   function isAvailable(product) { return product?.purchasable !== false && Number(product?.unitAmount) > 0; }
   function initials(value) { return String(value || "").trim().charAt(0).toUpperCase(); }
+  function platformWordmarkMarkup(className = "") { return `<img class="platform-wordmark ${e(className)}" src="./public/brand/junktee-wordmark.jpeg" alt="JUNKTEE" width="448" height="96" decoding="async">`; }
 
   function productCard(product, compact = false) {
     const availability = isAvailable(product) ? "" : '<span class="card-availability">Collection forthcoming</span>';
@@ -64,7 +65,7 @@
     const primary = platform.navigation?.primary || [];
     app.insertAdjacentHTML("afterbegin", `
       <header class="desktop-marketplace-header" aria-label="Primary navigation">
-        <button class="platform-mark" type="button" onclick="go('home')">JUNKTEE</button>
+        <button class="platform-mark" type="button" onclick="go('home')" aria-label="JUNKTEE home">${platformWordmarkMarkup()}</button>
         <nav>${navigationMarkup(primary)}</nav>
         <div class="desktop-actions">
           <button type="button" onclick="openSearch()" aria-label="Search products, brands and collections">Search</button>
@@ -97,7 +98,7 @@
     hero.insertAdjacentHTML("afterend", '<div class="marketplace-home" id="marketplace-home"></div>');
     document.getElementById("bottomnav").insertAdjacentHTML("beforebegin", `
       <aside class="menu-sheet" id="marketplace-menu" aria-hidden="true">
-        <div class="menu-sheet-top"><span class="wordmark">JUNKTEE</span><button class="icon-btn" type="button" onclick="toggleMarketplaceMenu(false)" aria-label="Close menu">✕</button></div>
+        <div class="menu-sheet-top"><span class="wordmark">${platformWordmarkMarkup("platform-wordmark--menu")}</span><button class="icon-btn" type="button" onclick="toggleMarketplaceMenu(false)" aria-label="Close menu">✕</button></div>
         <nav>
           <button type="button" onclick="openSearch()">Search</button>
           <button type="button" onclick="menuGo('collections')">Collections</button>
@@ -145,7 +146,7 @@
 
   function renderHome() {
     document.getElementById("hero-line").textContent = "Independent fashion, selected with intent.";
-    document.querySelector("#screen-home .wordmark-lg").textContent = "JUNKTEE / THE PLATFORM";
+    document.querySelector("#screen-home .wordmark-lg").innerHTML = `${platformWordmarkMarkup("platform-wordmark--hero")}<span class="hero-platform-caption">/ THE PLATFORM</span>`;
     document.getElementById("hero-cta-label").textContent = "Discover New In";
     document.querySelector("#screen-home .hero-cta").onclick = () => openCollection("new-in");
     const sections = { newIn: homeNewIn, brandMoment: homeBrandMoment, meetBrands: homeMeetBrands, curatedTogether: homeCuratedTogether, journal: homeJournal, statement: homeStatement };
@@ -199,6 +200,7 @@
   function renderBrandPage(id) {
     const brand = brandById(id);
     if (!brand) return;
+    document.getElementById("screen-brand").dataset.brandWorld = brand.id;
     const products = officialProducts.filter((product) => product.brandId === brand.id);
     const isRmayd = brand.id === "rmayd";
     const approvedStory = brand.storyApproved ? `<section class="brand-story"><p class="eyebrow">Brand story</p><div><p class="story-copy">${e(brand.story)}</p></div></section>` : "";
