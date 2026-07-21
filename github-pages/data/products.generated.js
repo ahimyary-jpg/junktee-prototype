@@ -29,8 +29,6 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "material": "",
       "careInstructions": "",
       "countryOfManufacture": "",
-      "passportId": "",
-      "passportEligible": true,
       "images": {
         "front": "./assets/products/st23a451/front.webp",
         "back": "./assets/products/st23a451/back.webp",
@@ -62,8 +60,6 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "material": "",
       "careInstructions": "",
       "countryOfManufacture": "",
-      "passportId": "",
-      "passportEligible": true,
       "images": {
         "front": "./assets/products/st23a441/front.webp",
         "back": "./assets/products/st23a441/back.webp",
@@ -95,8 +91,6 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "material": "",
       "careInstructions": "",
       "countryOfManufacture": "",
-      "passportId": "",
-      "passportEligible": true,
       "images": {
         "front": "./assets/products/st23a44/front.webp",
         "back": "./assets/products/st23a44/back.webp",
@@ -128,8 +122,6 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "material": "",
       "careInstructions": "",
       "countryOfManufacture": "",
-      "passportId": "",
-      "passportEligible": true,
       "images": {
         "front": "./assets/products/st23a444/front.webp",
         "back": "./assets/products/st23a444/back.webp",
@@ -159,8 +151,6 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "material": "",
       "careInstructions": "",
       "countryOfManufacture": "",
-      "passportId": "",
-      "passportEligible": true,
       "images": {
         "front": "./assets/products/st23a450/front.webp",
         "back": "./assets/products/st23a450/back.webp",
@@ -195,8 +185,6 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "material": "",
       "careInstructions": "",
       "countryOfManufacture": "",
-      "passportId": "",
-      "passportEligible": true,
       "images": {
         "front": "./assets/products/st23a440/front.webp",
         "back": "./assets/products/st23a440/back.webp",
@@ -228,8 +216,6 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "material": "",
       "careInstructions": "",
       "countryOfManufacture": "",
-      "passportId": "",
-      "passportEligible": true,
       "images": {
         "front": "./assets/products/st23a442/front.webp",
         "back": "./assets/products/st23a442/back.webp",
@@ -261,8 +247,6 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "material": "",
       "careInstructions": "",
       "countryOfManufacture": "",
-      "passportId": "",
-      "passportEligible": true,
       "images": {
         "front": "./assets/products/st23a443/front.webp",
         "back": "./assets/products/st23a443/back.webp",
@@ -291,8 +275,6 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "material": "",
       "careInstructions": "",
       "countryOfManufacture": "",
-      "passportId": "",
-      "passportEligible": true,
       "images": {
         "front": "./assets/products/st23a446/front.webp",
         "back": null,
@@ -321,8 +303,6 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "material": "",
       "careInstructions": "",
       "countryOfManufacture": "",
-      "passportId": "",
-      "passportEligible": true,
       "images": {
         "front": "./assets/products/st23a447/front.webp",
         "back": "./assets/products/st23a447/back.webp",
@@ -351,8 +331,6 @@ window.JUNKTEE_PRODUCT_CATALOG = {
       "material": "",
       "careInstructions": "",
       "countryOfManufacture": "",
-      "passportId": "",
-      "passportEligible": true,
       "images": {
         "front": "./assets/products/st23a448/front.webp",
         "back": "./assets/products/st23a448/back.webp",
