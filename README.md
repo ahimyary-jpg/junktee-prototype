@@ -1,6 +1,6 @@
-# JUNKTEE v0.5 — Independent Fashion Platform Prototype
+# JUNKTEE v0.6 — Independent Fashion Platform Prototype
 
-JUNKTEE is now presented as the umbrella platform for independent fashion labels. JUNKTEE remains the founding brand and visual anchor; RMAYD is the second confirmed brand and is shown as a clearly disclosed preview until approved brand and product data is supplied. The experience includes a multi-brand Home, Shop, Brands directory, reusable brand pages, Collections, Journal, Bag, Stripe Test Mode checkout, Digital Passport, Collector Cabinet, Scan, and Settings.
+JUNKTEE is the umbrella platform for independent fashion labels. JUNKTEE remains the founding brand and visual anchor; RMAYD is the second confirmed brand and now uses its supplied official logo, secondary mark, and Instagram QR identity throughout the experience. RMAYD product content remains explicitly forthcoming until its approved Excel catalog is imported. The experience includes a multi-brand Home, Shop, Brands directory, reusable brand pages, Collections, Journal, Bag, Stripe Test Mode checkout, Digital Passport, Collector Cabinet, Scan, and Settings.
 
 No real money can be charged. Card details are entered only on Stripe-hosted Checkout and are never seen or stored by JUNKTEE.
 
@@ -14,7 +14,7 @@ No real money can be charged. Card details are entered only on Stripe-hosted Che
 6. Only after the Worker confirms a paid, complete, test-mode Session with the expected total does the browser activate the Digital Passport and add the piece to the Collector Cabinet.
 7. Non-sensitive presentation state is kept in browser `localStorage`. There is no order database or D1 dependency.
 8. `catalog/JUNKTEE_Product_Catalog.xlsx` is the product source of truth. A deterministic build creates the browser catalog, extracts its product images, and creates the Worker’s trusted price-and-size catalog.
-9. `data/marketplace.generated.js` contains platform presentation structure such as the brand directory, collection concepts, and RMAYD placeholders. It is not a commerce catalog and cannot override Excel prices or Worker validation.
+9. `data/marketplace.generated.js` contains platform presentation structure, RMAYD’s official identity references, and non-commercial forthcoming-collection entries. It is not a commerce catalog and cannot override Excel prices or Worker validation.
 
 The Worker uses Stripe’s idempotency support for duplicate session requests. The browser also locks the submit button and reuses a pending session for the same Bag.
 
@@ -23,6 +23,9 @@ The Worker uses Stripe’s idempotency support for duplicate session requests. T
 - `github-pages/` — public static frontend source
 - `data/marketplace.generated.js` — non-commercial brand and presentation structure
 - `marketplace.css` / `marketplace.js` — responsive multi-brand marketplace layer
+- `assets/brands/rmayd/originals/` — untouched official RMAYD source assets
+- `assets/brands/rmayd/` — responsive WebP logo, mark, and Instagram derivatives
+- `scripts/build_rmayd_assets.py` — deterministic RMAYD crop, resize, optimization, and mirror step
 - `catalog/JUNKTEE_Product_Catalog.xlsx` — authoritative product workbook
 - `scripts/build_catalog.py` — Excel-to-web conversion and deterministic WebP optimization
 - `requirements-catalog.txt` — pinned image-build dependency
@@ -46,20 +49,32 @@ Required fields for a publishable row are `SKU`, `Product Name`, and a positive 
 - **Platform-owned:** marketplace navigation, Brands directory, cross-brand Shop filters, Collections, Journal aggregation, Bag, checkout shell, Digital Passport system, Collector Cabinet, and account/settings surfaces.
 - **Brand-owned:** brand name, story, visual treatment, products, collections, product claims, imagery, price, inventory, origin, and Passport eligibility.
 - **JUNKTEE:** founding brand; its existing Excel products are authoritative and remain fully purchasable in Stripe Test Mode.
-- **RMAYD:** confirmed brand; current cards are presentation placeholders with no price, inventory, material, origin, sustainability claim, or payment eligibility. They may be added to a mixed-brand demonstration Bag, but Stripe checkout is disabled until those preview items are removed.
+- **RMAYD:** official identity is active; its collection cards contain only “Collection arriving soon” language, with no approved product name, price, inventory, size, material, origin, sustainability claim, or payment eligibility. The forthcoming entries cannot be purchased.
 
 ## Onboarding a new brand
 
-1. Obtain founder-approved brand name, short description, story, and visual assets.
+1. Obtain owner-approved brand name, short description, story, and visual assets.
 2. Add the brand record to `data/marketplace.generated.js` and its mirrored `github-pages/data/marketplace.generated.js`.
 3. Add a `Brand` column to the Excel Products sheet if it is not present.
 4. Add approved product rows using the exact brand name, with real prices, sizes, availability, descriptions, and image cells or filenames.
 5. Add matching Optional Details rows for material, care, origin, and Passport metadata where available.
 6. Run `npm run catalog:build`; review the generated JSON and WebP assets.
-7. Add or update the brand’s visual accent in `marketplace.css`. Do not place commerce facts in CSS or JavaScript.
+7. Add or update the brand’s visual treatment in `marketplace.css`. Do not place commerce facts in CSS or JavaScript.
 8. Run the complete automated and responsive test pass before deployment.
 
-To replace the RMAYD placeholders, add approved RMAYD workbook rows and then remove the matching `RMAYD-DEMO-*` entries from the marketplace presentation file. Do not leave demo and authoritative versions of the same product active together.
+To replace the RMAYD forthcoming-collection entries, add approved RMAYD workbook rows and then remove the matching `RMAYD-DEMO-*` entries from the marketplace presentation file. Do not leave demo and authoritative versions of the same product active together. Future product updates then require editing only the Excel workbook and rerunning the catalog build.
+
+## RMAYD identity assets
+
+The three supplied originals are preserved unchanged under `assets/brands/rmayd/originals/`. The public site loads responsive WebP derivatives so the primary logo, secondary mark, and Instagram QR remain sharp without downloading the 4500-pixel source canvases.
+
+Rebuild the responsive assets after replacing an official source file:
+
+```sh
+python3 scripts/build_rmayd_assets.py
+```
+
+The script crops only the surrounding canvas in generated derivatives, creates multiple responsive widths, mirrors them into `github-pages/`, and verifies that every copied original remains byte-identical.
 
 Images can remain embedded in the Excel image cells. The converter reads each original directly from the workbook, preserves that workbook as the source asset, and generates a quality-controlled WebP derivative at a stable SKU/role path such as `assets/products/st23a451/front.webp`. It never recompresses a previously generated image. A cell may instead contain a filename stored under `catalog/images/`.
 
@@ -196,7 +211,7 @@ The reset clears demo orders, purchased items, active purchased Passports, the B
 - Webhooks are intentionally omitted to keep this presentation build stateless. A production launch must add durable, idempotent webhook fulfillment and an order database.
 - Browser storage is device-local and can be cleared by the user.
 - GitHub Pages is static hosting; all payment and verification logic lives in the separate Worker and Stripe-hosted Checkout.
-- RMAYD has no supplied product catalog, approved product imagery, real prices, inventory, origin, or Passport eligibility. Its current content is intentionally labeled as presentation preview data and is blocked from payment.
+- RMAYD has official identity assets but no supplied product catalog, approved product photography, product names, prices, sizes, inventory, materials, origin, or Passport eligibility. Its current content is limited to forthcoming-collection placeholders and is blocked from payment.
 - Cross-brand fulfillment, tax allocation, brand payouts, inventory reservation, account sync, and durable Passport storage require production backend decisions and are outside this static presentation build.
 
 This repository must never be configured with live Stripe credentials.
