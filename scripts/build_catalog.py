@@ -62,7 +62,6 @@ OPTIONAL_COLUMNS = [
     "Material",
     "Care Instructions",
     "Country of Manufacture",
-    "Digital Passport ID",
     "Internal Notes",
 ]
 IMAGE_ROLES = {
@@ -279,6 +278,8 @@ def copy_image(
     cell: dict[str, object],
     sku_slug: str,
     role: str,
+    output_root: Path = PRODUCT_ASSETS_BUILD,
+    asset_url_prefix: str = "./assets/products",
 ) -> str | None:
     embedded = cell.get("embedded")
     filename = clean_text(cell.get("value"))
@@ -322,24 +323,34 @@ def copy_image(
     except (OSError, ValueError) as error:
         raise CatalogError(f"Unable to optimise image for {sku_slug}/{role}.") from error
 
-    output = PRODUCT_ASSETS_BUILD / sku_slug / f"{role}.webp"
+    output = output_root / sku_slug / f"{role}.webp"
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_bytes(web_bytes)
-    return f"./assets/products/{sku_slug}/{output.name}"
+    return f"{asset_url_prefix}/{sku_slug}/{output.name}"
 
 
 def value(record: dict[str, dict[str, object]], header: str) -> str:
     return clean_text(record.get(header, {}).get("value"))
 
 
-def build(workbook: Path) -> dict[str, object]:
+def build(
+    workbook: Path,
+    *,
+    brand_id: str | None = None,
+    brand_name: str | None = None,
+    assets_dir: Path = PRODUCT_ASSETS,
+    asset_url_prefix: str = "./assets/products",
+) -> dict[str, object]:
     if not workbook.is_file():
         raise CatalogError(f"Workbook not found: {workbook}")
 
     source_hash = hashlib.sha256(workbook.read_bytes()).hexdigest()
-    if PRODUCT_ASSETS_BUILD.exists():
-        shutil.rmtree(PRODUCT_ASSETS_BUILD)
-    PRODUCT_ASSETS_BUILD.mkdir(parents=True)
+    assets_build = assets_dir.parent / f".{assets_dir.name}-build"
+    if assets_build.exists():
+        shutil.rmtree(assets_build)
+    assets_build.mkdir(parents=True)
+    default_brand_id = brand_id or "junktee"
+    default_brand_name = brand_name or "JUNKTEE"
     with zipfile.ZipFile(workbook) as archive:
         strings = shared_strings(archive)
         sheets = sheet_paths(archive)
@@ -384,7 +395,15 @@ def build(workbook: Path) -> dict[str, object]:
 
             sku_slug = slug(sku)
             image_paths = {
-                role: copy_image(archive, workbook, record.get(header, {}), sku_slug, role)
+                role: copy_image(
+                    archive,
+                    workbook,
+                    record.get(header, {}),
+                    sku_slug,
+                    role,
+                    assets_build,
+                    asset_url_prefix,
+                )
                 for header, role in IMAGE_ROLES.items()
             }
             detail_images = [image_paths["detail-1"], image_paths["detail-2"]]
@@ -392,16 +411,16 @@ def build(workbook: Path) -> dict[str, object]:
             available = value(record, "Available (Yes/No)").lower() not in {"no", "false", "0"}
             country = value(optional, "Country of Manufacture")
             description = value(record, "Short Description")
-            brand_name = value(record, "Brand") or "JUNKTEE"
-            brand_slug = slug(brand_name)
+            row_brand_name = value(record, "Brand") or default_brand_name
+            row_brand_id = default_brand_id if brand_id else slug(row_brand_name)
 
             products.append({
                 "id": sku,
                 "sku": sku,
                 "name": name,
-                "brandId": brand_slug,
-                "brandName": brand_name,
-                "brandSlug": brand_slug,
+                "brandId": row_brand_id,
+                "brandName": row_brand_name,
+                "brandSlug": row_brand_id,
                 "category": value(record, "Category") or "Uncategorised",
                 "collection": value(record, "Collection") or "JUNKTEE Archive",
                 "price": f"SAR {unit_amount / 100:,.2f}".replace(".00", ""),
@@ -414,8 +433,6 @@ def build(workbook: Path) -> dict[str, object]:
                 "material": value(optional, "Material"),
                 "careInstructions": value(optional, "Care Instructions"),
                 "countryOfManufacture": country,
-                "passportId": value(optional, "Digital Passport ID"),
-                "passportEligible": True,
                 "images": {
                     "front": image_paths["front"],
                     "back": image_paths["back"],
@@ -424,25 +441,39 @@ def build(workbook: Path) -> dict[str, object]:
                 "available": available,
             })
 
-    if PRODUCT_ASSETS.exists():
-        shutil.rmtree(PRODUCT_ASSETS)
-    shutil.move(str(PRODUCT_ASSETS_BUILD), str(PRODUCT_ASSETS))
+    if assets_dir.exists():
+        shutil.rmtree(assets_dir)
+    shutil.move(str(assets_build), str(assets_dir))
+
+    try:
+        source_label = workbook.relative_to(ROOT).as_posix()
+    except ValueError:
+        source_label = workbook.name
 
     return {
         "schemaVersion": 2,
-        "source": "catalog/JUNKTEE_Product_Catalog.xlsx",
+        "source": source_label,
         "sourceSha256": source_hash,
         "products": products,
     }
 
 
-def write_outputs(catalog: dict[str, object]) -> None:
-    PRODUCTS_JSON.parent.mkdir(parents=True, exist_ok=True)
+def write_outputs(
+    catalog: dict[str, object],
+    *,
+    products_json: Path = PRODUCTS_JSON,
+    products_js: Path = PRODUCTS_JS,
+    worker_catalog: Path = WORKER_CATALOG,
+    global_name: str = "JUNKTEE_PRODUCT_CATALOG",
+    generated_by: str = "scripts/build_catalog.py",
+) -> None:
+    products_json.parent.mkdir(parents=True, exist_ok=True)
     json_text = json.dumps(catalog, ensure_ascii=False, indent=2) + "\n"
-    PRODUCTS_JSON.write_text(json_text, encoding="utf-8")
-    PRODUCTS_JS.write_text(
-        "/* Generated by scripts/build_catalog.py. Do not edit by hand. */\n"
-        f"window.JUNKTEE_PRODUCT_CATALOG = {json_text.rstrip()};\n",
+    products_json.write_text(json_text, encoding="utf-8")
+    products_js.parent.mkdir(parents=True, exist_ok=True)
+    products_js.write_text(
+        f"/* Generated by {generated_by}. Do not edit by hand. */\n"
+        f"window.{global_name} = {json_text.rstrip()};\n",
         encoding="utf-8",
     )
 
@@ -453,15 +484,13 @@ def write_outputs(catalog: dict[str, object]) -> None:
             "brandName": product["brandName"],
             "unitAmount": product["unitAmount"],
             "sizes": product["sizes"],
-            "passportId": product["passportId"],
-            "passportEligible": product["passportEligible"],
         }
         for product in catalog["products"]
         if product["available"]
     }
-    WORKER_CATALOG.parent.mkdir(parents=True, exist_ok=True)
-    WORKER_CATALOG.write_text(
-        "/* Generated by scripts/build_catalog.py. Do not edit by hand. */\n"
+    worker_catalog.parent.mkdir(parents=True, exist_ok=True)
+    worker_catalog.write_text(
+        f"/* Generated by {generated_by}. Do not edit by hand. */\n"
         f"export const CATALOG_SCHEMA_VERSION = {catalog['schemaVersion']};\n"
         f"export const CATALOG_SOURCE_SHA256 = {json.dumps(catalog['sourceSha256'])};\n"
         f"export const CATALOG = Object.freeze({json.dumps(worker_products, ensure_ascii=False, indent=2)});\n",
