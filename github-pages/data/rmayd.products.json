@@ -1,0 +1,362 @@
+{
+  "schemaVersion": 2,
+  "source": "catalog/RMAYD_Product_Catalog.xlsx",
+  "sourceSha256": "01f6f09604d434022e155109cd2e5e4135de8db8ce98108eba3cbca628aaee40",
+  "products": [
+    {
+      "id": "ST22B440",
+      "sku": "ST22B440",
+      "name": "After Hours",
+      "brandId": "rmayd",
+      "brandName": "RMAYD",
+      "brandSlug": "rmayd",
+      "category": "T-Shirts",
+      "collection": "After Hours",
+      "price": "SAR 220",
+      "priceSar": 220.0,
+      "unitAmount": 22000,
+      "color": "White",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "description": "Designed for versatility, this t-shirt moves easily between refined and casual settings. A clean white base is detailed with a minimal hand-embroidered illustration of a record player accompanied by withering flowers, referencing moments that exist just after movement fades. Designed with a dropped-shoulder silhouette and oversized fit, it offers a soft structure and effortless drape. Made from 100% organic cotton, it balances comfort with intention lightweight, breathable, and considered.",
+      "story": "Designed for versatility, this t-shirt moves easily between refined and casual settings. A clean white base is detailed with a minimal hand-embroidered illustration of a record player accompanied by withering flowers, referencing moments that exist just after movement fades. Designed with a dropped-shoulder silhouette and oversized fit, it offers a soft structure and effortless drape. Made from 100% organic cotton, it balances comfort with intention lightweight, breathable, and considered.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "images": {
+        "front": "./assets/products-rmayd/st22b440/front.webp",
+        "back": null,
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST22B441",
+      "sku": "ST22B441",
+      "name": "Only Joy",
+      "brandId": "rmayd",
+      "brandName": "RMAYD",
+      "brandSlug": "rmayd",
+      "category": "T-Shirts",
+      "collection": "Only Joy",
+      "price": "SAR 220",
+      "priceSar": 220.0,
+      "unitAmount": 22000,
+      "color": "Black",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "description": "Reduced to its essential form, this piece focuses on presence through restraint. A black base carries the phrase “I ONLY REMEMBER JOY” in a subtle, centered placement quiet, deliberate, and open to interpretation. The design suggests a softened recollection where intensity fades into clarity, leaving behind only what is chosen to remain. Minimal in expression yet considered in feeling. Cut with a dropped-shoulder silhouette and oversized fit, it falls with ease and precision. Crafted from 100% organic cotton, the fabric is smooth, breathable, and structured for everyday wear.",
+      "story": "Reduced to its essential form, this piece focuses on presence through restraint. A black base carries the phrase “I ONLY REMEMBER JOY” in a subtle, centered placement quiet, deliberate, and open to interpretation. The design suggests a softened recollection where intensity fades into clarity, leaving behind only what is chosen to remain. Minimal in expression yet considered in feeling. Cut with a dropped-shoulder silhouette and oversized fit, it falls with ease and precision. Crafted from 100% organic cotton, the fabric is smooth, breathable, and structured for everyday wear.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "images": {
+        "front": "./assets/products-rmayd/st22b441/front.webp",
+        "back": null,
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST22B442",
+      "sku": "ST22B442",
+      "name": "Let Her Dance",
+      "brandId": "rmayd",
+      "brandName": "RMAYD",
+      "brandSlug": "rmayd",
+      "category": "T-Shirts",
+      "collection": "Let Her Dance",
+      "price": "SAR 220",
+      "priceSar": 220.0,
+      "unitAmount": 22000,
+      "color": "White",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "description": "Designed for versatility, this t-shirt moves easily between refined and casual settings. A clean white base is marked with a child-like, hand-written and hand-embroidered text in all caps reading “LET HER DANCE ALL SHE WANTS,” expressing freedom of movement through a quiet, direct statement. Designed with a dropped-shoulder silhouette and oversized fit, it offers a soft structure and effortless drape. Made from 100% organic cotton, it balances comfort with intention lightweight, breathable, and considered.",
+      "story": "Designed for versatility, this t-shirt moves easily between refined and casual settings. A clean white base is marked with a child-like, hand-written and hand-embroidered text in all caps reading “LET HER DANCE ALL SHE WANTS,” expressing freedom of movement through a quiet, direct statement. Designed with a dropped-shoulder silhouette and oversized fit, it offers a soft structure and effortless drape. Made from 100% organic cotton, it balances comfort with intention lightweight, breathable, and considered.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "images": {
+        "front": "./assets/products-rmayd/st22b442/front.webp",
+        "back": null,
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST22B443",
+      "sku": "ST22B443",
+      "name": "CORK PANEL HOODIE-SAND",
+      "brandId": "rmayd",
+      "brandName": "RMAYD",
+      "brandSlug": "rmayd",
+      "category": "Hoodies",
+      "collection": "CORK PANEL HOODIE-SAND",
+      "price": "SAR 500",
+      "priceSar": 500.0,
+      "unitAmount": 50000,
+      "color": "Brown",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "description": "Elevated and defined by material and texture, this remade hoodie explores natural contrast through cork and organic cotton, with soft, earthy tones achieved through a unique dyeing process no two pieces are ever the same. A cork leather panel at the center introduces natural pattern and depth, adding a distinct tactile element to a refined essential. Designed with a classic hood, ribbed trims, and a dropped-shoulder silhouette, it offers a comfortable oversized fit with a structured drape. Crafted from midweight organic French terry soft on the inside and smooth on the outside it balances everyday wearability with considered construction",
+      "story": "Elevated and defined by material and texture, this remade hoodie explores natural contrast through cork and organic cotton, with soft, earthy tones achieved through a unique dyeing process no two pieces are ever the same. A cork leather panel at the center introduces natural pattern and depth, adding a distinct tactile element to a refined essential. Designed with a classic hood, ribbed trims, and a dropped-shoulder silhouette, it offers a comfortable oversized fit with a structured drape. Crafted from midweight organic French terry soft on the inside and smooth on the outside it balances everyday wearability with considered construction",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "images": {
+        "front": "./assets/products-rmayd/st22b443/front.webp",
+        "back": "./assets/products-rmayd/st22b443/back.webp",
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST22B448",
+      "sku": "ST22B448",
+      "name": "PANEL SWEATSHIRT-CONTRAST",
+      "brandId": "rmayd",
+      "brandName": "RMAYD",
+      "brandSlug": "rmayd",
+      "category": "Sweatshirts",
+      "collection": "PANEL SWEATSHIRT-CONTRAST",
+      "price": "SAR 420",
+      "priceSar": 420.0,
+      "unitAmount": 42000,
+      "color": "Black",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "description": "Designed with a classic crewneck, ribbed trims, and a relaxed dropped-shoulder silhouette, it offers a perfectly oversized, boxy fit. Crafted from midweight organic French terry soft on the inside and smooth on the outside it delivers comfort with structure and an effortless drape. Relaxed, elevated, and entirely one of a kind. This remade sweatshirt is defined by deep, burnt tones achieved through a unique dyeing process no two pieces are ever the same. Color and tone shift across each piece, ranging from rich, earthy browns to cooler, ashy hues depending on the process. A contrasting corduroy panel at the center adds structure and depth, grounding the design with a refined edge",
+      "story": "Designed with a classic crewneck, ribbed trims, and a relaxed dropped-shoulder silhouette, it offers a perfectly oversized, boxy fit. Crafted from midweight organic French terry soft on the inside and smooth on the outside it delivers comfort with structure and an effortless drape. Relaxed, elevated, and entirely one of a kind. This remade sweatshirt is defined by deep, burnt tones achieved through a unique dyeing process no two pieces are ever the same. Color and tone shift across each piece, ranging from rich, earthy browns to cooler, ashy hues depending on the process. A contrasting corduroy panel at the center adds structure and depth, grounding the design with a refined edge",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "images": {
+        "front": "./assets/products-rmayd/st22b448/front.webp",
+        "back": "./assets/products-rmayd/st22b448/back.webp",
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST22B445",
+      "sku": "ST22B445",
+      "name": "CHROMATIC PANEL SWEATSHIRT-CLAY",
+      "brandId": "rmayd",
+      "brandName": "RMAYD",
+      "brandSlug": "rmayd",
+      "category": "Sweatshirts",
+      "collection": "CHROMATIC PANEL SWEATSHIRT-CLAY",
+      "price": "SAR 420",
+      "priceSar": 420.0,
+      "unitAmount": 42000,
+      "color": "Beige",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "description": "Relaxed, elevated, and entirely one of a kind. This remade sweatshirt is defined by warm, earthy tones achieved through a unique dyeing process no two pieces are ever the same. A contrasting corduroy panel at the center adds depth and texture, bringing a modern edge to a timeless essential. Designed with a classic crewneck, ribbed trims, and a relaxed dropped-shoulder silhouette, it offers a perfectly oversized, boxy fit. Finished with discreet side pockets for everyday functionality.",
+      "story": "Relaxed, elevated, and entirely one of a kind. This remade sweatshirt is defined by warm, earthy tones achieved through a unique dyeing process no two pieces are ever the same. A contrasting corduroy panel at the center adds depth and texture, bringing a modern edge to a timeless essential. Designed with a classic crewneck, ribbed trims, and a relaxed dropped-shoulder silhouette, it offers a perfectly oversized, boxy fit. Finished with discreet side pockets for everyday functionality.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "images": {
+        "front": "./assets/products-rmayd/st22b445/front.webp",
+        "back": "./assets/products-rmayd/st22b445/back.webp",
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST22B444",
+      "sku": "ST22B444",
+      "name": "CHROMATIC PANEL SWEATSHIRT-CINDER",
+      "brandId": "rmayd",
+      "brandName": "RMAYD",
+      "brandSlug": "rmayd",
+      "category": "Sweatshirts",
+      "collection": "CHROMATIC PANEL SWEATSHIRT-CINDER",
+      "price": "SAR 420",
+      "priceSar": 420.0,
+      "unitAmount": 42000,
+      "color": "Brown-",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "description": "Relaxed, elevated, and entirely one of a kind. This remade sweatshirt is defined by deep, burnt tones achieved through a unique dyeing process no two pieces are ever the same. Color and tone shift across each piece, ranging from rich, earthy browns to cooler, ashy hues depending on the process. A contrasting corduroy panel at the center adds structure and depth, grounding the design with a refined edge. Designed with a classic crewneck, ribbed trims, and a relaxed dropped-shoulder silhouette, it offers a perfectly oversized, boxy fit. Crafted from midweight organic French terry soft on the inside and smooth on the outside it delivers comfort with structure and an effortless drape",
+      "story": "Relaxed, elevated, and entirely one of a kind. This remade sweatshirt is defined by deep, burnt tones achieved through a unique dyeing process no two pieces are ever the same. Color and tone shift across each piece, ranging from rich, earthy browns to cooler, ashy hues depending on the process. A contrasting corduroy panel at the center adds structure and depth, grounding the design with a refined edge. Designed with a classic crewneck, ribbed trims, and a relaxed dropped-shoulder silhouette, it offers a perfectly oversized, boxy fit. Crafted from midweight organic French terry soft on the inside and smooth on the outside it delivers comfort with structure and an effortless drape",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "images": {
+        "front": "./assets/products-rmayd/st22b444/front.webp",
+        "back": "./assets/products-rmayd/st22b444/back.webp",
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST22B446",
+      "sku": "ST22B446",
+      "name": "ZIP HOODIE-SILENCE",
+      "brandId": "rmayd",
+      "brandName": "RMAYD",
+      "brandSlug": "rmayd",
+      "category": "Hoodies",
+      "collection": "ZIP HOODIE-SILENCE",
+      "price": "SAR 385",
+      "priceSar": 385.0,
+      "unitAmount": 38500,
+      "color": "Black",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "description": "Exploring language as form, this hoodie introduces text as a subtle structural element rather than decoration. A clean black base is marked with a minimal chest composition reading “built from silence, meant for noise,” creating a quiet tension between restraint and expression. At the back, a tree bark icon is paired with /ree:'made/, applied with restraint to introduce a secondary layer of pattern without overwhelming the piece. Designed with a full zip closure, ribbed trims, and a dropped-shoulder silhouette, it offers a comfortable oversized fit with a structured drape. Crafted from midweight organic French terry soft on the inside and smooth on the outside it balances everyday wearability with considered construction.",
+      "story": "Exploring language as form, this hoodie introduces text as a subtle structural element rather than decoration. A clean black base is marked with a minimal chest composition reading “built from silence, meant for noise,” creating a quiet tension between restraint and expression. At the back, a tree bark icon is paired with /ree:'made/, applied with restraint to introduce a secondary layer of pattern without overwhelming the piece. Designed with a full zip closure, ribbed trims, and a dropped-shoulder silhouette, it offers a comfortable oversized fit with a structured drape. Crafted from midweight organic French terry soft on the inside and smooth on the outside it balances everyday wearability with considered construction.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "images": {
+        "front": "./assets/products-rmayd/st22b446/front.webp",
+        "back": "./assets/products-rmayd/st22b446/back.webp",
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST22B447",
+      "sku": "ST22B447",
+      "name": "PANEL HOODIE-FREE",
+      "brandId": "rmayd",
+      "brandName": "RMAYD",
+      "brandSlug": "rmayd",
+      "category": "Hoodies",
+      "collection": "PANEL HOODIE-FREE",
+      "price": "SAR 420",
+      "priceSar": 420.0,
+      "unitAmount": 42000,
+      "color": "Black",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "description": "Exploring form, surface, and mark, this remade hoodie introduces contrast through texture and proportion. A clean black base is offset by an extended sleeve featuring a hand-painted tree bark pattern, created through a stamping process that introduces depth and irregularity. A tonal chest detail features “leave no trace” on a lightweight suede-textured panel. Designed with a classic hood, ribbed trims, and a dropped-shoulder silhouette, it offers a comfortable oversized fit with a structured drape. The elongated sleeve is intentionally exaggerated, adding movement and a sculptural quality. Finished with a kangaroo pocket for functionality. Produced in limited quantities, each piece is shaped by process and material no two are repeated.",
+      "story": "Exploring form, surface, and mark, this remade hoodie introduces contrast through texture and proportion. A clean black base is offset by an extended sleeve featuring a hand-painted tree bark pattern, created through a stamping process that introduces depth and irregularity. A tonal chest detail features “leave no trace” on a lightweight suede-textured panel. Designed with a classic hood, ribbed trims, and a dropped-shoulder silhouette, it offers a comfortable oversized fit with a structured drape. The elongated sleeve is intentionally exaggerated, adding movement and a sculptural quality. Finished with a kangaroo pocket for functionality. Produced in limited quantities, each piece is shaped by process and material no two are repeated.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "images": {
+        "front": "./assets/products-rmayd/st22b447/front.webp",
+        "back": "./assets/products-rmayd/st22b447/back.webp",
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST22B450",
+      "sku": "ST22B450",
+      "name": "WOOL BUCKET HAT",
+      "brandId": "rmayd",
+      "brandName": "RMAYD",
+      "brandSlug": "rmayd",
+      "category": "Hat",
+      "collection": "WOOL BUCKET HAT",
+      "price": "SAR 180",
+      "priceSar": 180.0,
+      "unitAmount": 18000,
+      "color": "Grey",
+      "sizes": [
+        "ONE",
+        "SIZE"
+      ],
+      "description": "Rooted in material and process, this bucket hat is defined by texture and natural variation. Crafted from wool, each piece develops its own unique surface pattern, with no two hats sharing the same composition. A blend of grey tones with black, white, and subtle hints of yellow creates an organic, layered effect resembling surface changes formed through time and wear. The pattern is not applied but emerges through process, giving each piece its own identity. Designed with a soft structure and classic bucket silhouette, it offers a comfortable, adaptable fit. The material provides warmth while maintaining breathability, making it suitable across seasons.",
+      "story": "Rooted in material and process, this bucket hat is defined by texture and natural variation. Crafted from wool, each piece develops its own unique surface pattern, with no two hats sharing the same composition. A blend of grey tones with black, white, and subtle hints of yellow creates an organic, layered effect resembling surface changes formed through time and wear. The pattern is not applied but emerges through process, giving each piece its own identity. Designed with a soft structure and classic bucket silhouette, it offers a comfortable, adaptable fit. The material provides warmth while maintaining breathability, making it suitable across seasons.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "images": {
+        "front": "./assets/products-rmayd/st22b450/front.webp",
+        "back": null,
+        "details": []
+      },
+      "available": true
+    },
+    {
+      "id": "ST22B451",
+      "sku": "ST22B451",
+      "name": "CORDUROY CAP",
+      "brandId": "rmayd",
+      "brandName": "RMAYD",
+      "brandSlug": "rmayd",
+      "category": "Cap",
+      "collection": "CORDUROY CAP",
+      "price": "SAR 165",
+      "priceSar": 165.0,
+      "unitAmount": 16500,
+      "color": "Black",
+      "sizes": [
+        "ONE",
+        "SIZE"
+      ],
+      "description": "Grounded in material and identity, this corduroy cap introduces a subtle extension of the rmayd. visual language. A black base is finished with an embroidered tree bark icon paired with /ree:’made/ beneath, forming a minimal and structured composition. The graphic remains controlled and centered, allowing texture and material to lead. The corduroy surface adds depth and softness, contrasting with the precision of the embroidery. Designed with a classic cap silhouette and curved brim, it offers a familiar shape with a considered finish. An adjustable metal closure at the back allows for a flexible fit.",
+      "story": "Grounded in material and identity, this corduroy cap introduces a subtle extension of the rmayd. visual language. A black base is finished with an embroidered tree bark icon paired with /ree:’made/ beneath, forming a minimal and structured composition. The graphic remains controlled and centered, allowing texture and material to lead. The corduroy surface adds depth and softness, contrasting with the precision of the embroidery. Designed with a classic cap silhouette and curved brim, it offers a familiar shape with a considered finish. An adjustable metal closure at the back allows for a flexible fit.",
+      "material": "",
+      "careInstructions": "",
+      "countryOfManufacture": "",
+      "images": {
+        "front": "./assets/products-rmayd/st22b451/front.webp",
+        "back": null,
+        "details": []
+      },
+      "available": true
+    }
+  ]
+}
