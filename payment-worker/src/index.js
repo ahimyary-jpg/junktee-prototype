@@ -1,4 +1,5 @@
 import { CATALOG, CATALOG_SCHEMA_VERSION, CATALOG_SOURCE_SHA256 } from "./catalog.generated.js";
+import { CATALOG as RMAYD_CATALOG } from "./rmayd-catalog.generated.js";
 
 const STRIPE_API = "https://api.stripe.com/v1";
 const CURRENCY = "sar";
@@ -62,7 +63,7 @@ function validateItems(value) {
 
   return value.map((item) => {
     const productId = String(item?.productId || "");
-    const product = CATALOG[productId];
+    const product = CATALOG[productId] || RMAYD_CATALOG[productId];
     const quantity = Number(item?.quantity);
     const requestedSize = String(item?.size || "").trim().toUpperCase();
     const size = !requestedSize && product?.sizes?.length === 1 ? product.sizes[0] : requestedSize;
@@ -82,8 +83,6 @@ function validateItems(value) {
       size,
       quantity,
       unitAmount: product.unitAmount,
-      passportId: product.passportId,
-      passportEligible: product.passportEligible !== false,
     };
   });
 }
@@ -106,7 +105,7 @@ function appendLineItem(form, index, item) {
   form.append(`${root}[price_data][currency]`, CURRENCY);
   form.append(`${root}[price_data][unit_amount]`, String(item.unitAmount));
   form.append(`${root}[price_data][product_data][name]`, item.name);
-  form.append(`${root}[price_data][product_data][description]`, `Size ${item.size} · Digital Passport included`);
+  form.append(`${root}[price_data][product_data][description]`, `Size ${item.size} · JUNKTEE curated edit`);
 }
 
 async function stripeRequest(path, env, init = {}) {
@@ -275,8 +274,6 @@ async function verifyCheckoutSession(sessionId, env, headers) {
         size: item.size,
         quantity: item.quantity,
         unitAmount: item.unitAmount,
-        passportId: item.passportId || `JT-${item.productId.toUpperCase()}-${hash.slice(index * 6, index * 6 + 8)}`,
-        passportEligible: item.passportEligible,
       })),
     },
   }, 200, headers);
