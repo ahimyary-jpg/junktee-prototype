@@ -1,6 +1,32 @@
 /* Marketplace presentation data. Product commerce remains authoritative in the Excel catalog. */
 window.JUNKTEE_MARKETPLACE = Object.freeze({
-  schemaVersion: 1,
+  schemaVersion: 2,
+  platform: {
+    navigation: {
+      primary: [
+        { id: "new-in", label: "New In" },
+        { id: "shop", label: "Shop" },
+        { id: "brands", label: "Brands" },
+        { id: "collections", label: "Collections" },
+        { id: "journal", label: "Journal" },
+      ],
+      secondary: [
+        { id: "search", label: "Search" },
+        { id: "account", label: "Account" },
+        { id: "bag", label: "Bag" },
+      ],
+      mobile: [
+        { id: "home", label: "Home" },
+        { id: "shop", label: "Shop" },
+        { id: "brands", label: "Brands" },
+        { id: "journal", label: "Journal" },
+        { id: "menu", label: "Menu" },
+      ],
+    },
+    homeSections: ["newIn", "brandMoment", "meetBrands", "curatedTogether", "journal", "statement"],
+    featuredBrandIds: ["rmayd", "junktee"],
+    features: { search: true, cabinet: true, sandboxCheckout: true },
+  },
   brands: [
     {
       id: "junktee",
@@ -8,7 +34,8 @@ window.JUNKTEE_MARKETPLACE = Object.freeze({
       status: "Founding brand",
       description: "The founding label and first expression of the JUNKTEE platform.",
       story: "JUNKTEE began with pieces designed to be kept, questioned, repaired, and carried forward. Its existing product catalog remains the platform’s first verified archive.",
-      passportEligible: true,
+      storyApproved: true,
+      sections: ["introduction", "story", "collection", "journal", "discover"],
       accent: "ink",
     },
     {
@@ -17,7 +44,8 @@ window.JUNKTEE_MARKETPLACE = Object.freeze({
       status: "Official identity · Collection forthcoming",
       description: "The first RMAYD collection will be available soon.",
       story: "Collection arriving soon.",
-      passportEligible: false,
+      storyApproved: false,
+      sections: ["introduction", "collection", "journal", "social", "discover"],
       accent: "ink",
       placeholder: true,
       instagramHandle: "@rmayd.official",
@@ -48,8 +76,6 @@ window.JUNKTEE_MARKETPLACE = Object.freeze({
       material: "",
       careInstructions: "",
       countryOfManufacture: "",
-      passportId: "",
-      passportEligible: false,
       purchasable: false,
       available: true,
       demo: true,
@@ -73,8 +99,6 @@ window.JUNKTEE_MARKETPLACE = Object.freeze({
       material: "",
       careInstructions: "",
       countryOfManufacture: "",
-      passportId: "",
-      passportEligible: false,
       purchasable: false,
       available: true,
       demo: true,
@@ -98,8 +122,6 @@ window.JUNKTEE_MARKETPLACE = Object.freeze({
       material: "",
       careInstructions: "",
       countryOfManufacture: "",
-      passportId: "",
-      passportEligible: false,
       purchasable: false,
       available: true,
       demo: true,
@@ -114,6 +136,6 @@ window.JUNKTEE_MARKETPLACE = Object.freeze({
   ],
   journal: [
     { id: "rmayd-intro", brandId: "rmayd", type: "Brand Update", title: "Collection arriving soon.", time: "Forthcoming", placeholder: true },
-    { id: "platform-passports", brandId: "platform", type: "Platform Note", title: "One Passport System, Many Independent Labels", time: "4 min read" },
+    { id: "selected-by-junktee", brandId: "platform", type: "Platform Note", title: "Why every label is selected, not simply listed", time: "4 min read", articleId: "a1" },
   ],
 });
