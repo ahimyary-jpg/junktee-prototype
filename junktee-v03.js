@@ -115,6 +115,8 @@
     const quantity = cartQuantity();
     badge.textContent = quantity;
     badge.style.display = quantity ? "flex" : "none";
+    const desktopCount = document.getElementById("desktop-cart-count");
+    if (desktopCount) desktopCount.textContent = quantity;
   }
 
   function selectedSize() {
@@ -153,7 +155,7 @@
     const button = document.getElementById("add-to-bag");
     button.textContent = "Added";
     button.setAttribute("aria-live", "polite");
-    setTimeout(() => { button.textContent = "Add to Bag"; }, 1300);
+    setTimeout(() => { button.textContent = product.purchasable === false ? "Add Preview to Bag" : "Add to Bag"; }, 1300);
     renderCartV03();
   };
 
