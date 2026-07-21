@@ -30,6 +30,8 @@ test("public frontend contains no Stripe secret or live credential patterns", as
     readFile(new URL("github-pages/index.html", root), "utf8"),
     readFile(new URL("github-pages/junktee-v03.js", root), "utf8"),
     readFile(new URL("github-pages/junktee-v03.css", root), "utf8"),
+    readFile(new URL("github-pages/marketplace.js", root), "utf8"),
+    readFile(new URL("github-pages/marketplace.css", root), "utf8"),
   ]);
   const publicSource = files.join("\n");
   assert.doesNotMatch(publicSource, /(?:sk|rk)_(?:test|live)_[A-Za-z0-9]{8,}/);

@@ -18,6 +18,8 @@ test("Excel is the authoritative source for all generated products", async () =>
   assert.equal(catalog.products.length, 11);
   assert.equal(new Set(catalog.products.map(({ id }) => id)).size, 11);
   assert.equal(catalog.products.every(({ id, name, unitAmount, sizes }) => id && name && unitAmount > 0 && sizes.length), true);
+  assert.equal(catalog.schemaVersion, 2);
+  assert.equal(catalog.products.every(({ brandId, brandName, passportEligible }) => brandId === "junktee" && brandName === "JUNKTEE" && passportEligible === true), true);
   assert.deepEqual(catalog.products.find(({ id }) => id === "ST23A444").sizes, ["S", "M", "L", "XL"]);
   assert.deepEqual(catalog.products.find(({ id }) => id === "ST23A442").sizes, ["S", "M", "L", "XL"]);
   assert.deepEqual(catalog.products.find(({ id }) => id === "ST23A443").sizes, ["S", "M", "L", "XL"]);
@@ -42,7 +44,7 @@ test("the Worker catalog exactly matches available spreadsheet prices and sizes"
   const catalog = JSON.parse(await read("github-pages/data/products.json"));
   const expected = Object.fromEntries(catalog.products.filter(({ available }) => available).map((product) => [
     product.id,
-    { name: product.name, unitAmount: product.unitAmount, sizes: product.sizes },
+    { name: product.name, brandId: product.brandId, brandName: product.brandName, unitAmount: product.unitAmount, sizes: product.sizes, passportId: product.passportId, passportEligible: product.passportEligible },
   ]));
   assert.deepEqual(CATALOG, expected);
 });
@@ -50,6 +52,7 @@ test("the Worker catalog exactly matches available spreadsheet prices and sizes"
 test("the storefront loads generated data instead of a hardcoded product array", async () => {
   const html = await read("github-pages/index.html");
   assert.match(html, /<script src="\.\/data\/products\.generated\.js(?:\?v=[^"]+)?"><\/script>/);
+  assert.match(html, /<script src="\.\/data\/marketplace\.generated\.js(?:\?v=[^"]+)?"><\/script>/);
   assert.doesNotMatch(html, /const PRODUCTS\s*=\s*\[/);
   assert.match(html, /Collection temporarily unavailable/);
   assert.match(html, /productImageHTML/);
