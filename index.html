@@ -320,8 +320,8 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 @media(min-width:900px){#app{border-radius:18px;border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 120px rgba(0,0,0,.18)}body{background:#DCD7CF}[data-theme="dark"] body{background:#0D0C0B}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
-<link rel="stylesheet" href="./junktee-v03.css?v=0.7.0">
-<link rel="stylesheet" href="./marketplace.css?v=0.7.0">
+<link rel="stylesheet" href="./junktee-v03.css?v=0.8.0">
+<link rel="stylesheet" href="./marketplace.css?v=0.8.0">
 </head>
 <body data-theme="dark">
 
@@ -730,6 +730,7 @@ function brandIdentityHTML(input,options){
   const brandId=typeof input==='string'?input:(input?.brandId||'junktee');
   const brandName=typeof input==='object'&&input?.brandName?input.brandName:(marketplaceBrand(brandId)?.name||String(input||'JUNKTEE').toUpperCase());
   if(brandId==='rmayd') return rmaydPictureHTML('primary',`brand-identity-image ${options.className||''}`,Object.prototype.hasOwnProperty.call(options,'alt')?options.alt:'RMAYD',options.eager?'eager':'lazy');
+  if(brandId==='junktee') return `<img class="brand-identity-image brand-identity-image--junktee ${escapeCatalogHTML(options.className||'')}" src="./public/brand/junktee-wordmark.jpeg" alt="${escapeCatalogHTML(Object.prototype.hasOwnProperty.call(options,'alt')?options.alt:'JUNKTEE')}" width="448" height="96" loading="${options.eager?'eager':'lazy'}" decoding="async">`;
   return `<span class="brand-text-identity ${escapeCatalogHTML(options.className||'')}">${escapeCatalogHTML(brandName)}</span>`;
 }
 function brandLinkHTML(product,options){
