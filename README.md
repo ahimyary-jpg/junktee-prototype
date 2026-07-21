@@ -1,6 +1,6 @@
 # JUNKTEE — Independent Fashion Platform Prototype
 
-JUNKTEE is a curated umbrella platform for selected independent fashion labels. JUNKTEE remains the founding brand and visual anchor; RMAYD is the second confirmed brand and uses its supplied official logo, secondary mark, and Instagram QR identity throughout the experience. RMAYD product content remains explicitly forthcoming until its approved Excel catalog is imported. The experience includes a multi-brand Home, Shop, Brands directory, reusable brand pages, Collections, Journal, Bag, Stripe Test Mode checkout, a personal Cabinet, and Settings. JUNKTEE’s differentiator is how it discovers, introduces, presents, and celebrates each selected brand—not simply how it lists products.
+JUNKTEE is a curated umbrella platform for selected independent fashion labels. JUNKTEE remains the founding brand and visual anchor; RMAYD is the second confirmed brand and uses its supplied official logo, secondary mark, Instagram QR identity, and approved product catalog throughout the experience. The experience includes a multi-brand Home, Shop, Brands directory, reusable brand pages, Collections, Journal, Bag, Stripe Test Mode checkout, a personal Cabinet, and Settings. JUNKTEE’s differentiator is how it discovers, introduces, presents, and celebrates each selected brand—not simply how it lists products.
 
 No real money can be charged. Card details are entered only on Stripe-hosted Checkout and are never seen or stored by JUNKTEE.
 
@@ -17,7 +17,7 @@ The retired identity and verification feature has been removed from the product.
 5. JUNKTEE asks the Worker to retrieve and verify the returned Checkout Session. A redirect query alone never creates an order.
 6. Only after the Worker confirms a paid, complete, test-mode Session with the expected total does the browser create the demo order and add the purchased item to the personal Cabinet.
 7. Non-sensitive presentation state is kept in browser `localStorage`. There is no order database or D1 dependency.
-8. `catalog/JUNKTEE_Product_Catalog.xlsx` is the product source of truth. A deterministic build creates the browser catalog, extracts its product images, and creates the Worker’s trusted price-and-size catalog.
+8. `catalog/JUNKTEE_Product_Catalog.xlsx` and `catalog/RMAYD_Product_Catalog.xlsx` are the product source-of-truth workbooks for their respective brands. Deterministic builds create separate browser catalogs, extract product images, and create the Worker’s trusted price-and-size catalogs without mixing brand records.
 9. `data/marketplace.generated.js` contains platform presentation structure, RMAYD’s official identity references, approved/placeholder editorial entries, and configurable navigation. It is not a commerce catalog and cannot override Excel prices or Worker validation.
 
 The Worker uses Stripe’s idempotency support for duplicate session requests. The browser also locks the submit button and reuses a pending session for the same Bag.
@@ -32,6 +32,8 @@ The Worker uses Stripe’s idempotency support for duplicate session requests. T
 - `scripts/build_rmayd_assets.py` — deterministic RMAYD crop, resize, optimization, and mirror step
 - `catalog/JUNKTEE_Product_Catalog.xlsx` — authoritative product workbook
 - `scripts/build_catalog.py` — Excel-to-web conversion and deterministic WebP optimization
+- `catalog/RMAYD_Product_Catalog.xlsx` — authoritative RMAYD product workbook
+- `scripts/build_rmayd_catalog.py` — RMAYD catalog conversion and deterministic WebP optimization
 - `requirements-catalog.txt` — pinned image-build dependency
 - `payment-worker/` — minimal Cloudflare Worker
 - `deliverables/` — local prototype package
@@ -42,7 +44,7 @@ The Worker uses Stripe’s idempotency support for duplicate session requests. T
 
 ## Product catalog workflow
 
-Edit only `catalog/JUNKTEE_Product_Catalog.xlsx` when changing products. The `Products` sheet controls the Collection, product detail content, images, sizes, availability, and SAR prices. The `Optional Details` sheet adds material, care, and origin by matching the same SKU. Deprecated identity columns are ignored and never rendered or used by the storefront.
+Edit only the relevant brand workbook when changing products: `catalog/JUNKTEE_Product_Catalog.xlsx` for JUNKTEE or `catalog/RMAYD_Product_Catalog.xlsx` for RMAYD. The `Products` sheet controls the Collection, product detail content, images, sizes, availability, and SAR prices. The `Optional Details` sheet adds material, care, and origin by matching the same SKU. Deprecated identity columns are ignored and never rendered or used by the storefront.
 
 Required fields for a publishable row are `SKU`, `Product Name`, and a positive `Price (SAR)`. SKUs must be unique. Blank size cells become `ONE SIZE`; missing optional details are hidden without breaking the site. Set `Available (Yes/No)` to `No` to exclude a product from the public storefront and Worker checkout catalog.
 
@@ -53,20 +55,20 @@ Required fields for a publishable row are `SKU`, `Product Name`, and a positive 
 - **Platform-owned:** marketplace navigation, Brands directory, cross-brand Shop filters, Collections, Journal aggregation, Bag, checkout shell, Cabinet, and account/settings surfaces.
 - **Brand-owned:** brand name, story, visual treatment, products, collections, product claims, imagery, price, inventory, and origin.
 - **JUNKTEE:** founding brand; its existing Excel products are authoritative and remain fully purchasable in Stripe Test Mode.
-- **RMAYD:** official identity is active; its collection cards contain only “Collection arriving soon” language, with no approved product name, price, inventory, size, material, origin, sustainability claim, or payment eligibility. The forthcoming entries cannot be purchased.
+- **RMAYD:** official identity and approved catalog are active. The imported workbook supplies the product names, prices, availability, sizes, descriptions, and embedded photography. The former “Collection arriving soon” entries remain as a safe fallback only when the RMAYD catalog is unavailable and are automatically suppressed when catalog rows are present.
 
 ## Onboarding a new brand
 
 1. Obtain owner-approved brand name, short description, story, and visual assets.
 2. Add the brand record to `data/marketplace.generated.js` and its mirrored `github-pages/data/marketplace.generated.js`.
-3. Add a `Brand` column to the Excel Products sheet if it is not present.
+3. Add a `Brand` column to the Excel Products sheet if it is not present (the RMAYD build assigns `RMAYD` automatically).
 4. Add approved product rows using the exact brand name, with real prices, sizes, availability, descriptions, and image cells or filenames.
 5. Add matching Optional Details rows for material, care, and origin where available.
-6. Run `npm run catalog:build`; review the generated JSON and WebP assets.
+6. Run the matching build (`npm run catalog:build` for JUNKTEE or `python3 scripts/build_rmayd_catalog.py` for RMAYD); review the generated JSON and WebP assets.
 7. Add or update the brand’s visual treatment in `marketplace.css`. Do not place commerce facts in CSS or JavaScript.
 8. Run the complete automated and responsive test pass before deployment.
 
-To replace the RMAYD forthcoming-collection entries, add approved RMAYD workbook rows and then remove the matching `RMAYD-DEMO-*` entries from the marketplace presentation file. Do not leave demo and authoritative versions of the same product active together. Future product updates then require editing only the Excel workbook and rerunning the catalog build.
+The RMAYD workbook is now the authoritative source for RMAYD commerce. The generated frontend automatically suppresses the matching `RMAYD-DEMO-*` fallback entries when approved RMAYD rows are present. Future RMAYD product updates require editing only `catalog/RMAYD_Product_Catalog.xlsx` and rerunning `python3 scripts/build_rmayd_catalog.py`.
 
 ## Brand configuration and RMAYD identity assets
 
@@ -74,7 +76,7 @@ To replace the RMAYD forthcoming-collection entries, add approved RMAYD workbook
 
 The Cabinet is intentionally independent of any identity or ownership credential. It is a device-local personal collection for saved/purchased demo pieces; payment confirmation may add an item, but no credential is issued, displayed, or required.
 
-RMAYD’s current approved content is limited to its supplied identity assets, `@rmayd.official`, and “Collection arriving soon” / “The first RMAYD collection will be available soon.” Product names, prices, sizes, inventory, photography, materials, origin, founder story, sustainability claims, and other editorial facts remain pending the approved catalog and content.
+RMAYD’s approved product catalog is now imported from `catalog/RMAYD_Product_Catalog.xlsx`. Product names, SAR prices, sizes, availability, descriptions, and embedded photography come from that workbook. The workbook’s optional details sheet is currently blank, so material, care, origin, founder story, sustainability claims, and other unapproved editorial facts remain intentionally undisclosed.
 
 The three supplied originals are preserved unchanged under `assets/brands/rmayd/originals/`. The public site loads responsive WebP derivatives so the primary logo, secondary mark, and Instagram QR remain sharp without downloading the 4500-pixel source canvases.
 
@@ -99,10 +101,12 @@ The generated storefront uses one neutral studio-frame system with a fixed 4:5 a
 
 Do not hand-edit these generated outputs:
 
-- `github-pages/data/products.json`
-- `github-pages/data/products.generated.js`
+- `github-pages/data/products.json` and `github-pages/data/products.generated.js`
+- `github-pages/data/rmayd.products.json` and `github-pages/data/rmayd.products.generated.js`
 - `github-pages/assets/products/`
+- `github-pages/assets/products-rmayd/`
 - `payment-worker/src/catalog.generated.js`
+- `payment-worker/src/rmayd-catalog.generated.js`
 
 The `Build product catalog` GitHub Action runs on workbook changes, regenerates the files, mirrors public catalog assets to the GitHub Pages repository root, and commits the generated result. A validation error stops the workflow before the existing live catalog is replaced.
 
@@ -221,7 +225,7 @@ The reset clears demo orders, purchased items, the Bag, shipping draft, pending 
 - Webhooks are intentionally omitted to keep this presentation build stateless. A production launch must add durable, idempotent webhook fulfillment and an order database.
 - Browser storage is device-local and can be cleared by the user.
 - GitHub Pages is static hosting; all payment and verification logic lives in the separate Worker and Stripe-hosted Checkout.
-- RMAYD has official identity assets but no supplied product catalog, approved product photography, product names, prices, sizes, inventory, materials, origin, or approved editorial story. Its current content is limited to forthcoming-collection placeholders and is blocked from payment.
+- RMAYD’s 11 approved catalog rows are live in Collection, brand pages, product detail, Bag, and sandbox checkout. Optional material/care/origin fields remain empty until they are supplied in the workbook; no unsupported claims are invented.
 - Cross-brand fulfillment, tax allocation, brand payouts, inventory reservation, account sync, durable order storage, and account synchronization require production backend decisions and are outside this static presentation build.
 
 This repository must never be configured with live Stripe credentials.
