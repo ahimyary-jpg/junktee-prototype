@@ -5,7 +5,9 @@ on:
     branches: [main]
     paths:
       - catalog/JUNKTEE_Product_Catalog.xlsx
+      - catalog/RMAYD_Product_Catalog.xlsx
       - scripts/build_catalog.py
+      - scripts/build_rmayd_catalog.py
       - requirements-catalog.txt
       - .github/workflows/catalog.yml
   workflow_dispatch:
@@ -31,18 +33,24 @@ jobs:
         run: python3 -m pip install --requirement requirements-catalog.txt
       - name: Convert Excel catalog and extract product images
         run: python3 scripts/build_catalog.py
+      - name: Convert RMAYD Excel catalog and extract product images
+        run: python3 scripts/build_rmayd_catalog.py
       - name: Sync generated files to the GitHub Pages root
         run: |
           mkdir -p data assets
           rm -rf assets/products
+          rm -rf assets/products-rmayd
           cp github-pages/data/products.json data/products.json
           cp github-pages/data/products.generated.js data/products.generated.js
+          cp github-pages/data/rmayd.products.json data/rmayd.products.json
+          cp github-pages/data/rmayd.products.generated.js data/rmayd.products.generated.js
           cp -R github-pages/assets/products assets/products
+          cp -R github-pages/assets/products-rmayd assets/products-rmayd
       - name: Commit generated catalog
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add github-pages/data github-pages/assets/products data/products.json data/products.generated.js assets/products payment-worker/src/catalog.generated.js
+          git add github-pages/data github-pages/assets/products github-pages/assets/products-rmayd data/products.json data/products.generated.js data/rmayd.products.json data/rmayd.products.generated.js assets/products assets/products-rmayd payment-worker/src/catalog.generated.js payment-worker/src/rmayd-catalog.generated.js
           git diff --cached --quiet && exit 0
           git commit -m "catalog: regenerate storefront and payment data"
           git push
