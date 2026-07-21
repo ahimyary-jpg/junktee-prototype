@@ -392,11 +392,16 @@ def build(workbook: Path) -> dict[str, object]:
             available = value(record, "Available (Yes/No)").lower() not in {"no", "false", "0"}
             country = value(optional, "Country of Manufacture")
             description = value(record, "Short Description")
+            brand_name = value(record, "Brand") or "JUNKTEE"
+            brand_slug = slug(brand_name)
 
             products.append({
                 "id": sku,
                 "sku": sku,
                 "name": name,
+                "brandId": brand_slug,
+                "brandName": brand_name,
+                "brandSlug": brand_slug,
                 "category": value(record, "Category") or "Uncategorised",
                 "collection": value(record, "Collection") or "JUNKTEE Archive",
                 "price": f"SAR {unit_amount / 100:,.2f}".replace(".00", ""),
@@ -410,6 +415,7 @@ def build(workbook: Path) -> dict[str, object]:
                 "careInstructions": value(optional, "Care Instructions"),
                 "countryOfManufacture": country,
                 "passportId": value(optional, "Digital Passport ID"),
+                "passportEligible": True,
                 "images": {
                     "front": image_paths["front"],
                     "back": image_paths["back"],
@@ -423,7 +429,7 @@ def build(workbook: Path) -> dict[str, object]:
     shutil.move(str(PRODUCT_ASSETS_BUILD), str(PRODUCT_ASSETS))
 
     return {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "source": "catalog/JUNKTEE_Product_Catalog.xlsx",
         "sourceSha256": source_hash,
         "products": products,
@@ -443,8 +449,12 @@ def write_outputs(catalog: dict[str, object]) -> None:
     worker_products = {
         product["id"]: {
             "name": product["name"],
+            "brandId": product["brandId"],
+            "brandName": product["brandName"],
             "unitAmount": product["unitAmount"],
             "sizes": product["sizes"],
+            "passportId": product["passportId"],
+            "passportEligible": product["passportEligible"],
         }
         for product in catalog["products"]
         if product["available"]
