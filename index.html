@@ -116,8 +116,6 @@ h1,h2,h3,p{ margin:0; }
 .imgbox{ width:100%; aspect-ratio:4/5; background:var(--surface); display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; }
 .imgbox svg{ width:38%; opacity:.5; }
 .imgbox.square{ aspect-ratio:1/1; }
-.tag-passport{ position:absolute; top:8px; left:8px; background:rgba(10,10,10,.75); color:#fff; font-size:9px; padding:3px 7px; border-radius:20px; display:flex; align-items:center; gap:3px; backdrop-filter:blur(4px); }
-.tag-passport svg{ width:9px;height:9px; stroke:var(--green-bright); }
 
 .product-card{ width:150px; }
 .product-card .imgbox{ border-radius:var(--radius); margin-bottom:8px; }
@@ -142,28 +140,10 @@ h1,h2,h3,p{ margin:0; }
 .pill{ padding:8px 14px; border-radius:999px; border:1.5px solid var(--border); font-size:12px; font-weight:600; white-space:nowrap; background:transparent; color:var(--fg);}
 .pill.active{ background:var(--fg); color:var(--bg); border-color:var(--fg); }
 
-/* ---------- PASSPORT ---------- */
-.passport-modal{ position:fixed; inset:0; z-index:200; background:var(--black); color:#fff; opacity:0; visibility:hidden; transform:scale(.98); transition:opacity .3s var(--ease), transform .3s var(--ease), visibility 0s linear .3s; }
-.passport-modal.active{ opacity:1; visibility:visible; transform:scale(1); transition:opacity .3s var(--ease), transform .3s var(--ease);}
-.passport-modal.instant{ transition:none !important; }
-.passport-inner{ max-width:480px; margin:0 auto; height:100%; position:relative; display:flex; flex-direction:column;}
-@media(min-width:900px){ .passport-modal{ position:absolute; } .passport-inner{ max-width:none; } }
-.passport-top{ display:flex; align-items:center; justify-content:space-between; padding:16px; }
-.passport-close{ background:none; border:none; color:#fff; font-size:20px; }
-.passport-pageindicator{ font-family:var(--mono); font-size:11px; color:var(--g500); }
-.passport-pages{ flex:1; overflow:hidden; position:relative; }
-.ppage{ position:absolute; inset:0; padding:0 24px 40px; overflow-y:auto; opacity:0; transform:translateX(16px); transition:opacity .25s var(--ease), transform .25s var(--ease); }
-.ppage.active{ opacity:1; transform:translateX(0); z-index:2; }
-.ppage-title{ font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--green-bright); margin-bottom:18px; font-weight:700;}
-.seal{ width:64px;height:64px;border-radius:50%; border:1.5px solid #fff; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; font-size:9px; font-weight:700; letter-spacing:.05em; text-align:center;}
-.pid{ font-family:var(--mono); font-size:28px; text-align:center; letter-spacing:.02em; margin-bottom:6px;}
-.pcollection{ text-align:center; color:var(--g500); font-size:13px; margin-bottom:22px;}
-.verified-badge{ display:flex; align-items:center; justify-content:center; gap:6px; background:var(--green); color:#fff; font-size:11px; font-weight:700; padding:8px 14px; border-radius:999px; width:fit-content; margin:0 auto;}
-.verified-badge svg{ width:12px;height:12px; }
+/* ---------- PRODUCT FACTS & COLLECTION ACTIVITY ---------- */
 .datarow{ display:flex; justify-content:space-between; padding:13px 0; border-bottom:1px solid var(--g900); font-size:14px;}
 .datarow .k{ color:var(--g500); }
 .datarow .v{ font-family:var(--mono); text-align:right; }
-.pp-para{ font-size:15px; line-height:1.65; color:#e8e8e8; margin-bottom:16px;}
 .pquote{ font-size:19px; font-weight:600; line-height:1.4; margin:22px 0; color:#fff;}
 .rail{ position:relative; margin-top:8px; padding-left:20px; }
 .rail::before{ content:""; position:absolute; left:5px; top:6px; bottom:6px; width:1px; background:var(--g700);}
@@ -172,46 +152,14 @@ h1,h2,h3,p{ margin:0; }
 .rail-item .rt-date{ font-family:var(--mono); font-size:11px; color:var(--green-bright); margin-bottom:3px;}
 .rail-item .rt-desc{ font-size:14px; color:#eee; }
 .rail-continue{ font-size:12px; color:var(--g500); font-style:italic; padding-left:0; margin-top:4px;}
-.pp-nav{ display:flex; justify-content:space-between; padding:16px 24px; }
 .dotrow{ display:flex; gap:5px; justify-content:center; padding-bottom:10px;}
 .dot{ width:5px;height:5px;border-radius:50%; background:var(--g700);}
 .dot.active{ background:var(--green-bright); width:14px; border-radius:3px; transition:all .2s;}
-
-/* ---------- SCAN / VERIFY ---------- */
-.scan-modal{ position:fixed; inset:0; z-index:300; background:#000; display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:opacity .25s, visibility 0s linear .25s;}
-.scan-modal.active{ opacity:1; visibility:visible; transition:opacity .25s;}
-@media(min-width:900px){ .scan-modal{ position:absolute; } }
-.scan-view{ position:absolute; inset:0; display:none; flex-direction:column; align-items:center; justify-content:center; color:#fff; text-align:center; padding:40px;}
-.scan-view.active{ display:flex; }
-.viewfinder{ width:220px;height:220px; border:2px solid rgba(255,255,255,.5); border-radius:24px; margin-bottom:28px; position:relative;}
-.viewfinder::before,.viewfinder::after{ content:""; position:absolute; width:24px;height:24px; border-color:var(--green-bright); }
-.scanline{ position:absolute; left:6%; right:6%; height:2px; background:var(--green-bright); top:10%; box-shadow:0 0 12px var(--green-bright); animation:sweep 2.4s var(--ease) infinite;}
-@keyframes sweep{ 0%{top:8%;} 50%{top:88%;} 100%{top:8%;} }
-.scan-close{ position:absolute; top:20px; right:20px; background:none;border:none;color:#fff;font-size:22px; z-index:5;}
-.verify-stage{ text-align:center; }
-.verify-ring{ width:120px;height:120px;border-radius:50%; border:1.5px solid var(--g700); display:flex; align-items:center; justify-content:center; margin:0 auto 24px; position:relative;}
-.verify-ring .pulse{ position:absolute; inset:-8px; border-radius:50%; border:1.5px solid var(--green-bright); opacity:0;}
-.verify-ring.done .pulse{ animation:pulseOut 1s var(--ease); }
-@keyframes pulseOut{ 0%{opacity:1; transform:scale(.85);} 100%{opacity:0; transform:scale(1.3);} }
-.verify-ring svg{ width:46px;height:46px; stroke:var(--green-bright); opacity:0; transition:opacity .3s;}
-.verify-ring.done svg{ opacity:1; }
-.verify-id{ font-family:var(--mono); font-size:22px; letter-spacing:.03em; margin-bottom:6px; opacity:0; transform:translateY(6px); transition:all .4s var(--ease);}
-.verify-id.show{ opacity:1; transform:translateY(0);}
-.verify-caption{ font-size:12px; color:var(--g500); opacity:0; transition:opacity .4s var(--ease) .3s;}
-.verify-caption.show{ opacity:1; }
-.signature-mark{ width:120px; height:36px; margin:18px auto 0; opacity:0; transition:opacity .5s var(--ease); }
-.signature-mark.show{ opacity:1; }
-.activation-card{ color:#fff; text-align:center; padding:20px;}
-.activation-card .headline{ font-size:24px; margin-bottom:10px;}
-.activation-card .sub{ color:var(--g500); font-size:14px; margin-bottom:26px; line-height:1.5;}
-.crew-box{ background:var(--g900); border-radius:14px; padding:18px; text-align:left; margin-bottom:20px; }
-.crew-box p{ font-size:13px; color:#ddd; line-height:1.55; margin-bottom:10px;}
 .toggle-row{ display:flex; align-items:center; justify-content:space-between; }
 .toggle{ width:42px;height:24px;border-radius:20px; background:var(--g700); position:relative; border:none; flex-shrink:0;}
 .toggle.on{ background:var(--green); }
 .toggle .knob{ position:absolute; top:2px;left:2px; width:20px;height:20px;border-radius:50%; background:#fff; transition:left .2s var(--ease);}
 .toggle.on .knob{ left:20px; }
-.next-actions a{ display:flex; align-items:center; justify-content:space-between; padding:14px 0; border-bottom:1px solid var(--g900); color:#fff; font-size:14px; font-weight:600;}
 
 /* ---------- TIMELINE (cabinet) ---------- */
 .stat-para{ font-size:15px; line-height:1.7; }
@@ -290,7 +238,7 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 .screen.active{transition:opacity .36s var(--ease),transform .36s var(--ease)}
 .section{padding:48px 24px}.section-tight{padding:40px 24px}.section-tight+.section-tight{padding-top:48px}
 .eyebrow{font-size:10px;letter-spacing:.14em;font-weight:500}.display{font-size:46px;line-height:1.02;letter-spacing:-.035em}.headline{font-size:29px;line-height:1.12;letter-spacing:-.025em}.body,.body-md{font-size:16px;line-height:1.7}.meta{font-size:11px;line-height:1.55;letter-spacing:.025em}
-.hero .line,#screen-journal .headline,#art-title,#screen-article .pquote,.passport-modal .pid,#screen-product .pquote{font-family:var(--serif);font-weight:400}
+.hero .line,#screen-journal .headline,#art-title,#screen-article .pquote,#screen-product .pquote{font-family:var(--serif);font-weight:400}
 .divider{background:var(--border);margin:40px 0}
 
 /* Architectural controls */
@@ -320,7 +268,6 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 .visual-p2{background:linear-gradient(145deg,rgba(255,255,255,.08),transparent 40%),linear-gradient(120deg,#6B6256,#171614 63%,#0B0B0A)}.visual-p3{background:linear-gradient(155deg,#D5CEC0,#8C8375 42%,#282622)}.visual-p4{background:linear-gradient(130deg,#413D37,#D5C6AD 68%,#8B7659)}.visual-p5{background:linear-gradient(135deg,#080808,#47413A 54%,#1B1917)}.visual-p6{background:linear-gradient(130deg,#8A7E6B,#CFC5B4 48%,#403A31)}
 .story-photo:before{width:70%;height:76%;clip-path:polygon(44% 0,56% 0,60% 19%,78% 25%,72% 100%,28% 100%,22% 25%,40% 19%);background:linear-gradient(90deg,#171614,#665D51)}
 .story-photo{background:linear-gradient(135deg,#B9AA91,#3A342D 48%,#151412)}
-.tag-passport{display:none!important}.passport-meta{display:block;margin-top:7px;color:var(--green);font-size:9px;letter-spacing:.08em;text-transform:uppercase}
 
 /* Hero: full-bleed, documentary, unhurried */
 .hero{height:100%;min-height:100%;background:#11100F;align-items:flex-end}
@@ -332,7 +279,6 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 #screen-home>.section-tight{padding-top:64px;padding-bottom:64px}
 #screen-home>.section-tight .imgbox[onclick]{aspect-ratio:4/5!important;margin:22px -24px 28px!important;width:calc(100% + 48px)}
 #screen-home .pcard-hero{padding:0}.pcard-hero .imgbox{aspect-ratio:3/4}.pcard-hero .body-md{margin-top:16px}.product-card{width:168px!important}.product-card .imgbox{border-radius:2px;margin-bottom:14px}.product-card .name{font-size:14px;line-height:1.35}.product-card .meta{font-weight:400}
-.passport-chapter{margin:32px 0 0!important;padding:72px 28px!important;border-radius:0!important;background:#0C0C0B!important;min-height:520px;display:flex;flex-direction:column;justify-content:center}.passport-chapter>div{background:transparent!important;border:0!important;border-radius:0!important;padding:28px 0!important}.passport-chapter .headline{font-size:36px}.passport-chapter .btn-secondary{width:auto;align-self:flex-start;border:0;padding-left:0;padding-right:0}
 .archive-tile .imgbox{border-radius:0}.crew-grid{gap:18px!important}.crew-grid .imgbox{border-radius:2px!important}
 
 /* Collection: curated wall, not catalog */
@@ -346,13 +292,10 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 #screen-product>.section-tight{padding-top:56px;padding-bottom:56px}#screen-product>.section-tight:nth-of-type(1){padding-top:32px;padding-bottom:42px}
 #pd-name{font-size:32px!important;line-height:1.04}.origin-line{border:0!important;background:transparent!important;color:var(--muted)!important;padding:0!important;font-size:10px!important;letter-spacing:.1em!important}
 #pd-price{font-size:12px;font-weight:400;letter-spacing:.06em}#screen-product .pquote{font-size:34px!important;line-height:1.2;margin:24px 0!important}
-.materials-fact{display:grid;grid-template-columns:1fr 1fr;gap:28px;border:0!important;padding:24px 0!important}.passport-teaser{margin:0 -24px;background:#0C0C0B;color:#fff;border-radius:0!important;padding:64px 28px!important;min-height:300px;display:flex;flex-direction:column;justify-content:center}.passport-teaser .btn{border:0;padding-left:0;justify-content:flex-start;width:auto}
+.materials-fact{display:grid;grid-template-columns:1fr 1fr;gap:28px;border:0!important;padding:24px 0!important}
 .sizechip{width:52px;height:52px;border-radius:2px;border:1px solid var(--border);font-size:12px}.sizechip.selected{background:var(--fg);color:var(--bg)}
 
-/* Passport: collectible document */
-.passport-modal{background:#080807;transition:opacity .38s var(--ease),transform .42s var(--ease),visibility 0s linear .42s}.passport-modal.active{transition:opacity .38s var(--ease),transform .42s var(--ease)}
-.passport-top{padding:24px}.ppage{padding:24px 30px 56px;transform:translateX(28px) scale(.995);transition:opacity .38s var(--ease),transform .42s var(--ease);box-shadow:-24px 0 50px rgba(0,0,0,0)}.ppage.active{box-shadow:-24px 0 50px rgba(0,0,0,.14)}
-.ppage-title{letter-spacing:.16em;margin-bottom:32px}.seal{width:108px;height:108px;margin:18px auto 38px;border-width:1px;font-size:10px}.pid{font-size:52px;line-height:.95;letter-spacing:-.035em;margin-bottom:16px}.pcollection{margin-bottom:30px}.verified-badge{font-size:9px;letter-spacing:.1em;padding:8px 14px}.datarow{padding:20px 0;border-bottom-color:rgba(255,255,255,.09)}.rail-item{padding-bottom:38px}.pquote{font-family:var(--serif);font-size:29px;font-weight:400;line-height:1.3}.pp-nav{padding:18px 30px 26px}.dotrow{gap:7px}.dot.active{width:22px}
+.datarow{padding:20px 0}.rail-item{padding-bottom:38px}.pquote{font-family:var(--serif);font-size:29px;font-weight:400;line-height:1.3}.dotrow{gap:7px}.dot.active{width:22px}
 
 /* Cabinet: personal gallery */
 #cabinet-grid{gap:34px 18px!important}#cabinet-grid>div:first-child{grid-column:1/-1}#cabinet-grid .imgbox{aspect-ratio:4/5}#cabinet-grid .name{font-size:14px!important;margin-top:14px!important}
@@ -369,21 +312,18 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 .field{margin-bottom:30px}.field label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:500}.field input,.field select{border:0;border-bottom:1px solid var(--border);border-radius:0;padding:13px 0;background:transparent;font-size:15px}.field input:focus,.field select:focus{outline:0;border-color:var(--green)}#screen-checkout>.section-tight{padding:46px 28px}.checkout-section{margin-bottom:56px}
 .settings-group{margin-bottom:48px}.settings-group>.grouplabel{letter-spacing:.14em}.settings-group>div{border:0!important;border-radius:0!important}.setting-row{padding:18px 0!important;border-bottom:1px solid var(--border)!important}.setting-row:last-child{border-bottom:1px solid var(--border)!important}
 
-/* Scan: precision instrument */
-.scan-modal{background:#070707;transition:opacity .38s var(--ease),visibility 0s linear .38s}.scan-view{padding:48px}.viewfinder{width:244px;height:244px;border:0;border-radius:0;margin-bottom:48px;background:linear-gradient(var(--green-bright),var(--green-bright)) left top/32px 1px no-repeat,linear-gradient(var(--green-bright),var(--green-bright)) left top/1px 32px no-repeat,linear-gradient(var(--green-bright),var(--green-bright)) right top/32px 1px no-repeat,linear-gradient(var(--green-bright),var(--green-bright)) right top/1px 32px no-repeat,linear-gradient(var(--green-bright),var(--green-bright)) left bottom/32px 1px no-repeat,linear-gradient(var(--green-bright),var(--green-bright)) left bottom/1px 32px no-repeat,linear-gradient(var(--green-bright),var(--green-bright)) right bottom/32px 1px no-repeat,linear-gradient(var(--green-bright),var(--green-bright)) right bottom/1px 32px no-repeat}.scanline{left:10%;right:10%;height:1px;animation-duration:3.2s;box-shadow:0 0 18px var(--green-bright)}.verify-ring{width:144px;height:144px;border-width:1px}.verify-id{font-family:var(--serif);font-size:42px;letter-spacing:-.03em;margin-top:30px}.signature-mark{width:210px;height:64px;margin-top:32px;transition:opacity .7s var(--ease)}.activation-card .headline{font-family:var(--serif);font-size:38px;line-height:1.05;font-weight:400}.crew-box{border-radius:2px;background:#151515;padding:24px}.next-actions a{padding:18px 0;border-bottom-color:#242424}
-
 /* Reveal & RTL */
 .editorial-reveal{opacity:0;transform:scale(1.04) translateY(12px)}.editorial-reveal.in-view{opacity:1;transform:scale(1) translateY(0);transition:opacity .7s var(--ease),transform .85s var(--ease)}
-[dir="rtl"] .hero-content,[dir="rtl"] .activation-card{text-align:right}[dir="rtl"] .hero-media:before{right:auto;left:11%}[dir="rtl"] .ppage{transform:translateX(-28px) scale(.995)}[dir="rtl"] .ppage.active{transform:translateX(0) scale(1)}[dir="rtl"] .datarow .v{text-align:left}[dir="rtl"] .rail{padding-left:0;padding-right:20px}[dir="rtl"] .rail:before{left:auto;right:5px}[dir="rtl"] .rail-item:before{left:auto;right:-20px}
+[dir="rtl"] .hero-content{text-align:right}[dir="rtl"] .hero-media:before{right:auto;left:11%}[dir="rtl"] .datarow .v{text-align:left}[dir="rtl"] .rail{padding-left:0;padding-right:20px}[dir="rtl"] .rail:before{left:auto;right:5px}[dir="rtl"] .rail-item:before{left:auto;right:-20px}
 
-@media(max-width:380px){.hero .line{font-size:40px}.display{font-size:40px}.section-tight{padding-left:20px;padding-right:20px}.pid{font-size:44px}.cart-item{grid-template-columns:105px 1fr auto}.cart-item .imgbox{width:105px}}
+@media(max-width:380px){.hero .line{font-size:40px}.display{font-size:40px}.section-tight{padding-left:20px;padding-right:20px}.cart-item{grid-template-columns:105px 1fr auto}.cart-item .imgbox{width:105px}}
 @media(min-width:900px){#app{border-radius:18px;border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 120px rgba(0,0,0,.18)}body{background:#DCD7CF}[data-theme="dark"] body{background:#0D0C0B}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
-<link rel="stylesheet" href="./junktee-v03.css?v=0.6.0">
-<link rel="stylesheet" href="./marketplace.css?v=0.6.0">
+<link rel="stylesheet" href="./junktee-v03.css?v=0.7.0">
+<link rel="stylesheet" href="./marketplace.css?v=0.7.0">
 </head>
-<body data-theme="light">
+<body data-theme="dark">
 
 <div id="app">
 
@@ -406,8 +346,8 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
           <p class="display">Discover independent labels with their identities intact.</p>
         </div>
         <div class="ob-slide" data-slide="2">
-          <p class="eyebrow" style="margin-bottom:14px;">Every Piece</p>
-          <p class="display">One platform Passport records product identity and ownership over time.</p>
+          <p class="eyebrow" style="margin-bottom:14px;">Selected Labels</p>
+          <p class="display">Every brand keeps its own voice. JUNKTEE brings the edit together.</p>
         </div>
       </div>
       <div class="ob-dots" id="ob-dots">
@@ -451,7 +391,6 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
       </div>
       <div class="pcard-hero" id="featured-product" style="margin-top:14px;">
         <div class="imgbox editorial-reveal" id="featured-product-image">
-          <span class="tag-passport"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4" stroke="currentColor"/></svg>Passport</span>
           <svg viewBox="0 0 24 24"><path d="M6 4l12 16M18 4L6 20" stroke="currentColor"/></svg>
         </div>
         <p class="body-md" id="featured-product-name">Latest piece</p>
@@ -464,17 +403,6 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
       <p class="eyebrow">Why This Piece Matters</p>
       <p class="pquote" style="color:var(--fg); font-size:18px; margin:12px 0;">"We wanted a shirt that admits the joke before you do."</p>
       <p class="meta" id="home-product-note"></p>
-    </div>
-
-    <div class="section-tight passport-chapter" style="background:var(--g900); color:#fff;">
-      <p class="eyebrow" style="color:var(--green-bright);">Digital Passport</p>
-      <h2 class="headline" style="margin:10px 0;">See what's really in it.</h2>
-      <p class="body" style="color:#ccc; margin-bottom:18px;">Every JUNKTEE piece carries its own verified story.</p>
-      <div style="background:#000; border:1px solid #262626; border-radius:12px; padding:16px; margin-bottom:16px;">
-        <p class="mono" id="home-passport-id" style="font-size:15px;">Catalog loading</p>
-        <span class="verified-badge" style="margin-top:8px;"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4" stroke="currentColor"/></svg>Passport available</span>
-      </div>
-      <button class="btn btn-secondary" style="color:#fff; border-color:#fff;" onclick="startScan()">Scan a piece</button>
     </div>
 
     <div class="section-tight">
@@ -530,7 +458,7 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
         <span class="pill active origin-line" id="pd-origin" style="cursor:default;">Origin details pending</span>
       </div>
       <p class="body-md" id="pd-price">SAR 249</p>
-      <p class="meta" style="margin-top:4px; color:var(--green);">In stock</p>
+      <p class="meta" id="pd-availability" style="margin-top:4px; color:var(--green);">In stock</p>
     </div>
     <div class="divider" style="margin:0 16px;"></div>
 
@@ -555,14 +483,6 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
       <p class="meta" id="pd-care" style="padding:8px 0;"></p>
     </div>
 
-    <div class="section-tight" id="pd-passport-section">
-      <div class="passport-teaser" style="background:var(--g900); color:#fff;">
-        <p class="mono" id="pd-passport-id" style="font-size:14px;"></p>
-        <p class="meta" id="pd-passport-meta" style="color:#999; margin:6px 0 14px;">Passport preview</p>
-        <button class="btn btn-secondary" style="color:#fff; border-color:#555;" onclick="openPassport()">Open Passport</button>
-      </div>
-    </div>
-
     <div class="section-tight" id="pd-size-section">
       <p class="eyebrow" style="margin-bottom:10px;">Size</p>
       <p class="meta" style="margin-bottom:10px;">Runs oversized — most people size down.</p>
@@ -578,7 +498,7 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
     </div>
 
     <div class="section-tight">
-      <p class="eyebrow">More from this Drop</p>
+      <p class="eyebrow" id="pd-related-title">More from this Drop</p>
       <div class="hscroll" style="padding-left:0; margin-top:12px;" id="pd-related"></div>
     </div>
   </div>
@@ -586,27 +506,26 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
   <!-- ============ COLLECTOR CABINET ============ -->
   <div class="screen" id="screen-cabinet">
     <div class="section-tight" style="padding-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
-      <p class="body-md">Layla's Cabinet</p>
+      <p class="body-md">My Collection</p>
       <button class="icon-btn" onclick="go('settings')"><svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.9.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.9V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg></button>
     </div>
 
     <div class="section-tight" style="padding-top:0;">
-      <p class="eyebrow" style="margin-bottom:10px;">My Collection</p>
+      <p class="eyebrow" style="margin-bottom:10px;">Saved &amp; Purchased</p>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" id="cabinet-grid"></div>
     </div>
 
     <div class="section-tight">
       <p class="stat-para">
-        <span class="n">3</span> pieces, all with active passports. <span class="n">1</span> year collecting.
-        <span class="n">0</span> repairs completed. <span class="n">3</span> pieces still with their first owner.
+        <span class="n">3</span> pieces in your collection. Saved edits and completed demo purchases stay together on this device.
       </p>
     </div>
 
     <div class="section-tight">
-      <p class="eyebrow" style="margin-bottom:12px;">Timeline</p>
+      <p class="eyebrow" style="margin-bottom:12px;">Recent Activity</p>
       <div class="rail" style="padding-left:20px;">
-        <div class="rail-item"><p class="meta mono" style="color:var(--green);">MAR 2025</p><p class="body" style="margin-top:2px;">First piece activated — Recycle Tee</p></div>
-        <div class="rail-item"><p class="meta mono" style="color:var(--green);">JUL 2025</p><p class="body" style="margin-top:2px;">First scan of the season</p></div>
+        <div class="rail-item"><p class="meta mono" style="color:var(--green);">MAR 2025</p><p class="body" style="margin-top:2px;">Saved — Recycle Tee</p></div>
+        <div class="rail-item"><p class="meta mono" style="color:var(--green);">JUL 2025</p><p class="body" style="margin-top:2px;">Added a new piece to the collection</p></div>
         <p class="rail-continue">This story continues.</p>
       </div>
     </div>
@@ -618,9 +537,6 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
       </div>
     </div>
 
-    <div class="section-tight">
-      <button class="btn btn-secondary" onclick="toast('Opening Archive index…')">Open Full Passport Archive</button>
-    </div>
   </div>
 
   <!-- ============ JOURNAL ============ -->
@@ -657,7 +573,7 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
         <p class="body" style="margin-bottom:18px;">So: a recycling mark, worn loud instead of printed small on a bottle nobody reads. A shirt that's honest about being hemp because hemp actually uses less water, not because "sustainable" sounds nice on a hangtag. And a dead fish, because sometimes the truest thing you can say, you have to say sideways.</p>
       </div>
       <div class="divider"></div>
-      <p class="eyebrow" style="margin-bottom:12px;">Related Passport Stories</p>
+      <p class="eyebrow" style="margin-bottom:12px;">Related Pieces</p>
       <div class="hscroll" style="padding-left:0;" id="art-related"></div>
     </div>
   </div>
@@ -763,73 +679,6 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
     <span id="cart-badge" style="position:absolute; top:-2px; right:-2px; background:var(--green); color:#fff; font-size:9px; font-weight:700; border-radius:50%; width:16px;height:16px; display:none; align-items:center; justify-content:center;">0</span>
   </button>
 
-  <!-- ============ PASSPORT MODAL ============ -->
-  <div class="passport-modal" id="passport-modal">
-    <div class="passport-inner">
-      <div class="passport-top">
-        <button class="passport-close" onclick="closePassport()">✕</button>
-        <span class="passport-pageindicator" id="pp-indicator">1 / 8</span>
-        <span style="width:20px;"></span>
-      </div>
-      <div class="passport-pages" id="passport-pages"></div>
-      <div class="dotrow" id="pp-dots"></div>
-      <div class="pp-nav">
-        <button class="btn-text" style="color:#fff;" onclick="ppMove(-1)">← Prev</button>
-        <button class="btn-text" style="color:#fff;" onclick="ppMove(1)">Next →</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============ SCAN / VERIFY / ACTIVATE MODAL ============ -->
-  <div class="scan-modal" id="scan-modal">
-    <button class="scan-close" onclick="closeScan()">✕</button>
-
-    <div class="scan-view active" id="scan-step-camera">
-      <div class="viewfinder"><div class="scanline"></div></div>
-      <p class="body-md">Find the mark on your tag.</p>
-      <p class="meta" style="margin-top:20px; color:#888;">Align the care tag inside the frame.</p>
-      <button class="btn btn-primary" style="max-width:220px; margin-top:18px;" onclick="doVerify()">Scan Tag</button>
-      <button class="btn-text" style="color:#aaa; margin-top:14px;" onclick="toast('Enter Piece ID — simulated')">Trouble scanning? Enter Piece ID</button>
-    </div>
-
-    <div class="scan-view" id="scan-step-verify">
-      <div class="verify-stage">
-        <div class="verify-ring" id="verify-ring"><div class="pulse"></div><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
-        <p class="verify-id mono" id="verify-id">JT-0891-2026</p>
-        <svg class="signature-mark" id="signature-mark" viewBox="0 0 120 36" fill="none" stroke="var(--green-bright)" stroke-width="1.5"><path d="M2 20 Q20 4 35 20 T68 18 Q85 6 100 22 T118 16"/></svg>
-        <p class="verify-caption" id="verify-caption">This moment, once.</p>
-      </div>
-    </div>
-
-    <div class="scan-view" id="scan-step-activate">
-      <div class="activation-card">
-        <p class="eyebrow" style="color:var(--green-bright);">Passport Activated</p>
-        <h1 class="headline" style="margin:14px 0 8px;">You're the first owner of Piece 0891.</h1>
-        <p class="sub">Verified today in Jeddah. Yours, on record, from here.</p>
-        <button class="btn btn-primary" style="max-width:240px; margin:0 auto;" onclick="showActivateConfirm()">Continue</button>
-      </div>
-    </div>
-
-    <div class="scan-view" id="scan-step-confirm">
-      <div class="activation-card" style="text-align:left; width:100%; max-width:340px;">
-        <h1 class="headline" style="text-align:center; margin-bottom:20px;">That's it. Piece 0891 is officially yours.</h1>
-        <div class="crew-box">
-          <p>You're part of the Crew now — not a club with dues, just everyone who's chosen to actually own what they wear. There's nothing you need to do.</p>
-          <div class="toggle-row">
-            <span class="meta" style="color:#aaa;">Show on Crew feed (optional)</span>
-            <button class="toggle" id="crew-share-toggle" onclick="this.classList.toggle('on')"><span class="knob"></span></button>
-          </div>
-        </div>
-        <div class="next-actions">
-          <a onclick="closeScanAnd('passport')">Explore the Passport <span>→</span></a>
-          <a onclick="closeScanAnd('article','a1')">Read the Story <span>→</span></a>
-          <a onclick="showCurrentCare()">Care Guide <span>→</span></a>
-        </div>
-        <button class="btn btn-primary" style="margin-top:20px;" onclick="closeScan()">Done</button>
-      </div>
-    </div>
-  </div>
-
   <div class="toast" id="toast">Saved</div>
 </div>
 
@@ -840,13 +689,13 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 <p id="desktop-frame-label" style="text-align:center; margin-top:14px; font-family:-apple-system,sans-serif; color:#888; font-size:12px;">JUNKTEE — Private Preview</p>
 
 <script src="./data/products.generated.js?v=0802d264"></script>
-<script src="./data/marketplace.generated.js?v=0.6.0"></script>
+<script src="./data/marketplace.generated.js?v=0.7.0"></script>
 <script>
 /* ================= DATA ================= */
 const CATALOG_PAYLOAD = window.JUNKTEE_PRODUCT_CATALOG || {products:[]};
 const MARKETPLACE = window.JUNKTEE_MARKETPLACE || {brands:[],demoProducts:[],collections:[],journal:[]};
 const PRODUCTS = Array.isArray(CATALOG_PAYLOAD.products)
-  ? CATALOG_PAYLOAD.products.filter(product=>product && product.available !== false).map(product=>({brandId:'junktee',brandName:'JUNKTEE',brandSlug:'junktee',passportEligible:true,purchasable:true,...product}))
+  ? CATALOG_PAYLOAD.products.filter(product=>product && product.available !== false).map(product=>({brandId:'junktee',brandName:'JUNKTEE',brandSlug:'junktee',purchasable:true,...product}))
   : [];
 PRODUCTS.push(...(Array.isArray(MARKETPLACE.demoProducts)?MARKETPLACE.demoProducts:[]));
 const ARTICLES = [
@@ -933,7 +782,7 @@ function productCardHTML(p, w){
   return `<div class="card product-card" style="width:${w||150}px; border:none;" onclick="openProduct('${escapeCatalogHTML(p.id)}')">
     <div class="imgbox catalog-product editorial-reveal">${productImageHTML(p)}</div>
     ${brandLinkHTML(p)}
-    <span class="passport-meta">${p.passportEligible===false?'Catalog forthcoming':'Passport available'}</span><p class="name">${escapeCatalogHTML(p.name)}</p><p class="meta">${escapeCatalogHTML(p.price)}</p>
+    <p class="name">${escapeCatalogHTML(p.name)}</p><p class="meta">${escapeCatalogHTML(p.price)}</p>
   </div>`;
 }
 function renderFeaturedProduct(){
@@ -948,11 +797,10 @@ function renderFeaturedProduct(){
   }
   card.onclick=()=>openProduct(p.id);
   const image=document.getElementById('featured-product-image');
-  image.innerHTML=`<span class="tag-passport"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4" stroke="currentColor"/></svg>Passport</span>${productImageHTML(p,{eager:true})}`;
+  image.innerHTML=productImageHTML(p,{eager:true});
   document.getElementById('featured-product-name').textContent=p.name;
   document.getElementById('featured-product-meta').textContent=`${p.color||p.category||'JUNKTEE'} · ${p.price}`;
   document.getElementById('home-product-note').textContent=(p.description||'').split(/(?<=[.!?])\s+/)[0]||`${p.name} · ${p.collection}`;
-  document.getElementById('home-passport-id').textContent=p.passportId||p.sku;
 }
 function renderDropStrip(){
   document.getElementById('drop-strip').innerHTML = PRODUCTS.slice(1).map(p=>productCardHTML(p,130)).join('');
@@ -967,7 +815,7 @@ function renderCollectionGrid(products){
   grid.innerHTML = list.map(p=>`
     <div class="card" style="border:none;" onclick="openProduct('${escapeCatalogHTML(p.id)}')">
       <div class="imgbox catalog-product editorial-reveal">${productImageHTML(p)}</div>
-      ${brandLinkHTML(p)}<span class="passport-meta">${p.passportEligible===false?'Catalog forthcoming':'Passport available'}</span><p class="name" style="margin-top:8px; font-size:13px; font-weight:600;">${escapeCatalogHTML(p.name)}</p><p class="meta">${escapeCatalogHTML(p.price)}</p>
+      ${brandLinkHTML(p)}<p class="name" style="margin-top:8px; font-size:13px; font-weight:600;">${escapeCatalogHTML(p.name)}</p><p class="meta">${escapeCatalogHTML(p.price)}</p>
     </div>`).join('');
 }
 function filterCollection(filter, button){
@@ -1003,7 +851,7 @@ function renderCabinet(){
   document.getElementById('cabinet-grid').innerHTML = CABINET.map(c=>`
     <div class="card" style="border:none;" onclick="openProduct('${escapeCatalogHTML(c.id)}')">
       <div class="imgbox catalog-product editorial-reveal">${productImageHTML(PRODUCTS.find(product=>product.id===c.id))}</div>
-      <span class="passport-meta">V · Verified</span><p class="name" style="margin-top:8px; font-size:13px; font-weight:600;">${escapeCatalogHTML(c.name)}</p>
+      <span class="meta">Saved piece</span><p class="name" style="margin-top:8px; font-size:13px; font-weight:600;">${escapeCatalogHTML(c.name)}</p>
     </div>`).join('');
 }
 
@@ -1062,8 +910,6 @@ function openProduct(id){
     const impactMaterial=document.getElementById('pd-impact-material');
     impactMaterial.hidden=!p.material;
     impactMaterial.textContent=p.material||'';
-    document.getElementById('pd-passport-id').textContent=p.passportId||p.sku;
-    document.getElementById('pd-passport-meta').textContent=`${p.name} · Passport preview`;
     const addButton=document.getElementById('add-to-bag');
     if(addButton) addButton.textContent=p.purchasable===false?'Add Preview to Bag':'Add to Bag';
     const hero = document.getElementById('pd-hero-img');
@@ -1176,90 +1022,6 @@ function skipOnboarding(){
   document.getElementById('screen-onboarding').classList.remove('active');
   go('home', {replace:true});
 }
-
-/* ================= PASSPORT ================= */
-function passportProduct(){ return PRODUCTS.find(product=>product.id===currentProduct)||PRODUCTS[0]; }
-function passportDataRow(label,detail){
-  return detail?`<div class="datarow"><span class="k">${escapeCatalogHTML(label)}</span><span class="v">${escapeCatalogHTML(detail)}</span></div>`:'';
-}
-const PP_PAGES = [
-  {title:'Identity', render:()=>{
-    const product=passportProduct();
-    const identity=product?.passportId||product?.sku||'Product record unavailable';
-    const identityMark=product?.brandId==='rmayd'?`<div class="passport-rmayd-identity">${rmaydPictureHTML('secondary','passport-rmayd-decoration','')}${brandIdentityHTML(product,{className:'brand-identity--passport',alt:'RMAYD'})}</div>`:`<div class="seal">${escapeCatalogHTML(product?.brandName||'JUNKTEE')}<br>SEAL</div>`;
-    return `${identityMark}<p class="pid">${escapeCatalogHTML(identity)}</p><p class="pcollection">${escapeCatalogHTML(product?.name||'Platform Piece')} · ${escapeCatalogHTML(product?.collection||'Archive')}</p><div class="verified-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>${product?.passportEligible===false?'Passport pending':'Passport preview'}</div><div style="margin-top:28px;">${passportDataRow('Brand',product?.brandName||'JUNKTEE')}${passportDataRow('Product ID',product?.sku)}${passportDataRow('Collection',product?.collection)}${passportDataRow('Country of Origin',product?.countryOfManufacture)}</div>`;
-  }},
-  {title:'Story', render:()=>{
-    const product=passportProduct();
-    return `<p class="pp-para">${escapeCatalogHTML(product?.story||'No product story is recorded in the current catalog.')}</p><p class="pquote">"Only dead fish go with the flow."</p>`;
-  }},
-  {title:'Materials & Origin', render:()=>{
-    const product=passportProduct();
-    const details=`${passportDataRow('Material',product?.material)}${passportDataRow('Color',product?.color)}${passportDataRow('Country of Origin',product?.countryOfManufacture)}`;
-    return details||'<p class="pp-para">Additional provenance details are not recorded in the current product catalog.</p>';
-  }},
-  {title:'Impact Record', render:()=>'<p class="pp-para">Product-specific impact data is not recorded in the current catalog.</p>'},
-  {title:'Ownership Timeline', render:()=>'<p class="pp-para">This Passport has not been activated. Verified ownership events will appear here after purchase or first scan.</p>'},
-  {title:'Repair & Care', render:()=>{
-    const product=passportProduct();
-    return product?.careInstructions?`<p class="eyebrow">Care</p><p class="pp-para" style="margin-top:16px;">${escapeCatalogHTML(product.careInstructions)}</p>`:'<p class="pp-para">Care instructions are not recorded in the current product catalog.</p>';
-  }},
-  {title:'Authentication', render:()=>{
-    const product=passportProduct();
-    return `<div style="width:140px;height:140px; background:#fff; margin:0 auto 20px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><svg width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="#fff"/><g fill="#0A0A0A"><rect x="6" y="6" width="26" height="26"/><rect x="68" y="6" width="26" height="26"/><rect x="6" y="68" width="26" height="26"/><rect x="14" y="14" width="10" height="10" fill="#fff"/><rect x="76" y="14" width="10" height="10" fill="#fff"/><rect x="14" y="76" width="10" height="10" fill="#fff"/><rect x="42" y="42" width="8" height="8"/><rect x="54" y="54" width="8" height="8"/><rect x="42" y="60" width="8" height="8"/></g></svg></div><p class="pid" style="font-size:16px;">${escapeCatalogHTML(product?.passportId||product?.sku||'—')}</p><p class="pp-para" style="text-align:center; margin-top:16px;">The active Passport will be issued and verified through the ownership flow.</p>`;
-  }},
-];
-let ppIndex = 0;
-function renderPassport(){
-  const wrap = document.getElementById('passport-pages');
-  wrap.innerHTML = PP_PAGES.map((pg,i)=>`<div class="ppage ${i===0?'active':''}" data-i="${i}"><p class="ppage-title">${pg.title}</p>${pg.render()}</div>`).join('');
-  document.getElementById('pp-dots').innerHTML = PP_PAGES.map((_,i)=>`<div class="dot ${i===0?'active':''}"></div>`).join('');
-  ppIndex = 0;
-  document.getElementById('pp-indicator').textContent = `1 / ${PP_PAGES.length}`;
-}
-function ppMove(dir){
-  const pages = document.querySelectorAll('.ppage');
-  const dots = document.querySelectorAll('#pp-dots .dot');
-  const next = ppIndex+dir;
-  if(next<0 || next>=pages.length) return;
-  pages[ppIndex].classList.remove('active'); dots[ppIndex].classList.remove('active');
-  ppIndex = next;
-  pages[ppIndex].classList.add('active'); dots[ppIndex].classList.add('active');
-  document.getElementById('pp-indicator').textContent = `${ppIndex+1} / ${PP_PAGES.length}`;
-}
-let passportOpenedOnce = false;
-function openPassport(){
-  renderPassport();
-  const modal = document.getElementById('passport-modal');
-  modal.classList.add('active');
-}
-function closePassport(){ document.getElementById('passport-modal').classList.remove('active'); }
-
-/* ================= FIRST SCAN / VERIFY / ACTIVATE ================= */
-function startScan(){
-  document.getElementById('scan-modal').classList.add('active');
-  showScanStep('camera');
-}
-function closeScan(){ document.getElementById('scan-modal').classList.remove('active'); }
-function closeScanAnd(dest, arg){ closeScan(); if(dest==='passport') openPassport(); else if(dest==='article') openArticle(arg); }
-function showScanStep(name){
-  document.querySelectorAll('.scan-view').forEach(v=>v.classList.remove('active'));
-  document.getElementById('scan-step-'+name).classList.add('active');
-}
-function doVerify(){
-  showScanStep('verify');
-  const ring = document.getElementById('verify-ring');
-  const id = document.getElementById('verify-id');
-  const sig = document.getElementById('signature-mark');
-  const cap = document.getElementById('verify-caption');
-  ring.classList.remove('done'); id.classList.remove('show'); sig.classList.remove('show'); cap.classList.remove('show');
-  setTimeout(()=>ring.classList.add('done'), 850);
-  setTimeout(()=>{ id.classList.add('show'); if(navigator.vibrate) navigator.vibrate(40); }, 1350);
-  setTimeout(()=>sig.classList.add('show'), 2050);
-  setTimeout(()=>cap.classList.add('show'), 2550);
-  setTimeout(()=>showScanStep('activate'), 3500);
-}
-function showActivateConfirm(){ showScanStep('confirm'); }
 
 /* ================= INIT ================= */
 renderHeroProduct(); renderFeaturedProduct(); renderDropStrip(); renderCollectionGrid(); renderRelated(); renderJournal(); renderCabinet(); renderCart();
