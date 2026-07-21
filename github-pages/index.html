@@ -380,8 +380,8 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 @media(min-width:900px){#app{border-radius:18px;border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 120px rgba(0,0,0,.18)}body{background:#DCD7CF}[data-theme="dark"] body{background:#0D0C0B}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
-<link rel="stylesheet" href="./junktee-v03.css?v=0.4.0">
-<link rel="stylesheet" href="./marketplace.css?v=0.5.0">
+<link rel="stylesheet" href="./junktee-v03.css?v=0.6.0">
+<link rel="stylesheet" href="./marketplace.css?v=0.6.0">
 </head>
 <body data-theme="light">
 
@@ -534,19 +534,19 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
     </div>
     <div class="divider" style="margin:0 16px;"></div>
 
-    <div class="section-tight">
+    <div class="section-tight" id="pd-impact-section">
       <p class="eyebrow">Why This Piece Matters</p>
       <p class="pquote" style="font-size:18px; margin:12px 0;">"We wanted a shirt that admits the joke before you do."</p>
       <p class="meta" id="pd-impact-material" hidden></p>
     </div>
 
-    <div class="section-tight">
+    <div class="section-tight" id="pd-story-section">
       <p class="eyebrow" style="margin-bottom:10px;">Story</p>
       <p class="body" id="pd-story">The recycling mark started as a joke between three friends about how nobody actually reads the little triangle on a bottle. So we put it on a shirt — bigger, unmissable, paired with a piece that's actually made to be kept, not thrown away in a season. Only dead fish go with the flow. This one doesn't.</p>
       <button class="btn-text" style="margin-top:8px;" onclick="openArticle('a1')">Continue reading →</button>
     </div>
 
-    <div class="section-tight">
+    <div class="section-tight" id="pd-material-section">
       <p class="eyebrow" style="margin-bottom:10px;">Materials</p>
       <div class="materials-fact" style="border-color:var(--border); color:var(--fg);">
         <div class="datarow" id="pd-material-row"><span class="k">Material</span><span class="v" id="pd-material"></span></div>
@@ -555,7 +555,7 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
       <p class="meta" id="pd-care" style="padding:8px 0;"></p>
     </div>
 
-    <div class="section-tight">
+    <div class="section-tight" id="pd-passport-section">
       <div class="passport-teaser" style="background:var(--g900); color:#fff;">
         <p class="mono" id="pd-passport-id" style="font-size:14px;"></p>
         <p class="meta" id="pd-passport-meta" style="color:#999; margin:6px 0 14px;">Passport preview</p>
@@ -563,14 +563,14 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
       </div>
     </div>
 
-    <div class="section-tight">
+    <div class="section-tight" id="pd-size-section">
       <p class="eyebrow" style="margin-bottom:10px;">Size</p>
       <p class="meta" style="margin-bottom:10px;">Runs oversized — most people size down.</p>
       <div style="display:flex; gap:8px;" id="size-row">
         <button class="sizechip">S</button><button class="sizechip selected">M</button><button class="sizechip">L</button><button class="sizechip">XL</button>
       </div>
     </div>
-    <div class="section-tight" style="padding-top:0; display:flex; gap:10px;">
+    <div class="section-tight" id="pd-action-section" style="padding-top:0; display:flex; gap:10px;">
       <button class="btn btn-primary" id="add-to-bag" onclick="addToBag()">Add to Bag</button>
       <button class="icon-btn" style="border:1.5px solid var(--border); border-radius:8px; padding:12px;" onclick="toast('Saved to wishlist')">
         <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5"><path d="M12 21s-7-4.5-9.5-9C.7 8.2 2 5 5.3 5c2 0 3.4 1.2 4.2 2.3C10.3 6.2 11.7 5 13.7 5 17 5 18.3 8.2 16.5 12c-2.5 4.5-9.5 9-9.5 9z"/></svg>
@@ -839,7 +839,7 @@ button,.icon-btn,.back-btn,.navitem{min-width:44px;min-height:44px}
 <p id="desktop-frame-label" style="text-align:center; margin-top:14px; font-family:-apple-system,sans-serif; color:#888; font-size:12px;">JUNKTEE — Private Preview</p>
 
 <script src="./data/products.generated.js?v=0802d264"></script>
-<script src="./data/marketplace.generated.js?v=0.5.0"></script>
+<script src="./data/marketplace.generated.js?v=0.6.0"></script>
 <script>
 /* ================= DATA ================= */
 const CATALOG_PAYLOAD = window.JUNKTEE_PRODUCT_CATALOG || {products:[]};
@@ -860,13 +860,17 @@ const CABINET = ['ST23A440','ST23A451','ST23A448']
   .map(({id,name})=>({id,name}));
 let cart = [];
 
-/* ================= ICON HELPER ================= */
-function pIcon(product){ if(product?.demo) return `<span class="editorial-placeholder editorial-placeholder-${escapeCatalogHTML(product.brandId||'platform')}" aria-hidden="true"><span>${escapeCatalogHTML(product.brandName||'Preview')}</span><small>Editorial preview</small></span>`; return '<span class="garment-placeholder" aria-hidden="true"></span>'; }
+/* ================= BRAND & IMAGE HELPERS ================= */
 function escapeCatalogHTML(value){
   return String(value??'').replace(/[&<>'"]/g, character=>({
     '&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'
   })[character]);
 }
+function marketplaceBrand(id){return (MARKETPLACE.brands||[]).find(brand=>brand.id===id)||null;}
+function rmaydPictureHTML(kind,className,alt,loading){const asset=marketplaceBrand('rmayd')?.assets?.[kind];if(!asset)return '';const sizes=kind==='primary'?'(min-width: 900px) 720px, 82vw':kind==='secondary'?'(min-width: 900px) 480px, 72vw':'(min-width: 900px) 190px, 148px';return `<picture class="rmayd-picture ${escapeCatalogHTML(className||'')}"><source type="image/webp" srcset="${escapeCatalogHTML(asset.srcset)}" sizes="${sizes}"><img src="${escapeCatalogHTML(asset.src)}" alt="${escapeCatalogHTML(alt||'')}" width="${asset.width}" height="${asset.height}" loading="${loading==='eager'?'eager':'lazy'}" ${loading==='eager'?'fetchpriority="high"':''} decoding="async"></picture>`;}
+function brandIdentityHTML(input,options){options=options||{};const brandId=typeof input==='string'?input:(input?.brandId||'junktee');const brandName=typeof input==='object'&&input?.brandName?input.brandName:(marketplaceBrand(brandId)?.name||String(input||'JUNKTEE').toUpperCase());if(brandId==='rmayd')return rmaydPictureHTML('primary',`brand-identity-image ${options.className||''}`,Object.prototype.hasOwnProperty.call(options,'alt')?options.alt:'RMAYD',options.eager?'eager':'lazy');return `<span class="brand-text-identity ${escapeCatalogHTML(options.className||'')}">${escapeCatalogHTML(brandName)}</span>`;}
+function brandLinkHTML(product,options){options=options||{};const brandId=product?.brandId||'junktee';const brandName=product?.brandName||marketplaceBrand(brandId)?.name||'JUNKTEE';return `<button class="brand-link${options.className?' '+escapeCatalogHTML(options.className):''}" data-brand-id="${escapeCatalogHTML(brandId)}" type="button" aria-label="Open ${escapeCatalogHTML(brandName)} brand page" onclick="event.stopPropagation();openBrand('${escapeCatalogHTML(brandId)}')">${brandIdentityHTML(product,{className:options.compact?'brand-identity--compact':'',alt:brandName})}</button>`;}
+function pIcon(product){if(product?.brandId==='rmayd')return `<span class="rmayd-editorial-placeholder" aria-hidden="true">${rmaydPictureHTML('secondary','rmayd-secondary-art','')}</span>`;if(product?.demo)return '<span class="editorial-placeholder" aria-hidden="true"><small>Collection arriving soon.</small></span>';return '<span class="garment-placeholder" aria-hidden="true"></span>';}
 function productImageHTML(product, options){
   options=options||{};
   const src=options.src||product?.images?.front;
@@ -905,7 +909,7 @@ function selectProductImage(index){
 function productCardHTML(p, w){
   return `<div class="card product-card" style="width:${w||150}px; border:none;" onclick="openProduct('${escapeCatalogHTML(p.id)}')">
     <div class="imgbox catalog-product editorial-reveal">${productImageHTML(p)}</div>
-    <button class="brand-link" type="button" onclick="event.stopPropagation();openBrand('${escapeCatalogHTML(p.brandId||'junktee')}')">${escapeCatalogHTML(p.brandName||'JUNKTEE')}</button><span class="passport-meta">${p.passportEligible===false?'Platform preview':'Passport available'}</span><p class="name">${escapeCatalogHTML(p.name)}</p><p class="meta">${escapeCatalogHTML(p.price)}</p>
+    ${brandLinkHTML(p)}<span class="passport-meta">${p.passportEligible===false?'Catalog forthcoming':'Passport available'}</span><p class="name">${escapeCatalogHTML(p.name)}</p><p class="meta">${escapeCatalogHTML(p.price)}</p>
   </div>`;
 }
 function renderFeaturedProduct(){
@@ -939,7 +943,7 @@ function renderCollectionGrid(products){
   grid.innerHTML = list.map(p=>`
     <div class="card" style="border:none;" onclick="openProduct('${escapeCatalogHTML(p.id)}')">
       <div class="imgbox catalog-product editorial-reveal">${productImageHTML(p)}</div>
-      <button class="brand-link" type="button" onclick="event.stopPropagation();openBrand('${escapeCatalogHTML(p.brandId||'junktee')}')">${escapeCatalogHTML(p.brandName||'JUNKTEE')}</button><span class="passport-meta">${p.passportEligible===false?'Platform preview':'Passport available'}</span><p class="name" style="margin-top:8px; font-size:13px; font-weight:600;">${escapeCatalogHTML(p.name)}</p><p class="meta">${escapeCatalogHTML(p.price)}</p>
+      ${brandLinkHTML(p)}<span class="passport-meta">${p.passportEligible===false?'Catalog forthcoming':'Passport available'}</span><p class="name" style="margin-top:8px; font-size:13px; font-weight:600;">${escapeCatalogHTML(p.name)}</p><p class="meta">${escapeCatalogHTML(p.price)}</p>
     </div>`).join('');
 }
 function filterCollection(filter, button){
@@ -1017,9 +1021,9 @@ function openProduct(id){
     document.getElementById('pd-name').textContent = p.name;
     document.getElementById('pd-price').textContent = p.price;
     document.getElementById('pd-story').textContent = p.story;
-    document.getElementById('pd-meta').textContent = `${p.collection} · ${p.sku}`;
+    document.getElementById('pd-meta').textContent = p.purchasable===false?'Official catalog forthcoming':`${p.collection} · ${p.sku}`;
     document.getElementById('pd-brand')?.replaceChildren(document.createTextNode(p.brandName||'JUNKTEE'));
-    const brandButton=document.getElementById('pd-brand-link'); if(brandButton){brandButton.textContent=p.brandName||'JUNKTEE';brandButton.onclick=()=>openBrand(p.brandId||'junktee');}
+    const brandButton=document.getElementById('pd-brand-link');if(brandButton){brandButton.innerHTML=brandIdentityHTML(p,{className:'brand-identity--product',alt:p.brandName||'JUNKTEE'});brandButton.dataset.brandId=p.brandId||'junktee';brandButton.setAttribute('aria-label',`Open ${p.brandName||'JUNKTEE'} brand page`);brandButton.onclick=()=>openBrand(p.brandId||'junktee');}
     const origin=document.getElementById('pd-origin');
     origin.hidden=!p.countryOfManufacture;
     origin.textContent=p.countryOfManufacture ? `Made in ${p.countryOfManufacture}` : '';
@@ -1156,7 +1160,8 @@ const PP_PAGES = [
   {title:'Identity', render:()=>{
     const product=passportProduct();
     const identity=product?.passportId||product?.sku||'Product record unavailable';
-    return `<div class="seal">${escapeCatalogHTML(product?.brandName||'JUNKTEE')}<br>SEAL</div><p class="pid">${escapeCatalogHTML(identity)}</p><p class="pcollection">${escapeCatalogHTML(product?.name||'Platform Piece')} · ${escapeCatalogHTML(product?.collection||'Archive')}</p><div class="verified-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>${product?.passportEligible===false?'Passport pending':'Passport preview'}</div><div style="margin-top:28px;">${passportDataRow('Brand',product?.brandName||'JUNKTEE')}${passportDataRow('Product ID',product?.sku)}${passportDataRow('Collection',product?.collection)}${passportDataRow('Country of Origin',product?.countryOfManufacture)}</div>`;
+    const identityMark=product?.brandId==='rmayd'?`<div class="passport-rmayd-identity">${rmaydPictureHTML('secondary','passport-rmayd-decoration','')}${brandIdentityHTML(product,{className:'brand-identity--passport',alt:'RMAYD'})}</div>`:`<div class="seal">${escapeCatalogHTML(product?.brandName||'JUNKTEE')}<br>SEAL</div>`;
+    return `${identityMark}<p class="pid">${escapeCatalogHTML(identity)}</p><p class="pcollection">${escapeCatalogHTML(product?.name||'Platform Piece')} · ${escapeCatalogHTML(product?.collection||'Archive')}</p><div class="verified-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>${product?.passportEligible===false?'Passport pending':'Passport preview'}</div><div style="margin-top:28px;">${passportDataRow('Brand',product?.brandName||'JUNKTEE')}${passportDataRow('Product ID',product?.sku)}${passportDataRow('Collection',product?.collection)}${passportDataRow('Country of Origin',product?.countryOfManufacture)}</div>`;
   }},
   {title:'Story', render:()=>{
     const product=passportProduct();
@@ -1253,7 +1258,7 @@ if(resumeV03){
   history_ = ['onboarding'];
 }
 </script>
-<script defer src="./junktee-v03.js?v=0.5.1"></script>
-<script defer src="./marketplace.js?v=0.5.0"></script>
+<script defer src="./junktee-v03.js?v=0.6.0"></script>
+<script defer src="./marketplace.js?v=0.6.0"></script>
 </body>
 </html>

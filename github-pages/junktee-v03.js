@@ -187,7 +187,7 @@
       <article class="cart-item">
         <div class="imgbox catalog-product">${productImageHTML(item)}</div>
         <div style="flex:1;">
-          <button class="brand-link" type="button" onclick="openBrand('${escapeHTML(item.brandId || "junktee")}')">${escapeHTML(item.brandName || "JUNKTEE")}</button><p class="body-md">${escapeHTML(item.name)}</p>
+          ${brandLinkHTML(item, { compact: true })}<p class="body-md">${escapeHTML(item.name)}</p>
           <p class="bag-size" style="margin:7px 0 10px;">Size ${escapeHTML(item.size)}</p>
           <p class="meta" style="margin-bottom:7px;">${displayPrice(item)}${isPurchasable(item) ? "" : " · Preview item, not charged"}</p>
           <div class="qty-control" aria-label="Quantity for ${escapeHTML(item.name)}">
@@ -300,7 +300,7 @@
     itemsWrap.innerHTML = cart.length ? cart.map((item) => `
       <div class="checkout-line">
         <div class="imgbox catalog-product">${productImageHTML(item)}</div>
-        <div><button class="brand-link" type="button" onclick="openBrand('${escapeHTML(item.brandId || "junktee")}')">${escapeHTML(item.brandName || "JUNKTEE")}</button><p class="product-name">${escapeHTML(item.name)}</p><p class="meta">Size ${escapeHTML(item.size)} · Qty ${item.quantity}</p></div><p class="price">${displayPrice(item, item.quantity)}</p>
+        <div>${brandLinkHTML(item, { compact: true, className: "checkout-brand-link" })}<p class="product-name">${escapeHTML(item.name)}</p><p class="meta">Size ${escapeHTML(item.size)} · Qty ${item.quantity}</p></div><p class="price">${displayPrice(item, item.quantity)}</p>
       </div>`).join("") : '<p class="meta">Your Bag is empty.</p>';
     totals.innerHTML = `
       <div class="total-row"><span>Subtotal</span><span>${money(cartSubtotal())}</span></div>
@@ -594,7 +594,7 @@
         <p class="active-label">Digital Passport Activated</p>
         <div class="confirmation-product">
           <div class="imgbox catalog-product">${productImageHTML(productById(item.productId))}</div>
-          <div><p class="eyebrow" style="color:#8c8c8c;">${escapeHTML(item.brandName || "JUNKTEE")} · ${escapeHTML(order.orderReference)}</p><h2 id="passport-activated-title">${escapeHTML(item.name)}</h2><p class="meta">Size ${escapeHTML(item.size)} · Qty ${item.quantity}</p></div>
+          <div>${brandIdentityHTML(productById(item.productId) || item, { className: "brand-identity--confirmation", alt: item.brandName || "JUNKTEE" })}<p class="eyebrow confirmation-order-ref">${escapeHTML(order.orderReference)}</p><h2 id="passport-activated-title">${escapeHTML(item.name)}</h2><p class="meta">Size ${escapeHTML(item.size)} · Qty ${item.quantity}</p></div>
         </div>
         <div class="confirmation-data">
           <div class="datarow"><span class="k">Payment status</span><span class="v" style="color:var(--green-bright);">${escapeHTML(order.paymentStatus)}</span></div>
@@ -636,11 +636,11 @@
     grid.innerHTML = allPieces.map((piece) => piece.base ? `
       <div class="card" style="border:none;" onclick="openProduct('${escapeHTML(piece.id)}')">
         <div class="imgbox catalog-product editorial-reveal in-view">${productImageHTML(productById(piece.id))}</div>
-        <button class="brand-link" type="button" onclick="event.stopPropagation();openBrand('${escapeHTML(productById(piece.id)?.brandId || "junktee")}')">${escapeHTML(productById(piece.id)?.brandName || "JUNKTEE")}</button><span class="passport-meta">V · Verified</span><p class="name" style="margin-top:8px;font-size:13px;font-weight:600;">${escapeHTML(piece.name)}</p>
+        ${brandLinkHTML(productById(piece.id), { compact: true })}<span class="passport-meta">V · Verified</span><p class="name" style="margin-top:8px;font-size:13px;font-weight:600;">${escapeHTML(piece.name)}</p>
       </div>` : `
       <div class="card" style="border:none;" onclick="openOwnedPassport('${escapeHTML(piece.productId)}')">
         <div class="imgbox catalog-product editorial-reveal in-view">${productImageHTML(productById(piece.productId))}</div>
-        <button class="brand-link" type="button" onclick="event.stopPropagation();openBrand('${escapeHTML(piece.brandId || "junktee")}')">${escapeHTML(piece.brandName || "JUNKTEE")}</button><span class="passport-meta passport-active">Active Passport</span><p class="name" style="margin-top:8px;font-size:13px;font-weight:600;">${escapeHTML(piece.name)}</p>
+        ${brandLinkHTML(piece, { compact: true })}<span class="passport-meta passport-active">Active Passport</span><p class="name" style="margin-top:8px;font-size:13px;font-weight:600;">${escapeHTML(piece.name)}</p>
         <div class="cabinet-owned-meta"><span>${escapeHTML(formatDate(piece.purchaseDate))}</span><span>${escapeHTML(piece.ownershipStatus)} · ${escapeHTML(piece.passportId)}</span></div>
       </div>`).join("");
 
@@ -671,7 +671,7 @@
       ? `${provenanceRows.map(([label, detail]) => `<div class="datarow"><span class="k">${escapeHTML(label)}</span><span class="v">${escapeHTML(detail)}</span></div>`).join("")}${product?.careInstructions ? `<p class="pp-para" style="margin-top:18px;">${escapeHTML(product.careInstructions)}</p>` : ""}`
       : '<p class="pp-para">Additional provenance details are not recorded in the current product catalog.</p>';
     const pages = [
-      { title: "Identity", body: `<div class="seal">${escapeHTML(piece.brandName || "JUNKTEE")}<br>SEAL</div><p class="pid">${escapeHTML(piece.passportId)}</p><p class="pcollection">${escapeHTML(piece.name)} · Owned piece</p><div class="verified-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Active · Verified</div>` },
+      { title: "Identity", body: `${piece.brandId === "rmayd" ? `<div class="passport-rmayd-identity">${rmaydPictureHTML("secondary", "passport-rmayd-decoration", "")}${brandIdentityHTML(piece, { className: "brand-identity--passport", alt: "RMAYD" })}</div>` : `<div class="seal">${escapeHTML(piece.brandName || "JUNKTEE")}<br>SEAL</div>`}<p class="pid">${escapeHTML(piece.passportId)}</p><p class="pcollection">${escapeHTML(piece.name)} · Owned piece</p><div class="verified-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Active · Verified</div>` },
       { title: "Piece", body: `<p class="pp-para">${escapeHTML(product?.story || "A JUNKTEE piece with a story built to continue.")}</p><p class="pquote">“Only dead fish go with the flow.”</p>` },
       { title: "Purchase Record", body: `<div class="datarow"><span class="k">Brand</span><span class="v">${escapeHTML(piece.brandName || "JUNKTEE")}</span></div><div class="datarow"><span class="k">Order reference</span><span class="v">${escapeHTML(piece.orderReference)}</span></div><div class="datarow"><span class="k">Purchase status</span><span class="v">Verified</span></div><div class="datarow"><span class="k">Activation date</span><span class="v">${escapeHTML(formatDate(piece.activationDate))}</span></div><div class="datarow"><span class="k">Size</span><span class="v">${escapeHTML(piece.size)}</span></div>` },
       { title: "Ownership", body: `<div class="datarow"><span class="k">First owner</span><span class="v">${escapeHTML(piece.firstOwner)}</span></div><div class="datarow"><span class="k">Current owner</span><span class="v">${escapeHTML(piece.currentOwner)}</span></div><div class="datarow"><span class="k">Ownership status</span><span class="v">${escapeHTML(piece.ownershipStatus)}</span></div><div class="datarow"><span class="k">Product ID</span><span class="v">${escapeHTML(piece.productId.toUpperCase())}</span></div>` },
